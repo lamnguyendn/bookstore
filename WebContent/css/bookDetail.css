@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+.item-name {
+    font-size: 18px;
+    font-weight: normal;
+    color: #333;
+    line-height: 25px;
+    margin: 10px 0;
+    margin-top: 0;
+}

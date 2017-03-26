@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts 
+Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+<struts-config>
+	<form-beans>
+		<form-bean name="bookForm" type="form.BookForm" />
+		<form-bean name="loginForm" type="form.LoginForm" />
+		<form-bean name="cartForm" type="form.CartForm" />
+		<form-bean name="publicForm" type="form.PublicForm" />
+		<form-bean name="customerForm" type="form.CustomerForm" />
+		<form-bean name="orderForm" type="form.OrderForm" />
+	</form-beans>
+	<action-mappings>
+		<action path="/checkLogin" name="loginForm" type="action.CheckLoginAction"
+			scope="request" input="/login.jsp">
+			<forward name="loginAdminSuccess" path="/bookManagement.do"
+				redirect="true" />
+			<forward name="loginUserSuccess" path="/index.do" redirect="true" />
+			<forward name="loginFailed" path="/login.jsp" />
+		</action>
+		<action path="/logout" type="action.LogoutAction" scope="request">
+			<forward name="logout" path="/index.do" redirect="true" />
+		</action>
+		<action path="/index" name="publicForm" scope="request"
+			type="action.PublicAction" input="/index.jsp">
+			<forward name="index" path="/index.jsp" />
+		</action>
+		<action path="/viewBookImage" name="bookForm" scope="request"
+			type="action.ViewBookImageAction">
+		</action>
+		<!-- Book Management -->
+		<action path="/bookManagement" name="bookForm" scope="request"
+			input="/login.jsp" type="action.ShowListOfBooksAction">
+			<forward name="listBooks" path="/bookManagement.jsp" />
+			<forward name="login" path="/login.jsp" redirect="true" />
+		</action>
+		<action path="/addBook" name="bookForm" scope="request" input="/book.jsp"
+			type="action.AddBookAction">
+			<forward name="addBookSuccess" path="/bookManagement.do"
+				redirect="true" />
+			<forward name="addBook" path="/book.jsp" />
+		</action>
+		<action path="/updateBook" name="bookForm" scope="request"
+			input="/bookManagement.jsp" type="action.UpdateBookAction">
+			<forward name="updateBook" path="/book.jsp" />
+			<forward name="updateBookSuccess" path="/bookManagement.do"
+				redirect="true" />
+		</action>
+		<action path="/deleteBook" name="bookForm" scope="request"
+			type="action.DeleteBookAction" input="/bookManagement.jsp">
+			<forward name="deleteBook" path="/bookManagement.do" />
+			<forward name="index" path="/login.jsp" redirect="true" />
+		</action>
+		<action path="/pagination" name="bookForm" scope="request"
+			type="action.PaginationAction">
+		</action>
+		<action path="/detailBook" name="bookForm" scope="request"
+			type="action.ViewDetailBookAction">
+			<forward name="view" path="/bookDetail.jsp" />
+		</action>
+		<!-- End Book Management -->
+		<!-- Category Detail -->
+		<action path="/category" name="bookForm" type="action.ViewDetailCategoryAction"
+			scope="request">
+			<forward name="listOfBooksByCategory" path="/categoryDetail.jsp" />
+		</action>
+		<action path="/paginationListOfBooksByCategory" type="action.PaginationListOfBooksByCategoryAction"
+			scope="request" name="bookForm" />
+		<!-- End Category Detail -->
+		<!-- Cart Processing -->
+		<action path="/buyBook" name="bookForm" scope="request"
+			type="action.AddBookToCartAction" input="/listBooks.jsp">
+			<forward name="addBookToCart" path="/showCart.do" redirect="true" />
+		</action>
+		<action path="/showCart" name="cartForm" scope="request"
+			type="action.ShowCartAction">
+			<forward name="showCart" path="/cart.jsp" />
+		</action>
+		<action path="/removeBookFromCart" name="bookForm" scope="request"
+			type="action.RemoveBookFromCartAction">
+			<forward name="done" path="/showCart.do" redirect="true" />
+		</action>
+		<action path="/updateCart" name="cartForm" scope="request"
+			type="action.UpdateCartAction" input="/cart.jsp">
+			<forward name="updated" path="/showCart.do" redirect="true" />
+		</action>
+		<action path="/payCartFirstStep" name="customerForm" scope="request"
+			type="action.PayCartFirstStepAction">
+			<forward name="cartIsEmpty" path="/index.do" redirect="true" />
+			<forward name="customer" path="/customer.jsp" />
+			<forward name="payCartThirdStep" path="/payCartThirdStep.do" />
+			<forward name="login" path="/login.jsp" redirect="true" />
+			<forward name="showCart" path="/showCart.do" redirect="true" />
+		</action>
+		<action path="/payCartSecondStep" name="customerForm" scope="request"
+			type="action.PayCartSecondStepAction">
+			<forward name="payCartFirstStep" path="/payCartFirstStep.do"
+				redirect="true" />
+			<forward name="payCartThirdStep" path="/payCartThirdStep.do"
+				redirect="true" />
+			<forward name="login" path="/login.jsp" redirect="true" />
+		</action>
+		<action path="/payCartThirdStep" scope="request"
+			type="action.PayCartThirdStepAction" name="cartForm">
+			<forward name="showCart" path="/showCart.do" redirect="true" />
+			<forward name="payCartFirstStep" path="/payCartFirstStep.do"
+				redirect="true" />
+			<forward name="confirmCart" path="/confirmCart.jsp" />
+			<forward name="login" path="/login.jsp" redirect="true" />
+		</action>
+		<action path="/payCartFourthStep" scope="request"
+			type="action.PayCartFourthStepAction" name="cartForm">
+			<forward name="showCart" path="/showCart.do" redirect="true" />
+			<forward name="payCartFirstStep" path="/payCartFirstStep.do" />
+			<forward name="payCartThirdStep" path="/payCartThirdStep.do" />
+			<forward name="payCartFinalStep" path="/payCartFinalStep.do" />
+			<forward name="login" path="/login.jsp" redirect="true" />
+		</action>
+		<action path="/payCartFinalStep" type="action.PayCartFinalStepAction"
+			scope="request">
+			<forward name="payCartFinalStep" path="/payCartFinalStep.jsp"
+				redirect="true" />
+		</action>
+		<!-- End Cart Processing -->
+
+		<!-- Order Processing -->
+		<action path="/orderManagement" name="orderForm" scope="request"
+			type="action.OrderManagementAction">
+			<forward name="listOfOrders" path="/orderManagement.jsp" />
+		</action>
+		<action path="/confirmOrder" type="action.ConfirmOrderAction"
+			scope="request" name="orderForm">
+		</action>
+		<action path="/viewOrderDetail" type="action.ViewOrderDetailAction"
+			scope="request" name="orderForm">
+		</action>
+		<!-- End Order Processing -->
+
+	</action-mappings>
+	<message-resources parameter="action.ApplicationResources" />
+</struts-config>

@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+encoding//src/action/ConfirmOrderAction.java=UTF-8
+encoding//src/action/ShowListOfBooksAction.java=UTF-8
+encoding//src/action/UpdateBookAction.java=UTF-8
+encoding//src/model/dao/OrderDAO.java=UTF-8
