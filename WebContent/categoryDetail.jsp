@@ -12,7 +12,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Thể loại sách</title>
+
 
 <!-- Pagination -->
 <script src="js/jquery.min.js"></script>
@@ -21,6 +22,8 @@
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
+<!-- Style Css -->
+<link rel="stylesheet" href="css/style.css">
 
 <style type="text/css">
 hr.style18 {
@@ -67,45 +70,60 @@ hr.style18:before {
 </head>
 <body>
 	<%@include file="navbar.jsp"%>
-	<div class="container marketing">
-		<center>
-			<h1 style="margin-bottom: 100px;">
-				<bean:write property="categoryName" name="bookForm" />
-			</h1>
-		</center>
-		<center>
-			<div class="container">
-				<div class="row col-lg-12 category-detail" id="dataTable">
-					<logic:iterate id="book" property="listOfBooksLimitByCategoryNum"
-						name="bookForm">
-						<div class="col-lg-3">
-							<bean:define id="image_1" property="image_1" name="book" />
-							<html:img action="viewBookImage?isbn=${book.isbn}"
-								styleClass="img-circle" alt="Generic placeholder image"
-								width="140" height="140"></html:img>
-							<h2 class="title-book">
-								<bean:write name="book" property="name" />
-							</h2>
-							<p class="description">
-								<bean:write name="book" property="description" />
-							</p>
-							<p>
-								<html:link styleClass="btn btn-default"
-									action="detailBook?isbn=${book.isbn}">
+	<div class="container marketing" id="content">
+		<bean:define id="listOfBooksByCategory"
+			property="listOfBooksByCategory" name="bookForm" />
+		<c:if test="${not empty listOfBooksByCategory}">
+			<center>
+				<h1 style="margin: 50px 0 50px 0;">
+					<bean:write property="categoryName" name="bookForm" />
+				</h1>
+			</center>
+			<center>
+				<div class="container">
+					<div class="row col-lg-12 category-detail" id="dataTable">
+						<logic:iterate id="book" property="listOfBooksByCategory"
+							name="bookForm">
+							<div class="col-md-3" style="margin-top:50px;">
+								<bean:define id="image_1" property="image_1" name="book" />
+								<html:img action="viewBookImage?isbn=${book.isbn}"
+									style="height: 250px; width: 200px; margin-bottom: 20px;"></html:img>
+								<h2 class="title-book">
+									<bean:write name="book" property="name" />
+								</h2>
+								<p class="description">
+									<bean:write name="book" property="description" />
+								</p>
+								<p style="margin-top: 20px;">
+									<html:link styleClass="btn btn-default"
+										action="detailBook?isbn=${book.isbn}">
 								Xem thêm &raquo;
 							</html:link>
-							</p>
-						</div>
-					</logic:iterate>
-				</div>
-				<bean:define id="totalPages" property="totalPages" name="bookForm" />
-				<bean:define id="categoryNum" property="categoryNum" name="bookForm" />
+								</p>
+							</div>
+						</logic:iterate>
+					</div>
 
-				<nav aria-label="Page navigation">
-				<ul class="pagination" id="pagination"></ul>
-				</nav>
-			</div>
-		</center>
+					<nav aria-label="Page navigation">
+					<ul class="pagination" id="pagination"></ul>
+					</nav>
+				</div>
+			</center>
+		</c:if>
+		<c:if test="${empty listOfBooksByCategory}">
+			<center>
+				<h1 style="margin-top: 100px;">Không tìm thấy dữ liệu tương ứng</h1>
+				<button style="margin-top: 50px;" type="button"
+					class="btn btn-default" onclick="goBack()">Quay lại</button>
+				<script>
+					function goBack() {
+						window.history.back();
+					}
+				</script>
+			</center>
+		</c:if>
+		<bean:define id="totalPages" property="totalPages" name="bookForm" />
+		<bean:define id="categoryNum" property="categoryNum" name="bookForm" />
 	</div>
 	<script type="text/javascript">
 		var categoryNum = '${categoryNum}';

@@ -10,17 +10,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Book Store</title>
+<title>Thanh toán</title>
+
+<!-- Bootstrap -->
+<script src="js/jquery.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<!-- <script src="js/jquery.min.js"></script> -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="js/bootstrap.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<link href="css/carousel.css" rel="stylesheet">
+
+<!-- Validate book -->
+<script type="text/javascript" src="js/jquery-validation.js"></script>
+<script type="text/javascript" src="js/additional-methods.min.js"></script>
+<script type="text/javascript" src="js/validateCustomer.js"></script>
+<!-- Style Css -->
+<link rel="stylesheet" href="css/style.css">
+
 <style type="text/css">
 .thumbnail {
 	border: none;
@@ -34,30 +37,33 @@
 </head>
 <body>
 	<%@include file="navbar.jsp"%>
-	<div class="container" style="margin-top: 100px;">
+	<div class="container" style="margin-top: 100px;" id="content">
 		<div class="row">
-			<html:form action="/payCartSecondStep" method="post">
+			<html:form action="/payCartSecondStep" method="post" styleId="myForm">
 				<div class="col-md-6 col-md-offset-3">
-					<h2 style="margin-bottom: 20px;">Thông tin tài khoản khách
-						hàng</h2>
+					<h2 style="margin-bottom: 20px;">Thông tin khách hàng</h2>
 					<div class="form-group">
 						<label>Họ và tên</label>
-						<html:text property="name" styleClass="form-control" />
+						<html:text property="name" styleClass="form-control"
+							styleId="name" />
 						<html:errors property="customerNameError" />
 					</div>
 					<div class="form-group">
 						<label>Số điện thoại</label>
-						<html:text property="phone" styleClass="form-control" />
+						<html:text property="phone" styleClass="form-control"
+							styleId="phone" />
 						<html:errors property="customerPhoneError" />
 					</div>
 					<div class="form-group">
 						<label>Địa chỉ</label>
-						<html:text property="address" styleClass="form-control" />
+						<html:text property="address" styleClass="form-control"
+							styleId="address" />
 						<html:errors property="customerAddressError" />
 					</div>
 					<div class="form-group">
 						<label>Email</label>
-						<html:text property="email" styleClass="form-control" />
+						<html:text property="email" styleClass="form-control"
+							styleId="email" />
 						<html:errors property="customerEmailError" />
 					</div>
 					<div class="form-group">
@@ -66,7 +72,7 @@
 						</html:submit>
 						<html:reset styleClass="btn btn-default">Nhập lại</html:reset>
 						<button type="button" class="btn btn-default" onclick="goBack()">
-							<span class="glyphicon glyphicon-step-backward"></span>Quay lại
+							Quay lại
 						</button>
 					</div>
 				</div>

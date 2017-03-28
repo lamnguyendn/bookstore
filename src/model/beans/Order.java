@@ -8,7 +8,6 @@ public class Order {
 	private double total;
 	private int status;
 	private String userName;
-
 	private String customerName;
 	private String customerAddress;
 	private String customerEmail;

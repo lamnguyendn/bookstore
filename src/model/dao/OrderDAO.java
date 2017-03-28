@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,6 @@ import model.beans.OrderDetail;
 import model.beans.Promotion;
 
 public class OrderDAO {
-	Connection con = DataAccess.connect();
 	Statement stm;
 	PreparedStatement pstm;
 	ResultSet rs;
@@ -72,6 +70,8 @@ public class OrderDAO {
 
 	private void saveOrder(Order order) {
 		String sql = "INSERT INTO donhang VALUES(?,?,?,?,?,?,?,?,?)";
+		Connection con = DataAccess.connect();
+
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, order.getOrderNum());
@@ -88,11 +88,19 @@ public class OrderDAO {
 		} catch (SQLException e) {
 			System.out.println("Save order has Error");
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public int getStatusOrder(String orderNum) {
 		String sql = "SELECT * FROM donhang WHERE ma_dh = ?";
+		Connection con = DataAccess.connect();
+
 		int status = 0;
 		try {
 			pstm = con.prepareStatement(sql);
@@ -103,12 +111,19 @@ public class OrderDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return status;
 	}
 
 	public void updateOrder(String orderNum, int status) {
 		String sql = "UPDATE donhang SET trangthai = ? WHERE ma_dh = ?";
+		Connection con = DataAccess.connect();
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setInt(1, status);
@@ -116,12 +131,19 @@ public class OrderDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public ArrayList<Order> getListOfOrders() {
 		ArrayList<Order> arr = new ArrayList<>();
 		String sql = "SELECT * FROM donhang";
+		Connection con = DataAccess.connect();
 		try {
 			stm = con.createStatement();
 			rs = stm.executeQuery(sql);
@@ -140,13 +162,19 @@ public class OrderDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return arr;
 	}
 
 	public Order findOrderByOrderNum(String orderNum) {
 		String sql = "SELECT * FROM donhang WHERE ma_dh = ?";
-
+		Connection con = DataAccess.connect();
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, orderNum);
@@ -166,8 +194,126 @@ public class OrderDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
+	}
+
+	public ArrayList<Order> getListOfOrdersLimit(int first, int last) {
+		ArrayList<Order> arr = new ArrayList<>();
+		String sql = "SELECT * FROM donhang" + " LIMIT " + first + " ," + last + " ; ";
+		Connection con = DataAccess.connect();
+		try {
+			stm = con.createStatement();
+			rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				Order order = new Order();
+				order.setCreatedDate(rs.getDate("ngaytao"));
+				order.setCustomerAddress(rs.getString("diachi"));
+				order.setCustomerEmail(rs.getString("email"));
+				order.setCustomerName(rs.getString("ten"));
+				order.setCustomerPhone(rs.getString("sodienthoai"));
+				order.setOrderNum(rs.getString("ma_dh"));
+				order.setStatus(rs.getInt("trangthai"));
+				order.setTotal(rs.getDouble("tongtien"));
+				order.setUserName(rs.getString("username"));
+
+				arr.add(order);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return arr;
+	}
+
+	public ArrayList<Order> getListOfOrdersLimitByFindKey(int first, int last, String findKey) {
+		ArrayList<Order> arr = new ArrayList<>();
+		String sql = "SELECT * FROM donhang WHERE ten LIKE N'%" + findKey + "%' OR username LIKE N'%" + findKey + "%'"
+				+ " LIMIT " + first + " ," + last + " ;";
+		Connection con = DataAccess.connect();
+		try {
+			stm = con.createStatement();
+			rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				Order order = new Order();
+				order.setCreatedDate(rs.getDate("ngaytao"));
+				order.setCustomerAddress(rs.getString("diachi"));
+				order.setCustomerEmail(rs.getString("email"));
+				order.setCustomerName(rs.getString("ten"));
+				order.setCustomerPhone(rs.getString("sodienthoai"));
+				order.setOrderNum(rs.getString("ma_dh"));
+				order.setStatus(rs.getInt("trangthai"));
+				order.setTotal(rs.getDouble("tongtien"));
+				order.setUserName(rs.getString("username"));
+
+				arr.add(order);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return arr;
+	}
+
+	public int countRowsByFindKey(String findKey) {
+		String sql = "SELECT count(ma_dh) FROM donhang WHERE ten LIKE N'%" + findKey + "%' OR username LIKE N'%"
+				+ findKey + "%';";
+		Connection con = DataAccess.connect();
+		int count = 0;
+		try {
+			stm = con.createStatement();
+			rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
+	}
+
+	public int countRows() {
+		String sql = "SELECT count(ma_dh) FROM donhang";
+		Connection con = DataAccess.connect();
+		int count = 0;
+		try {
+			stm = con.createStatement();
+			rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
 	}
 
 }

@@ -11,18 +11,24 @@ import org.apache.struts.action.ActionMapping;
 import common.CartProcess;
 import form.CartForm;
 import model.beans.CartInfo;
+import model.bo.CategoryBO;
 
+/**
+ * Giỏ hàng - Cập nhật sản phẩm trong giỏ hàng
+ * 
+ * @author LamNX
+ *
+ */
 public class UpdateCartAction extends Action {
+	CategoryBO categoryBO = new CategoryBO();
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		CartInfo cartInfo = CartProcess.getCartInSession(request);
 		CartForm cartForm = (CartForm) form;
-		String isbn = cartForm.getIsbn();
-		int quantity = cartForm.getQuantity();
-		cartInfo.updateBook(isbn, quantity);
-
+		cartInfo.updateBook(cartForm.getIsbn(), cartForm.getQuantity());
+		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
 		return mapping.findForward("updated");
 	}
 

@@ -11,12 +11,13 @@ import common.DataAccess;
 import model.beans.Category;
 
 public class CategoryDAO {
-	Connection con = DataAccess.connect();
 	Statement stm;
 	PreparedStatement pstm;
 	ResultSet rs;
 
 	public ArrayList<Category> getListOfCategories() {
+		Connection con = DataAccess.connect();
+
 		ArrayList<Category> arr = new ArrayList<>();
 		String sql = "SELECT * FROM theloai ;";
 		try {
@@ -30,11 +31,19 @@ public class CategoryDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return arr;
 	}
 
 	public String findCategoryByCategoryNum(String categoryNum) {
+		Connection con = DataAccess.connect();
+
 		String sql = "SELECT ten_tl FROM theloai WHERE ma_tl = '" + categoryNum + "';";
 		try {
 			stm = con.createStatement();
@@ -44,6 +53,12 @@ public class CategoryDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}

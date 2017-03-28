@@ -1,25 +1,22 @@
 package model.beans;
 
-import java.util.Date;
-
 public class Promotion {
 	private String maKM;
 	private String tenKM;
 	private float phanTramKM;
-	private Date ngayBatDau;
-	private Date ngayKetThuc;
 	private String maDH;
+	private int trangThai;
 
 	public Promotion() {
 	}
 
-	public Promotion(String maKM, String tenKM, float phanTramKM, Date ngayBatDau, Date ngayKetThuc, String maDH) {
+	public Promotion(String maKM, String tenKM, float phanTramKM, String maDH, int trangThai) {
+		super();
 		this.maKM = maKM;
 		this.tenKM = tenKM;
 		this.phanTramKM = phanTramKM;
-		this.ngayBatDau = ngayBatDau;
-		this.ngayKetThuc = ngayKetThuc;
 		this.maDH = maDH;
+		this.trangThai = trangThai;
 	}
 
 	public String getMaKM() {
@@ -46,28 +43,20 @@ public class Promotion {
 		this.phanTramKM = phanTramKM;
 	}
 
-	public Date getNgayBatDau() {
-		return ngayBatDau;
-	}
-
-	public void setNgayBatDau(Date ngayBatDau) {
-		this.ngayBatDau = ngayBatDau;
-	}
-
-	public Date getNgayKetThuc() {
-		return ngayKetThuc;
-	}
-
-	public void setNgayKetThuc(Date ngayKetThuc) {
-		this.ngayKetThuc = ngayKetThuc;
-	}
-
 	public String getMaDH() {
 		return maDH;
 	}
 
 	public void setMaDH(String maDH) {
 		this.maDH = maDH;
+	}
+
+	public int getTrangThai() {
+		return trangThai;
+	}
+
+	public void setTrangThai(int trangThai) {
+		this.trangThai = trangThai;
 	}
 
 }

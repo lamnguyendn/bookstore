@@ -11,7 +11,6 @@ import common.DataAccess;
 import model.beans.Publisher;
 
 public class PublisherDAO {
-	Connection con = DataAccess.connect();
 	Statement stm;
 	PreparedStatement pstm;
 	ResultSet rs;
@@ -19,6 +18,7 @@ public class PublisherDAO {
 	public ArrayList<Publisher> getListOfPublishers() {
 		ArrayList<Publisher> arr = new ArrayList<>();
 		String sql = "SELECT * FROM nhaxuatban ;";
+		Connection con = DataAccess.connect();
 		try {
 			stm = con.createStatement();
 			rs = stm.executeQuery(sql);
@@ -32,6 +32,12 @@ public class PublisherDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return arr;
 	}

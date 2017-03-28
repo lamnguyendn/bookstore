@@ -31,5 +31,4 @@ public class ViewBookImageAction extends Action {
 		response.getOutputStream().close();
 		return null;
 	}
-
 }

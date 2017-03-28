@@ -11,12 +11,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Book Store</title>
+<title>Giỏ hàng</title>
 
 <!-- Bootstrap -->
 <script src="js/jquery.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
+<!-- Style Css -->
+<link rel="stylesheet" href="css/style.css">
 
 <style type="text/css">
 .thumbnail {
@@ -32,7 +34,7 @@
 <body>
 	<fmt:setLocale value="vi-VN" />
 	<%@include file="navbar.jsp"%>
-	<div class="container">
+	<div class="container" id="content">
 		<div class="row">
 			<bean:define id="cartInfo" name="cartForm" property="cart" />
 			<bean:define id="cartLines" name="cartInfo" property="cartLines" />
@@ -67,7 +69,8 @@
 										<td class="col-sm-8 col-md-6">
 											<div class="media">
 												<a class="thumbnail pull-left" href="#"> <html:img
-														styleClass="media-object" src="images/${image_1}" />
+														styleClass="media-object"
+														action="viewBookImage?isbn=${isbn}" />
 												</a>
 												<div class="media-body">
 													<h4 class="media-heading">
@@ -85,6 +88,8 @@
 												<html:text styleClass="form-control" property="quantity"
 													name="line" />
 											</c:if> <c:if test="${outOfStock}">
+												<html:text styleClass="form-control" property="quantity"
+													name="line" />
 												<span style="color: red;"> <html:errors
 														property="cartIsOutOfStockError" />
 												</span>
@@ -104,7 +109,7 @@
 												Cập nhật
 												</html:submit>
 											</c:if> <c:if test="${outOfStock}">
-												<html:submit styleClass="btn btn-default" disabled="true">
+												<html:submit styleClass="btn btn-default">
 												Cập nhật
 												</html:submit>
 											</c:if></td>
@@ -169,4 +174,3 @@
 	<%@include file="footer.jsp"%>
 </body>
 </html>
-

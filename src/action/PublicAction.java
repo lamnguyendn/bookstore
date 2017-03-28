@@ -1,5 +1,7 @@
 package action;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,9 +12,17 @@ import org.apache.struts.action.ActionMapping;
 
 import form.PublicForm;
 import model.beans.Account;
+import model.beans.Book;
+import model.beans.Category;
 import model.bo.BookBO;
 import model.bo.CategoryBO;
 
+/**
+ * Quản lý trang chủ
+ * 
+ * @author LamNX
+ *
+ */
 public class PublicAction extends Action {
 	BookBO bookBO = new BookBO();
 	CategoryBO categoryBO = new CategoryBO();
@@ -20,15 +30,33 @@ public class PublicAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		// request.setCharacterEncoding("UTF_8");
+		request.setCharacterEncoding("UTF-8");
+		PublicForm publicForm = (PublicForm) form;
+		if (null == request.getSession().getAttribute("dkx")) {
+			request.getSession().setAttribute("dkx", "123");
+		}
+		ArrayList<Book> listSachDX;
 		Account account = (Account) request.getSession().getAttribute("userName");
+		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
 		if (null != account) {
 			request.setAttribute("logged", true);
+			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
+				request.setAttribute("admin", true);
+			}
+			if (!bookBO.checkXem(account.getUserName())) {
+				listSachDX = bookBO.getListSachDX();
+			} else {
+				listSachDX = bookBO.getListSachDX(bookBO.getTacGia(account.getUserName()));
+			}
+		} else {
+			listSachDX = bookBO.getListSachDX();
 		}
-		PublicForm publicForm = (PublicForm) form;
-		publicForm.setListOfCategories(categoryBO.getListOfCategories());
-		publicForm.setListOfSuggestedBook(bookBO.getListOfSuggestedBook());
-
+		publicForm.setListOfSuggestedBook(listSachDX);
+		ArrayList<Category> listOfHomeBooks = categoryBO.getListOfCategories();
+		for (Category c : listOfHomeBooks) {
+			c.setListOfBooksByCategory(bookBO.getListOfBooksByCategory(c.getCategoryNum()));
+		}
+		publicForm.setListOfCategories(listOfHomeBooks);
 		return mapping.findForward("index");
 	}
 

@@ -24,6 +24,7 @@ public class Book {
 
 	public Book(String isbn, String name, float price, int quantity, Date publishDate, byte[] image_1,
 			String description, String authorNum, String categoryNum, String publisherNum) {
+		super();
 		this.isbn = isbn;
 		this.name = name;
 		this.price = price;
@@ -34,6 +35,14 @@ public class Book {
 		this.authorNum = authorNum;
 		this.categoryNum = categoryNum;
 		this.publisherNum = publisherNum;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
 	}
 
 	public String getIsbn() {
@@ -52,12 +61,12 @@ public class Book {
 		this.name = name;
 	}
 
-	public float getPrice() {
-		return price;
+	public byte[] getImage_1() {
+		return image_1;
 	}
 
-	public void setPrice(float price) {
-		this.price = price;
+	public void setImage_1(byte[] image_1) {
+		this.image_1 = image_1;
 	}
 
 	public int getQuantity() {
@@ -74,14 +83,6 @@ public class Book {
 
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
-	}
-
-	public byte[] getImage_1() {
-		return image_1;
-	}
-
-	public void setImage_1(byte[] image_1) {
-		this.image_1 = image_1;
 	}
 
 	public String getDescription() {
@@ -106,16 +107,6 @@ public class Book {
 
 	public void setCategoryNum(String categoryNum) {
 		this.categoryNum = categoryNum;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Book [isbn=" + isbn + ", name=" + name + ", price=" + price + ", quantity=" + quantity;
 	}
 
 	public String getPublisherNum() {

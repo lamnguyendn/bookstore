@@ -35,19 +35,21 @@ public class CartProcess {
 	public static CartInfo getLastOrderedCartInSession(HttpServletRequest request) {
 		return (CartInfo) request.getSession().getAttribute("lastOrderedCart");
 	}
-	
+
 	public static void checkQuantityOutOfStock(CartInfo myCart) {
 		BookBO bookBO = new BookBO();
-		
+
 		for (CartLineInfo cartLineInfo : myCart.getCartLines()) {
 			Book bookCart = cartLineInfo.getBook();
 			String isbn = bookCart.getIsbn();
 			Book book = bookBO.findBookByIsbn(isbn);
-			if (book.getQuantity() <= 0) {
+			if (book.getQuantity() <= 0 || book.getQuantity() < cartLineInfo.getQuantity()) {
 				cartLineInfo.setOutOfStock(true);
 				myCart.setOutOfStock(true);
 				return;
 			}
+			cartLineInfo.setOutOfStock(false);
+			myCart.setOutOfStock(false);
 		}
 	}
 }

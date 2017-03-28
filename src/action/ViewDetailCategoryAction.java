@@ -9,10 +9,17 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import form.BookForm;
+import model.beans.Account;
 import model.bo.BookBO;
 import model.bo.CategoryBO;
 import model.bo.PublisherBO;
 
+/**
+ * Hiển thị các sách theo thể loại
+ * 
+ * @author LamNX
+ *
+ */
 public class ViewDetailCategoryAction extends Action {
 	int first = 0, last = 0, pages = 1, dataPerPage = 8;
 	BookBO bookBO = new BookBO();
@@ -24,6 +31,15 @@ public class ViewDetailCategoryAction extends Action {
 			HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		Account account = (Account) request.getSession().getAttribute("userName");
+		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
+		if (null != account) {
+			request.setAttribute("logged", true);
+			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
+				request.setAttribute("admin", true);
+			}
+		}
+
 		BookForm bookForm = (BookForm) form;
 		bookForm.setListOfCategories(categoryBO.getListOfCategories());
 		String categoryNum = bookForm.getCategoryNum();
@@ -34,7 +50,8 @@ public class ViewDetailCategoryAction extends Action {
 		}
 		int totalPages = pagination(categoryNum);
 		bookForm.setCategoryName(categoryBO.findCategoryByCategoryNum(categoryNum));
-		bookForm.setListOfBooksLimitByCategoryNum(bookBO.getListOfBooksLimitByCategoryNum(first, last, categoryNum));
+		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
+		bookForm.setListOfBooksByCategory(bookBO.getListOfBooksLimitByCategoryNum(first, last, categoryNum));
 		bookForm.setTotalPages(totalPages);
 		return mapping.findForward("listOfBooksByCategory");
 	}
@@ -52,7 +69,6 @@ public class ViewDetailCategoryAction extends Action {
 			first = (pages - 1) * 8;
 			last = 8;
 		}
-
 		int totalPages = 0, num = 0;
 
 		if ((total / 8) % 2 != 0) {
@@ -72,5 +88,4 @@ public class ViewDetailCategoryAction extends Action {
 		}
 		return totalPages;
 	}
-
 }

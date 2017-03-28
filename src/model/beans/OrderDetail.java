@@ -3,8 +3,10 @@ package model.beans;
 public class OrderDetail {
 	private String bookNum;
 	private String orderNum;
+	private String bookName;
 	private int quantity;
-	private float price;
+	private double price;
+	private double amount;
 
 	public OrderDetail() {
 		super();
@@ -12,6 +14,14 @@ public class OrderDetail {
 
 	public String getBookNum() {
 		return bookNum;
+	}
+
+	public String getBookName() {
+		return bookName;
+	}
+
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
 	}
 
 	public void setBookNum(String bookNum) {
@@ -34,12 +44,20 @@ public class OrderDetail {
 		this.quantity = quantity;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 
 }

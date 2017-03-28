@@ -1,7 +1,6 @@
 package common;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -10,21 +9,12 @@ import java.util.regex.Pattern;
 import org.apache.commons.validator.routines.DateValidator;
 import org.apache.struts.upload.FormFile;
 
-/**
- * StringProcess.java
- *
- * Version 1.0
- *
- * Date: Jan 20, 2015
- *
- * Copyright
- *
- * Modification Logs: DATE AUTHOR DESCRIPTION
- * ----------------------------------------------------------------------- Jan
- * 20, 2015 DaiLV2 Create
- */
+import model.dao.BookDAO;
+import model.dao.PromotionDAO;
 
 public class StringProcess {
+	static PromotionDAO khuyenMaiDAO = new PromotionDAO();
+	static BookDAO bookDAO = new BookDAO();
 
 	/**
 	 * Ham tra ve gioi tinh: 1=Nam, 0=Nu
@@ -72,7 +62,7 @@ public class StringProcess {
 	public static boolean notValidNumber(String s) {
 		if (notValid(s))
 			return true;
-		String regex = "[0-9.]+";
+		String regex = "[0-9]+";
 		if (s.matches(regex))
 			return false;
 		return true;
@@ -82,13 +72,6 @@ public class StringProcess {
 		if (DateValidator.getInstance().validate(publishDate, "dd-MM-yyyy") != null) {
 			return false;
 		}
-		// try {
-		// DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		// df.setLenient(false);
-		// df.parse(publishDate);
-		// } catch (ParseException e) {
-		// return true;
-		// }
 		return true;
 	}
 
@@ -100,7 +83,6 @@ public class StringProcess {
 			}
 			return false;
 		} catch (Exception e) {
-			System.out.println("Price is not valid!");
 		}
 		return true;
 	}
@@ -110,14 +92,14 @@ public class StringProcess {
 		if (date != null) {
 			return date;
 		}
-		// DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		// try {
-		// df.setLenient(false);
-		// return df.parse(publishDate);
-		// } catch (ParseException e) {
-		// e.printStackTrace();
-		// }
 		return null;
+	}
+
+	public static String convertDateSqlToDateUtil(Date publishDate) {
+		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		String newPublishDate = formatter.format(publishDate);
+		System.out.println("newPublishDate : " + newPublishDate);
+		return newPublishDate;
 	}
 
 	public static boolean nameDoesNotMatchFormat(String name) {
@@ -165,11 +147,45 @@ public class StringProcess {
 		return true;
 	}
 
-	public static String convertDateSqlToDateUtil(Date publishDate) {
-		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		String newPublishDate = formatter.format(publishDate);
-		System.out.println("newPublishDate : " + newPublishDate);
-		return newPublishDate;
+	// kiem tra xem co chua ki tu dac biet hay khong
+	public static boolean symbolID(String s) {
+		String regex = "[0-9a-zA-Z ]+";
+		if (s.matches(regex))
+			return false;
+		return true;
+	}
+
+	// kiem tra co trung ma hay khong
+	public static boolean duplicateId(String s) {
+		return khuyenMaiDAO.duplicateId(s);
+	}
+
+	public static boolean priceLessThanTenMillion(String strPrice) {
+		try {
+			double price = Double.parseDouble(strPrice);
+			if (price >= 10000000) {
+				throw new Exception();
+			}
+			return false;
+		} catch (Exception e) {
+		}
+		return true;
+	}
+
+	public static boolean quantityLessThanOneThousand(String strQuantity) {
+		try {
+			int quantity = Integer.parseInt(strQuantity);
+			if (quantity >= 1000) {
+				throw new Exception();
+			}
+			return false;
+		} catch (Exception e) {
+		}
+		return true;
+	}
+
+	public static boolean duplicateIsbn(String isbn) {
+		return bookDAO.duplicateIsbn(isbn);
 	}
 
 }

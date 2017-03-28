@@ -31,4 +31,20 @@ public class OrderBO {
 		return orderDAO.findOrderByOrderNum(orderNum);
 	}
 
+	public int countRows() {
+		return orderDAO.countRows();
+	}
+
+	public int countRowsByFindKey(String findKey) {
+		return orderDAO.countRowsByFindKey(findKey);
+	}
+
+	public ArrayList<Order> getListOfOrdersLimit(int first, int last) {
+		return orderDAO.getListOfOrdersLimit(first,last);
+	}
+
+	public ArrayList<Order> getListOfOrdersLimitByFindKey(int first, int last, String findKey) {
+		return orderDAO.getListOfOrdersLimitByFindKey(first,last,findKey);
+	}
+
 }

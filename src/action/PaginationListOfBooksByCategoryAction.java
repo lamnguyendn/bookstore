@@ -16,8 +16,17 @@ import model.bo.BookBO;
 import model.bo.CategoryBO;
 import model.bo.PublisherBO;
 
+/**
+ * Quản lý thể loại
+ * 
+ * @author LamNX
+ *
+ */
 public class PaginationListOfBooksByCategoryAction extends Action {
-	int first = 0, last = 0, pages = 1, dataPerPage = 8;
+	int first = 0;
+	int last = 0;
+	int pages = 1;
+	int dataPerPage = 8;
 	BookBO bookBO = new BookBO();
 	PublisherBO publisherBO = new PublisherBO();
 	CategoryBO categoryBO = new CategoryBO();
@@ -40,27 +49,26 @@ public class PaginationListOfBooksByCategoryAction extends Action {
 		int end = start + dataPerPage;
 		int totalPages = pagination(categoryNum);
 		result = bookBO.getListOfBooksLimitByCategoryNum(start, end, categoryNum);
-		
-		String strResult = "";
+
+		StringBuffer strResult = new StringBuffer();
 		for (Book book : result) {
-			strResult += "<div class=\"col-lg-3\">"
-								+ "<img src=\"/BookStore/viewBookImage.do?isbn="+book.getIsbn()+"\" "
-									+ "class=\"img-circle\" alt=\"Generic placeholder image\" "
-									+ "width=\"140\" height=\"140\"></img>"
-								+ " <h2 class=\"title-book\">"
-									+ book.getName()
-								+ " </h2>"
-								+ " <p class=\"description\">"
-									+ book.getDescription()
-								+ " </p>"
-								+ " <p>"
-									+ " <a class=\"btn btn-default\" href=\"/BookStore/detailBook.do?isbn="+book.getIsbn()+"\">"
-										+ " Xem th�m &raquo;"
-									+ " </a>"
-								+ " </p>"
-						+ " </div>";
+			strResult.append("<div class=\"col-lg-3\" style=\"margin-top:50px;\">"
+							+ "<img src=\"/BookStore/viewBookImage.do?isbn="+book.getIsbn()+"\" "
+								+ "style=\"height: 250px; width: 200px; margin-bottom: 20px;\"></img>"
+							+ " <h2 class=\"title-book\">"
+								+ book.getName()
+							+ " </h2>"
+							+ " <p class=\"description\">"
+								+ book.getDescription()
+							+ " </p>"
+							+ " <p style=\"margin-top: 20px;\">"
+								+ " <a class=\"btn btn-default\" href=\"/BookStore/detailBook.do?isbn="+book.getIsbn()+"\">"
+									+ " Xem thêm &raquo;"
+								+ " </a>"
+							+ " </p>"
+						+ " </div>");
 		}
-		response.getWriter().println(strResult);
+		response.getWriter().println(strResult.toString());
 		bookForm.setTotalPages(totalPages);
 		bookForm.setCategoryName(categoryBO.findCategoryByCategoryNum(categoryNum));
 		return null;
@@ -71,7 +79,7 @@ public class PaginationListOfBooksByCategoryAction extends Action {
 		first = 0;
 		last = 8;
 		total = bookBO.countRowsByCategoryNum(categoryNum);
-		
+
 		if (total <= 8) {
 			first = 0;
 			last = total;

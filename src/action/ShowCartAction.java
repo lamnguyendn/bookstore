@@ -14,16 +14,33 @@ import org.apache.struts.action.ActionMessage;
 
 import common.CartProcess;
 import form.CartForm;
+import model.beans.Account;
 import model.beans.CartInfo;
 import model.beans.Promotion;
+import model.bo.CategoryBO;
 import model.bo.PromotionBO;
 
+/**
+ * Giỏ hàng - Hiển thị danh sách sản phẩm trong giỏ hàng
+ * 
+ * @author LamNX
+ *
+ */
 public class ShowCartAction extends Action {
 	PromotionBO promotionBO = new PromotionBO();
-	
+	CategoryBO categoryBO = new CategoryBO();
+
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
+		Account account = (Account) request.getSession().getAttribute("userName");
+		if (null != account) {
+			request.setAttribute("logged", true);
+			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
+				request.setAttribute("admin", true);
+			}
+		}
 		CartInfo myCart = CartProcess.getCartInSession(request);
 		ActionErrors actionErrors = new ActionErrors();
 		if (myCart.getCartLines().size() == 0) {
@@ -32,12 +49,10 @@ public class ShowCartAction extends Action {
 			myCart.setListOfPromotionCodes(new ArrayList<>());
 			myCart.setOutOfStock(false);
 		}
-
+		CartProcess.checkQuantityOutOfStock(myCart);
 		if (myCart.isOutOfStock()) {
 			actionErrors.add("cartIsOutOfStockError", new ActionMessage("error.cartIsOutOfStockError"));
 		}
-
-		CartProcess.checkQuantityOutOfStock(myCart);
 
 		CartForm cartForm = (CartForm) form;
 		String promotionCodeForm = cartForm.getPromotionCode();
@@ -64,5 +79,4 @@ public class ShowCartAction extends Action {
 
 		return mapping.findForward("showCart");
 	}
-
 }

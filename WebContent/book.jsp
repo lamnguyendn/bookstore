@@ -10,7 +10,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Book Store</title>
+
+<title>Quản lý sách</title>
 
 <!-- DatePicker -->
 <script src="js/jquery.min.js"></script>
@@ -23,6 +24,8 @@
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
+<!-- Style Css -->
+<link rel="stylesheet" href="css/style.css">
 
 <style type="text/css">
 .dpimage {
@@ -40,8 +43,9 @@
 	font-size: 12px;
 	color: #999999;
 }
-input[type="file"]{
-    color: transparent;
+
+input[type="file"] {
+	color: transparent;
 }
 </style>
 </head>
@@ -65,7 +69,7 @@ input[type="file"]{
 					<c:if test="${submitName eq 'Sửa'}">
 						<html:text property="isbn" styleClass="form-control"
 							readonly="true" styleId="isbn" />
-						<bean:define id="book" property="book" name="bookForm" />
+						<bean:define id="bookDetail" name="bookForm" property="book" />
 						<span style="color: red;"> <html:errors
 								property="isbnError" />
 						</span>
@@ -201,29 +205,34 @@ input[type="file"]{
 				</div>
 				<div class="form-group ">
 					<div class="col-md-11">
-						<label for="txt">Hình ảnh 1:</label>
+						<label for="txt">Hình ảnh :</label>
 					</div>
 					<div class="col-md-1">
 						<span style='color: red; float: right'>*</span>
 					</div>
 					<html:file property="image_1" accept="image/*" styleId="image_1"
-						value="${book.image_1}" onchange="previewFile1()" title="123"/>
-					<html:img action="viewBookImage?isbn=${book.isbn}"
+						onchange="previewFile1()" />
+					<span style="color: red;"> <html:errors
+							property="image_1Error" />
+					</span>
+					<html:img action="viewBookImage?isbn=${bookDetail.isbn}"
 						styleId="imgBook1" height="320" width="220" />
-					<span style="color: red;"><html:errors
-							property="image_1Error" /> </span>
 				</div>
 			</div>
-			<div class="col-md-12">
-				<center>
-					<html:submit property="submit" value="${submitName}"
-						styleClass="btn btn-info glyphicon glyphicon-plus-sign">
-					</html:submit>
-					<html:reset
-						styleClass="btn btn-info glyphicon glyphicon-remove-sign">
-						Hủy
-					</html:reset>
-				</center>
+			<div class="col-md-6">
+				<html:submit property="submit" value="${submitName}"
+					styleClass="btn btn-info">
+				</html:submit>
+				<html:reset styleClass="btn btn-info">
+					Hủy
+				</html:reset>
+				<button type="button" class="btn btn-default" onclick="goBack()">
+					Quay lại</button>
+				<script>
+					function goBack() {
+						window.history.back();
+					}
+				</script>
 			</div>
 		</html:form>
 	</div>

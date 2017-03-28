@@ -3,6 +3,8 @@ package form;
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -15,7 +17,6 @@ public class CustomerForm extends ActionForm {
 	private String phone;
 	private String submit;
 	private String edit;
-
 	private boolean valid;
 
 	public String getName() {
@@ -72,6 +73,11 @@ public class CustomerForm extends ActionForm {
 
 	public void setEdit(String edit) {
 		this.edit = edit;
+	}
+
+	@Override
+	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+		return super.validate(mapping, request);
 	}
 
 	@Override

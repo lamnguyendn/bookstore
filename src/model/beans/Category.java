@@ -1,8 +1,11 @@
 package model.beans;
 
+import java.util.ArrayList;
+
 public class Category {
 	private String categoryNum;
 	private String categoryName;
+	private ArrayList<Book> listOfBooksByCategory;
 
 	public Category() {
 	}
@@ -23,4 +26,11 @@ public class Category {
 		this.categoryName = categoryName;
 	}
 
+	public ArrayList<Book> getListOfBooksByCategory() {
+		return listOfBooksByCategory;
+	}
+
+	public void setListOfBooksByCategory(ArrayList<Book> listOfBooksByCategory) {
+		this.listOfBooksByCategory = listOfBooksByCategory;
+	}
 }

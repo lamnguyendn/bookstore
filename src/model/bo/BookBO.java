@@ -48,8 +48,52 @@ public class BookBO {
 		return bookDAO.getListOfBooksLimitByFindKey(first, last, findKey);
 	}
 
-	public ArrayList<Book> getListOfSuggestedBook() {
-		return bookDAO.getListOfSuggestedBook();
+	public ArrayList<Book> getListOfRelatedBooks(String isbn) {
+		return bookDAO.getListOfRelatedBooks(isbn);
+	}
+
+	public boolean notExistsIsbn(String isbn) {
+		return bookDAO.notExistsIsbn(isbn);
+	}
+
+	public ArrayList<Book> getListOfBookByAuthor(String authorNum) {
+		return bookDAO.getListOfBookByAuthor(authorNum);
+	}
+
+	public ArrayList<Book> getListSachDX(String idTacGia) {
+		return bookDAO.getListSachDX(idTacGia);
+	}
+
+	public ArrayList<Book> getListSachDX() {
+		return bookDAO.getListSachDX();
+	}
+
+	public String getTacGia(String userName) {
+		return bookDAO.getTacGia(userName);
+	}
+
+	public boolean checkXem(String userName) {
+		return bookDAO.checkXem(userName);
+	}
+
+	public boolean checkXem(String userName, String isbn) {
+		return bookDAO.checkXem(userName, isbn);
+	}
+
+	public int getLuotXem(String userName, String isbn) {
+		return bookDAO.getLuotXem(userName, isbn);
+	}
+
+	public void updateLuotXem(String userName, String isbn, int luotXem) {
+		bookDAO.updateLuotXem(userName, isbn, luotXem);
+	}
+
+	public void themLuotXem(String userName, String isbn) {
+		bookDAO.themLuotXem(userName, isbn);
+	}
+
+	public ArrayList<Book> getListOfBooksByCategory(String categoryNum) {
+		return bookDAO.getListOfBooksByCategory(categoryNum);
 	}
 
 }

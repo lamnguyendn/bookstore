@@ -9,8 +9,13 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<form-bean name="publicForm" type="form.PublicForm" />
 		<form-bean name="customerForm" type="form.CustomerForm" />
 		<form-bean name="orderForm" type="form.OrderForm" />
+		<form-bean name="khuyenMaiForm" type="form.KhuyenMaiForm" />
+		<form-bean name="danhSachKhuyenMaiForm" type="form.DanhSachKhuyenMaiForm" />
+		<form-bean name="accountForm" type="form.AccountForm" />
+		<form-bean name="danhSachAccountForm" type="form.DanhSachAccountForm" />
 	</form-beans>
 	<action-mappings>
+		<!-- Public -->
 		<action path="/checkLogin" name="loginForm" type="action.CheckLoginAction"
 			scope="request" input="/login.jsp">
 			<forward name="loginAdminSuccess" path="/bookManagement.do"
@@ -28,37 +33,53 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<action path="/viewBookImage" name="bookForm" scope="request"
 			type="action.ViewBookImageAction">
 		</action>
+		<action path="/findBook" name="bookForm" scope="request"
+			type="action.FindBookAction">
+			<forward name="findBook" path="/findBook.jsp" />
+		</action>
+		<action path="/paginationFindBook" scope="request" name="bookForm"
+			type="action.PaginationFindBookAction">
+		</action>
+		<action path="/findBookByAuthor" scope="request" name="bookForm"
+			type="action.FindBookByAuthorAction">
+			<forward name="view" path="/bookAuthor.jsp" />
+		</action>
+		<action path="/detailBook" name="bookForm" scope="request"
+			type="action.ViewDetailBookAction">
+			<forward name="view" path="/bookDetail.jsp" />
+		</action>
+		<!-- End Public -->
 		<!-- Book Management -->
 		<action path="/bookManagement" name="bookForm" scope="request"
 			input="/login.jsp" type="action.ShowListOfBooksAction">
 			<forward name="listBooks" path="/bookManagement.jsp" />
-			<forward name="login" path="/login.jsp" redirect="true" />
+			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action path="/addBook" name="bookForm" scope="request" input="/book.jsp"
 			type="action.AddBookAction">
 			<forward name="addBookSuccess" path="/bookManagement.do"
 				redirect="true" />
 			<forward name="addBook" path="/book.jsp" />
+			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action path="/updateBook" name="bookForm" scope="request"
 			input="/bookManagement.jsp" type="action.UpdateBookAction">
 			<forward name="updateBook" path="/book.jsp" />
 			<forward name="updateBookSuccess" path="/bookManagement.do"
 				redirect="true" />
+			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action path="/deleteBook" name="bookForm" scope="request"
 			type="action.DeleteBookAction" input="/bookManagement.jsp">
 			<forward name="deleteBook" path="/bookManagement.do" />
 			<forward name="index" path="/login.jsp" redirect="true" />
+			<forward name="404" path="/404.html" redirect="true" />
 		</action>
-		<action path="/pagination" name="bookForm" scope="request"
-			type="action.PaginationAction">
-		</action>
-		<action path="/detailBook" name="bookForm" scope="request"
-			type="action.ViewDetailBookAction">
-			<forward name="view" path="/bookDetail.jsp" />
+		<action path="/paginationBookManagement" name="bookForm" scope="request"
+			type="action.PaginationBookManagementAction">
 		</action>
 		<!-- End Book Management -->
+
 		<!-- Category Detail -->
 		<action path="/category" name="bookForm" type="action.ViewDetailCategoryAction"
 			scope="request">
@@ -67,6 +88,7 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<action path="/paginationListOfBooksByCategory" type="action.PaginationListOfBooksByCategoryAction"
 			scope="request" name="bookForm" />
 		<!-- End Category Detail -->
+
 		<!-- Cart Processing -->
 		<action path="/buyBook" name="bookForm" scope="request"
 			type="action.AddBookToCartAction" input="/listBooks.jsp">
@@ -111,9 +133,12 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<action path="/payCartFourthStep" scope="request"
 			type="action.PayCartFourthStepAction" name="cartForm">
 			<forward name="showCart" path="/showCart.do" redirect="true" />
-			<forward name="payCartFirstStep" path="/payCartFirstStep.do" />
-			<forward name="payCartThirdStep" path="/payCartThirdStep.do" />
-			<forward name="payCartFinalStep" path="/payCartFinalStep.do" />
+			<forward name="payCartFirstStep" path="/payCartFirstStep.do"
+				redirect="true" />
+			<forward name="payCartThirdStep" path="/payCartThirdStep.do"
+				redirect="true" />
+			<forward name="payCartFinalStep" path="/payCartFinalStep.do"
+				redirect="true" />
 			<forward name="login" path="/login.jsp" redirect="true" />
 		</action>
 		<action path="/payCartFinalStep" type="action.PayCartFinalStepAction"
@@ -127,15 +152,87 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<action path="/orderManagement" name="orderForm" scope="request"
 			type="action.OrderManagementAction">
 			<forward name="listOfOrders" path="/orderManagement.jsp" />
+			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action path="/confirmOrder" type="action.ConfirmOrderAction"
 			scope="request" name="orderForm">
 		</action>
 		<action path="/viewOrderDetail" type="action.ViewOrderDetailAction"
 			scope="request" name="orderForm">
+			<forward name="view" path="/orderDetail.jsp" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<action path="/paginationOrder" type="action.PaginationOrderManagementAction"
+			scope="request" name="orderForm">
 		</action>
 		<!-- End Order Processing -->
 
+		<!-- Promotion Management -->
+		<action path="/trangThaiKM" type="action.TrangThaiKhuyenMaiAction"
+			scope="request" name="khuyenMaiForm">
+		</action>
+		<action path="/xoaKm" name="khuyenMaiForm" scope="request"
+			type="action.XoaKhuyenMaiAction" input="/listKhuyenMai.jsp">
+			<forward name="xoaKm" path="/showlistkm.do" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<action input="/suaKhuyenMai.jsp" name="khuyenMaiForm" path="/suaKM"
+			scope="request" type="action.SuaKhuyenMaiAction">
+			<forward name="suaKM" path="/suaKhuyenMai.jsp" />
+			<forward name="suaKMxong" path="/showlistkm.do" />
+			<forward name="404" path="/404.html" redirect="true" />
+
+		</action>
+		<action input="/themKhuyenMai.jsp" name="khuyenMaiForm" path="/themKM"
+			scope="request" type="action.ThemKhuyenMaiAction" validate="true">
+			<forward name="themKMerror" path="/themKhuyenMai.jsp" />
+			<forward name="themKMxong" path="/showlistkm.do" />
+			<forward name="404" path="/404.html" redirect="true" />
+
+		</action>
+		<action path="/showlistkm" name="danhSachKhuyenMaiForm" scope="request"
+			type="action.ListKhuyenMai">
+			<forward name="thanhcong" path="/listKhuyenMai.jsp" />
+			<forward name="thatbai" path="/test.jsp" />
+			<forward name="404" path="/404.html" redirect="true" />
+
+		</action>
+		<!-- End Promotion Management -->
+
+		<!-- Account Management -->
+		<action input="/login.jsp" name="danhSachAccountForm" path="/danh-sach"
+			scope="request" type="action.DanhSachAccountAction">
+			<forward name="dsAccount" path="/danhSachAccount.jsp" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<action input="/themAccount.jsp" name="accountForm" path="/themAcc"
+			scope="request" type="action.ThemAccountAction" validate="true">
+			<forward name="themAcc" path="/themAccount.jsp" />
+			<forward name="themAccError" path="/themAccount.jsp" />
+			<forward name="themAccXong" path="/danh-sach.do" redirect="true" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<action input="/dangKy.jsp" name="accountForm" path="/dang-ky"
+			scope="request" type="action.DangKyAccountAction" validate="true">
+			<forward name="dkAcc" path="/dangKy.jsp" />
+			<forward name="dkAccError" path="/dangKy.jsp" />
+			<forward name="dkAccXong" path="/index.do" redirect="true" />
+			<forward name="dangNhapRoi" path="/index.do" redirect="true" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<action input="/suaAccount.jsp" name="accountForm" path="/suaAcc"
+			scope="request" type="action.SuaAccountAction">
+			<forward name="suaAcc" path="/suaAccount.jsp" />
+			<forward name="suaAccXong" path="/danh-sach.do" redirect="true" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<action input="/login.jsp" name="accountForm" path="/xoaAcc"
+			scope="request" type="action.XoaAccountAction">
+			<forward name="xoaAcc" path="/xoaAccount.jsp" />
+			<forward name="xoaAccXong" path="/danh-sach.do" redirect="true" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<!-- End Account Management -->
 	</action-mappings>
 	<message-resources parameter="action.ApplicationResources" />
 </struts-config>

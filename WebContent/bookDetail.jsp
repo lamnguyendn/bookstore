@@ -5,17 +5,22 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Book Store</title>
+<title>Chi tiết sách</title>
+
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<!-- Style Css -->
+<link rel="stylesheet" href="css/style.css">
 
 <style type="text/css">
 .content1-before {
@@ -109,12 +114,30 @@ hr.style18:before {
 	overflow: hidden !important;
 	text-overflow: ellipsis;
 }
+
+.link:link {
+	text-decoration: none;
+}
+
+.link:visited {
+	text-decoration: none;
+}
+
+.link:hover {
+	text-decoration: underline;
+}
+
+.link:active {
+	text-decoration: underline;
+}
 </style>
 </head>
 <body>
 	<!-- Navbar -->
 	<%@include file="navbar.jsp"%>
 	<!-- End Navbar -->
+	<fmt:setLocale value="vi-VN" />
+
 	<bean:define id="bookDetail" name="bookForm" property="book" />
 	<div class="container" style="margin-top: 50px;">
 		<div class="row">
@@ -131,8 +154,23 @@ hr.style18:before {
 			</div>
 			<div class="col-lg-8">
 				<!-- <div id="content1" class="content1-before"> -->
-				<h1 class="item-name">${bookDetail.name}</h1>
-				${bookDetail.description}
+				<h1 class="item-name">
+					<i> ${bookDetail.name} </i>
+				</h1>
+				<h3>
+					Tác giả:
+					<html:link
+						action="findBookByAuthor?authorNum=${bookDetail.authorNum}"
+						styleClass="link">${bookDetail.authorName}
+						</html:link>
+				</h3>
+				<h5>Giới thiệu: ${bookDetail.description}</h5>
+				<h3 style="color:red;">
+					
+					Giá:
+					<fmt:formatNumber value="${bookDetail.price}" type="currency"
+						maxFractionDigits="0" />
+				</h3>
 			</div>
 			<%-- <center>
 					<button id="btn1" class="btn btn-primary" style="margin-top: 20px;">Xem
@@ -149,8 +187,8 @@ hr.style18:before {
 					<div class="row col-md-12">
 						<center>
 							<h1 style="margin-bottom: 40px;">
-								<a href="#" style="text-decoration: none; color: #5a5a5a;">Danh
-									mục</a>
+								<a href="#" style="text-decoration: none; color: #5a5a5a;">
+									Các sách liên quan </a>
 							</h1>
 						</center>
 						<logic:iterate id="book" property="listOfRelatedBooks"

@@ -14,6 +14,12 @@ import model.beans.Book;
 import model.beans.CartInfo;
 import model.bo.BookBO;
 
+/**
+ * Giỏ hàng - Thêm sách vào giỏ hàng
+ * 
+ * @author LamNX
+ *
+ */
 public class AddBookToCartAction extends Action {
 	BookBO bookBO = new BookBO();
 

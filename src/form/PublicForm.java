@@ -12,7 +12,8 @@ public class PublicForm extends ActionForm {
 	private ArrayList<Category> listOfCategories;
 	private ArrayList<Book> listOfBestBookSeller;
 	private ArrayList<Book> listOfSuggestedBook;
-	
+	private ArrayList<Book> listOfHomeBooks;
+
 	public ArrayList<Category> getListOfCategories() {
 		return listOfCategories;
 	}
@@ -35,6 +36,14 @@ public class PublicForm extends ActionForm {
 
 	public void setListOfSuggestedBook(ArrayList<Book> listOfSuggestedBook) {
 		this.listOfSuggestedBook = listOfSuggestedBook;
+	}
+
+	public ArrayList<Book> getListOfHomeBooks() {
+		return listOfHomeBooks;
+	}
+
+	public void setListOfHomeBooks(ArrayList<Book> listOfHomeBooks) {
+		this.listOfHomeBooks = listOfHomeBooks;
 	}
 
 }

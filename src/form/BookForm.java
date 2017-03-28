@@ -44,11 +44,14 @@ public class BookForm extends ActionForm {
 	private ArrayList<Publisher> listOfPublishers;
 	private ArrayList<Author> listOfAuthors;
 	private ArrayList<Book> listOfRelatedBooks;
-	private ArrayList<Book> listOfBooksLimitByCategoryNum;
+	private ArrayList<Book> listOfBooksByCategory;
+	private ArrayList<Book> listOfBooksByFindKey;
+	private ArrayList<Book> listOfBooksByAuthor;
 
 	private int page;
 	private int totalPages;
 	private String findKey = "";
+	private int isSearch = 0;
 
 	private Book book;
 
@@ -58,6 +61,14 @@ public class BookForm extends ActionForm {
 
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
+	}
+
+	public int getIsSearch() {
+		return isSearch;
+	}
+
+	public void setIsSearch(int isSearch) {
+		this.isSearch = isSearch;
 	}
 
 	public String getName() {
@@ -260,6 +271,30 @@ public class BookForm extends ActionForm {
 		this.image_1 = image_1;
 	}
 
+	public ArrayList<Book> getListOfBooksByCategory() {
+		return listOfBooksByCategory;
+	}
+
+	public void setListOfBooksByCategory(ArrayList<Book> listOfBooksByCategory) {
+		this.listOfBooksByCategory = listOfBooksByCategory;
+	}
+
+	public ArrayList<Book> getListOfBooksByFindKey() {
+		return listOfBooksByFindKey;
+	}
+
+	public void setListOfBooksByFindKey(ArrayList<Book> listOfBooksByFindKey) {
+		this.listOfBooksByFindKey = listOfBooksByFindKey;
+	}
+
+	public ArrayList<Book> getListOfBooksByAuthor() {
+		return listOfBooksByAuthor;
+	}
+
+	public void setListOfBooksByAuthor(ArrayList<Book> listOfBooksByAuthor) {
+		this.listOfBooksByAuthor = listOfBooksByAuthor;
+	}
+
 	@Override
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 		try {
@@ -267,14 +302,6 @@ public class BookForm extends ActionForm {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public ArrayList<Book> getListOfBooksLimitByCategoryNum() {
-		return listOfBooksLimitByCategoryNum;
-	}
-
-	public void setListOfBooksLimitByCategoryNum(ArrayList<Book> listOfBooksLimitByCategoryNum) {
-		this.listOfBooksLimitByCategoryNum = listOfBooksLimitByCategoryNum;
 	}
 
 }

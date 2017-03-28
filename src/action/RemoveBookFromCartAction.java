@@ -14,6 +14,12 @@ import model.beans.Book;
 import model.beans.CartInfo;
 import model.bo.BookBO;
 
+/**
+ * Giỏ hàng - Xóa sách ra khỏi giỏ hàng
+ * 
+ * @author LamNX
+ *
+ */
 public class RemoveBookFromCartAction extends Action {
 	BookBO bookBO = new BookBO();
 
@@ -27,7 +33,6 @@ public class RemoveBookFromCartAction extends Action {
 			book = bookBO.findBookByIsbn(isbn);
 		}
 		if (book != null) {
-			// Cart Info stored in Session.
 			CartInfo cartInfo = CartProcess.getCartInSession(request);
 
 			cartInfo.removeBook(book);
