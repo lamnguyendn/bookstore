@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
 <!-- Style Css -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style1.css">
 
 <style type="text/css">
 .thumbnail {
@@ -127,9 +127,11 @@
 						<td></td>
 						<td class="text-right">
 							<h5>
-								<strong> <fmt:formatNumber
+								<strong> <%-- <fmt:formatNumber
 										value="${cartInfo.amountTotal}" type="currency"
-										maxFractionDigits="0" />
+										maxFractionDigits="0" /> --%> <bean:define name="cartForm"
+										property="amountTotal" id="amountTotal" /> <fmt:formatNumber
+										value="${amountTotal}" type="currency" maxFractionDigits="0" />
 								</strong>
 							</h5>
 						</td>

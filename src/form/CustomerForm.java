@@ -18,6 +18,7 @@ public class CustomerForm extends ActionForm {
 	private String submit;
 	private String edit;
 	private boolean valid;
+	private double amountTotal;
 
 	public String getName() {
 		return name;
@@ -25,6 +26,14 @@ public class CustomerForm extends ActionForm {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getAmountTotal() {
+		return amountTotal;
+	}
+
+	public void setAmountTotal(double amountTotal) {
+		this.amountTotal = amountTotal;
 	}
 
 	public String getEmail() {

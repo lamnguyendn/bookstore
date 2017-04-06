@@ -26,11 +26,11 @@ import model.bo.OrderBO;
 public class OrderManagementAction extends Action {
 	OrderBO orderBO = new OrderBO();
 	int first = 0, last = 0, page = 1, totalPerPage = 5;
-	ArrayList<Order> result;
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		ArrayList<Order> result = new ArrayList<>();
 		CategoryBO categoryBO = new CategoryBO();
 		Account account = (Account) request.getSession().getAttribute("userName");
 		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
@@ -93,7 +93,7 @@ public class OrderManagementAction extends Action {
 		}
 
 		if (total % 2 == 0) {
-			totalPages = (total / 5);
+			totalPages = (total / 5) + 1;
 		} else {
 			if (total < (num * 5) + 5 && total != num * 5) {
 				totalPages = (total / 5) + 1;

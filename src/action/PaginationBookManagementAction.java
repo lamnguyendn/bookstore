@@ -102,8 +102,8 @@ public class PaginationBookManagementAction extends Action {
 			num = (total + 1) / 5;
 		}
 
-		if (total % 2 == 0) {
-			totalPages = (total / 5);
+		if (total % 2 == 0 && total < 5) {
+			totalPages = (total / 5) + 1;
 		} else {
 			if (total < (num * 5) + 5 && total != num * 5) {
 				totalPages = (total / 5) + 1;

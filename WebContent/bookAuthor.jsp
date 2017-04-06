@@ -1,4 +1,3 @@
-<%@page import="common.FileProcess"%>
 <%@page import="common.HistoryLogLine"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -23,7 +22,7 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
 <!-- Style Css -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style1.css">
 
 <style type="text/css">
 hr.style18 {
@@ -69,55 +68,57 @@ hr.style18:before {
 </style>
 </head>
 <body>
-	<%@include file="navbar.jsp"%>
-	<div class="container marketing" id="content">
-		<bean:define id="listOfBooksByAuthor" property="listOfBooksByAuthor"
-			name="bookForm" />
-		<c:if test="${not empty listOfBooksByAuthor}">
-			<center>
-				<h1 style="margin-bottom: 100px;">
-					Sách của tác giả <bean:write property="authorName" name="bookForm" />
-				</h1>
-			</center>
-			<center>
-				<div class="container">
-					<div class="row col-lg-12 category-detail" id="dataTable">
-						<logic:iterate id="book" property="listOfBooksByAuthor"
-							name="bookForm">
-							<div class="col-lg-3">
-								<bean:define id="image_1" property="image_1" name="book" />
-								<html:img action="viewBookImage?isbn=${book.isbn}"
-									styleClass="img-circle" alt="Generic placeholder image"
-									width="140" height="140"></html:img>
-								<h2 class="title-book">
-									<bean:write name="book" property="name" />
-								</h2>
-								<p class="description">
-									<bean:write name="book" property="description" />
-								</p>
-								<p>
-									<html:link styleClass="btn btn-default"
-										action="detailBook?isbn=${book.isbn}">
-								Xem thêm &raquo;
-							</html:link>
-								</p>
-							</div>
-						</logic:iterate>
+	<div id="wrapper">
+		<%@include file="navbar.jsp"%>
+		<div class="container marketing" id="content">
+			<bean:define id="listOfBooksByAuthor" property="listOfBooksByAuthor"
+				name="bookForm" />
+			<c:if test="${not empty listOfBooksByAuthor}">
+				<center>
+					<h1 style="margin-bottom: 100px;">
+						Sách của tác giả <bean:write property="authorName" name="bookForm" />
+					</h1>
+				</center>
+				<center>
+					<div class="container">
+						<div class="row col-lg-12 category-detail" id="dataTable">
+							<logic:iterate id="book" property="listOfBooksByAuthor"
+								name="bookForm">
+								<div class="col-lg-3">
+									<bean:define id="image_1" property="image_1" name="book" />
+									<html:img action="viewBookImage?isbn=${book.isbn}"
+										styleClass="img-circle" alt="Generic placeholder image"
+										width="140" height="140"></html:img>
+									<h2 class="title-book">
+										<bean:write name="book" property="name" />
+									</h2>
+									<p class="description">
+										<bean:write name="book" property="description" />
+									</p>
+									<p>
+										<html:link styleClass="btn btn-default"
+											action="detailBook?isbn=${book.isbn}">
+									Xem thêm &raquo;
+								</html:link>
+									</p>
+								</div>
+							</logic:iterate>
+						</div>
+	
 					</div>
-
-				</div>
-			</center>
-		</c:if>
-		<c:if test="${empty listOfBooksByAuthor}">
-			<center>
-				<h1 style="margin-bottom: 100px;">
-					Không có sách của tác giả
-					<bean:write property="authorName" name="bookForm" />
-				</h1>
-				<html:link action="/index.do" styleClass="btn btn-default">Trở lại trang chủ</html:link>
-			</center>
-		</c:if>
+				</center>
+			</c:if>
+			<c:if test="${empty listOfBooksByAuthor}">
+				<center>
+					<h1 style="margin-bottom: 100px;">
+						Không có sách của tác giả
+						<bean:write property="authorName" name="bookForm" />
+					</h1>
+					<html:link action="/index.do" styleClass="btn btn-default">Trở lại trang chủ</html:link>
+				</center>
+			</c:if>
+		</div>
+		<%@include file="footer.jsp"%>
 	</div>
-	<%@include file="footer.jsp"%>
 </body>
 </html>

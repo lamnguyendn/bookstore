@@ -22,7 +22,7 @@
 <script type="text/javascript" src="js/additional-methods.min.js"></script>
 <script type="text/javascript" src="js/validateCustomer.js"></script>
 <!-- Style Css -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style1.css">
 
 <style type="text/css">
 .thumbnail {

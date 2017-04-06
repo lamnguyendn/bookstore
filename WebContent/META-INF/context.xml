@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Context antiJARLocking="true" path="">
+	<!-- Specify a JDBC datasource -->
+	<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver"
+		maxActive="100" maxIdle="50"  name="jdbc/bookstorefpt"
+		username="root" password="" type="javax.sql.DataSource"
+		connectionProperties="useUnicode=yes;characterEncoding=utf8;"
+		url="jdbc:mysql://localhost:3306/bookstorefpt" />
+</Context>

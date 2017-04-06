@@ -52,7 +52,7 @@ public class PaginationListOfBooksByCategoryAction extends Action {
 
 		StringBuffer strResult = new StringBuffer();
 		for (Book book : result) {
-			strResult.append("<div class=\"col-lg-3\" style=\"margin-top:50px;\">"
+			strResult.append("<div class=\"col-md-3 col-lg-3 col-sm-4 col-xs-6 book-info\" style=\"margin-top:50px;\">"
 							+ "<img src=\"/BookStore/viewBookImage.do?isbn="+book.getIsbn()+"\" "
 								+ "style=\"height: 250px; width: 200px; margin-bottom: 20px;\"></img>"
 							+ " <h2 class=\"title-book\">"

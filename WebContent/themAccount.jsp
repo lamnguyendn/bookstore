@@ -20,13 +20,13 @@
 <script type="text/javascript" src="js/additional-methods.min.js"></script>
 <script type="text/javascript" src="js/validateCustomer.js"></script>
 <!-- Style Css -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style1.css">
 
 </head>
 <body style="background: url('images/hinh-nen-sach.jpg');">
 	<%@include file="navbar.jsp"%>
 	<div class="container"
-		style="margin: auto; height: auto; width: 500px; background: rgba(255, 255, 255, 0.25); border-radius: 10px;">
+		style="margin-top: 50px; height: auto; width: 500px; background: rgba(255, 255, 255, 0.25); border-radius: 10px;">
 		<div class="container"
 			style="background: rgb(255, 216, 99); border-bottom-right-radius: 10px; width: 500px; margin-left: -15px;">
 			<h3 style="border-bottom: double; text-align: center;">Thêm tài

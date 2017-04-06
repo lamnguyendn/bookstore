@@ -1,5 +1,7 @@
 package form;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionErrors;
@@ -16,6 +18,15 @@ public class LoginForm extends ActionForm {
 	private String password;
 	private String message;
 	private boolean logged;
+	private String btnSubmit;
+
+	public String getBtnSubmit() {
+		return btnSubmit;
+	}
+
+	public void setBtnSubmit(String btnSubmit) {
+		this.btnSubmit = btnSubmit;
+	}
 
 	public String getUserName() {
 		return userName;
@@ -50,15 +61,12 @@ public class LoginForm extends ActionForm {
 	}
 
 	@Override
-	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-		ActionErrors actionErrors = new ActionErrors();
-		if (StringProcess.notValid(userName)) {
-			actionErrors.add("userNameError", new ActionMessage("error.userName"));
+	public void reset(ActionMapping mapping, HttpServletRequest request) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
-		if (StringProcess.notValid(password)) {
-			actionErrors.add("passwordError", new ActionMessage("error.password"));
-		}
-		return actionErrors;
 	}
 
 }

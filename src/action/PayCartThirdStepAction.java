@@ -31,6 +31,7 @@ public class PayCartThirdStepAction extends Action {
 		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
 		Account account = (Account) request.getSession().getAttribute("userName");
 		if (null != account) {
+			request.setAttribute("logged", true);
 			CartInfo cartInfo = CartProcess.getCartInSession(request);
 			if (cartInfo.isEmpty()) {
 				return mapping.findForward("showCart");
@@ -45,6 +46,7 @@ public class PayCartThirdStepAction extends Action {
 
 			CartForm cartForm = (CartForm) form;
 			cartForm.setCart(cartInfo);
+			cartForm.setAmountTotal(cartInfo.getAmountTotalAfterUsingPromotionCode());
 			return mapping.findForward("confirmCart");
 		}
 		return mapping.findForward("login");

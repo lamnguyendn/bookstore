@@ -20,7 +20,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!-- Style Css -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style1.css">
 
 <style type="text/css">
 .content1-before {
@@ -57,7 +57,7 @@ hr.style18:before {
 
 @media only screen and (max-width : 480px) {
 	img {
-		width: 50%;
+		width: 70%;
 		height: 50%;
 	}
 	.content1-before {
@@ -72,7 +72,6 @@ hr.style18:before {
 @media only screen and (min-width : 480px) {
 	img {
 		width: 50%;
-		height: 50%;
 	}
 	.content1-before {
 		overflow: hidden;
@@ -80,6 +79,15 @@ hr.style18:before {
 	}
 	.content1-after {
 		overflow: visible;
+	}
+	.book-detail {
+		text-align: center;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	.book-detail {
+		text-align: left;
 	}
 }
 
@@ -103,7 +111,7 @@ hr.style18:before {
             white-space: nowrap;
             overflow:hidden !important;
             text-overflow: ellipsis;*/
-	height: 80px;
+	/* height: 80px; */
 	overflow: hidden;
 }
 
@@ -133,93 +141,96 @@ hr.style18:before {
 </style>
 </head>
 <body>
-	<!-- Navbar -->
-	<%@include file="navbar.jsp"%>
-	<!-- End Navbar -->
-	<fmt:setLocale value="vi-VN" />
-
-	<bean:define id="bookDetail" name="bookForm" property="book" />
-	<div class="container" style="margin-top: 50px;">
-		<div class="row">
-			<div class="col-lg-4">
-				<center>
-					<html:img action="viewBookImage?isbn=${bookDetail.isbn}" />
-					<html:link style="margin-top: 20px; margin-bottom: 20px;"
-						styleClass="btn btn-warning"
-						action="/buyBook?isbn=${bookDetail.isbn}">
-						<span class="glyphicon glyphicon-shopping-cart"> </span> Thêm vào
-						giỏ hàng
-					</html:link>
-				</center>
-			</div>
-			<div class="col-lg-8">
-				<!-- <div id="content1" class="content1-before"> -->
-				<h1 class="item-name">
-					<i> ${bookDetail.name} </i>
-				</h1>
-				<h3>
-					Tác giả:
-					<html:link
-						action="findBookByAuthor?authorNum=${bookDetail.authorNum}"
-						styleClass="link">${bookDetail.authorName}
+	<div id="wrapper">
+		<!-- Navbar -->
+		<%@include file="navbar.jsp"%>
+		<!-- End Navbar -->
+		<fmt:setLocale value="vi-VN" />
+		<bean:define id="bookDetail" name="bookForm" property="book" />
+		<div id="content">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+						<center>
+							<html:img action="viewBookImage?isbn=${bookDetail.isbn}" />
+							<div class="row">
+								<html:link style="margin-top: 20px; margin-bottom: 20px;"
+									styleClass="btn btn-warning"
+									action="/buyBook?isbn=${bookDetail.isbn}">
+									<span class="glyphicon glyphicon-shopping-cart"> </span> Thêm vào
+									giỏ hàng
+								</html:link>
+							</div>
+						</center>
+					</div>
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 book-detail">
+						<!-- <div id="content1" class="content1-before"> -->
+						<h1 class="item-name">
+							<i> ${bookDetail.name} </i>
+						</h1>
+						<h3>
+							Tác giả:
+							<html:link
+								action="findBookByAuthor?authorNum=${bookDetail.authorNum}"
+								styleClass="link">${bookDetail.authorName}
 						</html:link>
-				</h3>
-				<h5>Giới thiệu: ${bookDetail.description}</h5>
-				<h3 style="color:red;">
-					
-					Giá:
-					<fmt:formatNumber value="${bookDetail.price}" type="currency"
-						maxFractionDigits="0" />
-				</h3>
-			</div>
-			<%-- <center>
+						</h3>
+						<h5>Giới thiệu: ${bookDetail.description}</h5>
+						<h3 style="color: red;">
+
+							Giá:
+							<fmt:formatNumber value="${bookDetail.price}" type="currency"
+								maxFractionDigits="0" />
+						</h3>
+					</div>
+					<%-- <center>
 					<button id="btn1" class="btn btn-primary" style="margin-top: 20px;">Xem
 						thêm</button>
 				</center> --%>
-			<!-- </div> -->
-		</div>
-	</div>
-	<hr class="style18">
-	<div class="container">
-		<div class="row">
-			<div class="container marketing">
-				<center>
-					<div class="row col-md-12">
+					<!-- </div> -->
+				</div>
+			</div>
+			<hr class="style18">
+			<div class="container">
+				<div class="row">
+					<div class="container marketing">
 						<center>
-							<h1 style="margin-bottom: 40px;">
-								<a href="#" style="text-decoration: none; color: #5a5a5a;">
-									Các sách liên quan </a>
-							</h1>
-						</center>
-						<logic:iterate id="book" property="listOfRelatedBooks"
-							name="bookForm">
-							<div class="col-md-3">
-								<bean:define id="image_1" property="image_1" name="book" />
-								<html:img action="viewBookImage?isbn=${book.isbn}"
-									style="height: 250px; width: 200px; margin-bottom: 20px;"></html:img>
-								<h2 class="title-book">
-									<bean:write name="book" property="name" />
-								</h2>
-								<p class="description">
-									<bean:write name="book" property="description" />
-								</p>
-								<p style="margin-top: 20px;">
-									<html:link styleClass="btn btn-default"
-										action="detailBook?isbn=${book.isbn}">
+							<div class="row col-md-12 col-lg-12 col-xs-12 col-sm-12">
+								<center>
+									<h1 style="margin-bottom: 40px;">
+										<a href="#" style="text-decoration: none; color: #5a5a5a;">
+											Các sách liên quan </a>
+									</h1>
+								</center>
+								<logic:iterate id="book" property="listOfRelatedBooks"
+									name="bookForm">
+									<div class="col-md-3 col-lg-3 col-sm-4 col-xs-12 book-info">
+										<bean:define id="image_1" property="image_1" name="book" />
+										<html:img action="viewBookImage?isbn=${book.isbn}"
+											style="height: 250px; width: 200px; margin-bottom: 20px;"></html:img>
+										<h2 class="title-book">
+											<bean:write name="book" property="name" />
+										</h2>
+										<p class="description">
+											<bean:write name="book" property="description" />
+										</p>
+										<p style="margin-top: 20px;">
+											<html:link styleClass="btn btn-default"
+												action="detailBook?isbn=${book.isbn}">
 								Xem thêm &raquo;
 							</html:link>
-								</p>
+										</p>
+									</div>
+								</logic:iterate>
 							</div>
-						</logic:iterate>
+						</center>
 					</div>
-				</center>
+				</div>
 			</div>
-
-			<hr class="featurette-divider">
-			<!-- Footer -->
-			<%@include file="footer.jsp"%>
-			<!-- End Footer -->
 		</div>
+		<!-- Footer -->
+		<%@include file="footer.jsp"%>
+		<!-- End Footer -->
 	</div>
 	<script type="text/javascript">
 		$('#btn1').click(function() {

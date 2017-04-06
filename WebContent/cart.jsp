@@ -13,13 +13,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Giỏ hàng</title>
 
+<!-- Validate cart -->
+<script src="js/jquery-3.2.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-validation.js"></script>
+<script type="text/javascript" src="js/additional-methods.min.js"></script>
+<script src="js/validateQuantityCart.js"></script>
+<script src="js/scrollBar.js"></script>
+<script src="js/jquery.bootstrap-touchspin.js"></script>
 <!-- Bootstrap -->
-<script src="js/jquery.min.js"></script>
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
 <!-- Style Css -->
-<link rel="stylesheet" href="css/style.css">
-
+<link rel="stylesheet" type="text/css" href="css/style1.css">
 <style type="text/css">
 .thumbnail {
 	border: none;
@@ -29,44 +34,60 @@
 	height: 80px;
 	width: 65px;
 }
+
+.media-heading {
+	padding-bottom: 5px;
+}
 </style>
 </head>
 <body>
-	<fmt:setLocale value="vi-VN" />
-	<%@include file="navbar.jsp"%>
-	<div class="container" id="content">
-		<div class="row">
-			<bean:define id="cartInfo" name="cartForm" property="cart" />
-			<bean:define id="cartLines" name="cartInfo" property="cartLines" />
-			<div class="col-sm-12 col-md-10 col-md-offset-1">
-				<center style="margin-top: 150px;">
+	<div id="wrapper">
+		<fmt:setLocale value="vi-VN" />
+		<%@include file="navbar.jsp"%>
+		<div id="content" >
+			<div class="container">
+				<bean:define id="cartInfo" name="cartForm" property="cart" />
+				<bean:define id="cartLines" name="cartInfo" property="cartLines" />
+				<center>
 					<c:if test="${empty cartLines}">
 						<h1>Không có sản phẩm nào trong giỏ hàng!!!</h1>
 						<html:img src="images/cart-empty.png" />
+						<center>
+							<html:link styleClass="btn btn-default" action="/index">
+								<span class="glyphicon glyphicon-chevron-left"></span> Tiếp
+												tục mua sắm
+										</html:link>
+						</center>
 					</c:if>
 				</center>
 				<c:if test="${not empty cartLines}">
-					<h1>Chi tiết giỏ hàng</h1>
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Tên sách</th>
-								<th>Số lượng</th>
-								<th class="text-center">Đơn giá</th>
-								<th class="text-center">Thành tiền</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
+					<div class="row">
+						<div class="col-lg-8 col-md-12">
+							<div class="row"
+								style="border-bottom: 1px solid #e1e1e1; margin-bottom: 20px;">
+								<div class="title-cart">
+									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+										<h5>Giỏ hàng</h5>
+									</div>
+									<div class="col-lg-2 col-md-2  col-sm-2 col-xs-2">
+										<h6>Giá mua</h6>
+									</div>
+									<div class="col-lg-2 col-md-2  col-sm-2 col-xs-2 text-right">
+										<h6>Số lượng</h6>
+									</div>
+								</div>
+							</div>
 							<bean:define id="cartInfo" name="cartForm" property="cart" />
 							<logic:iterate id="line" property="cartLines" name="cartInfo"
 								indexId="id">
-								<html:form action="/updateCart" method="post">
-									<tr>
+								<div class="row"
+									style="border-bottom: 1px solid #e1e1e1; margin-bottom: 20px;">
+									<html:form action="/updateCart" method="post" styleId="myForm">
 										<bean:define id="isbn" name="line" property="book.isbn" />
+										<bean:define id="book" name="line" property="book" />
 										<html:hidden property="isbn" name="cartForm" value="${isbn}" />
 										<bean:define id="image_1" name="line" property="book.image_1" />
-										<td class="col-sm-8 col-md-6">
+										<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
 											<div class="media">
 												<a class="thumbnail pull-left" href="#"> <html:img
 														styleClass="media-object"
@@ -74,103 +95,192 @@
 												</a>
 												<div class="media-body">
 													<h4 class="media-heading">
-														<html:link action="/detailBook?isbn=${isbn}">
+														<html:link action="/detailBook?isbn=${isbn}"
+															style="color:#000;">
 															<bean:write name="line" property="book.name" />
 														</html:link>
 													</h4>
+													<p class="note">
+														Tác giả:
+														<html:link
+															action="/findBookByAuthor?authorNum=${book.authorNum}">${book.authorName}</html:link>
+													</p>
+													<p class="note">
+														Danh mục:
+														<html:link
+															action="/category?categoryNum=${book.categoryNum}">${book.categoryName}</html:link>
+													</p>
+													<html:link action="/removeBookFromCart?isbn=${isbn}">
+														Xóa
+												</html:link>
 												</div>
 											</div>
-										</td>
-										<td class="col-sm-1 col-md-1" style="text-align: center">
+										</div>
+										<div class="col-lg-2 col-md-2  col-sm-2 col-xs-2">
+											<strong> <bean:define name="line"
+													property="book.price" id="price" /> <fmt:formatNumber
+													value="${price}" type="currency" maxFractionDigits="0" />
+											</strong>
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
 											<bean:define id="quantity" name="line" property="quantity" />
 											<bean:define id="outOfStock" name="line"
-												property="outOfStock" /> <c:if test="${not outOfStock}">
+												property="outOfStock" />
+											<c:if test="${not outOfStock}">
 												<html:text styleClass="form-control" property="quantity"
-													name="line" />
-											</c:if> <c:if test="${outOfStock}">
+													styleId="quantity" name="line"
+													onkeydown="return chkNumeric(event)" />
+											</c:if>
+											<c:if test="${outOfStock}">
 												<html:text styleClass="form-control" property="quantity"
-													name="line" />
+													styleId="quantity" name="line"
+													onkeydown="return chkNumeric(event)" />
 												<span style="color: red;"> <html:errors
 														property="cartIsOutOfStockError" />
 												</span>
 											</c:if>
-										</td>
-										<td class="col-sm-2 col-md-2 text-center"><strong>
-												<bean:define name="line" property="book.price" id="price" />
-												<fmt:formatNumber value="${price}" type="currency"
-													maxFractionDigits="0" />
-										</strong></td>
-										<td class="col-sm-1 col-md-1 text-center"><strong>
-												<bean:define name="line" property="amount" id="amount" /> <fmt:formatNumber
-													value="${amount}" type="currency" maxFractionDigits="0" />
-										</strong></td>
-										<td><c:if test="${not outOfStock}">
-												<html:submit styleClass="btn btn-default">
-												Cập nhật
-												</html:submit>
-											</c:if> <c:if test="${outOfStock}">
-												<html:submit styleClass="btn btn-default">
-												Cập nhật
-												</html:submit>
-											</c:if></td>
-										<td class="col-sm-1 col-md-1"><html:link
-												styleClass="btn btn-danger"
-												action="/removeBookFromCart?isbn=${isbn}">
-												<span class="glyphicon glyphicon-remove"></span>Xóa
-										</html:link></td>
-									</tr>
-								</html:form>
+											<div style="display: none;">
+												<c:if test="${not outOfStock}">
+													<html:submit styleClass="btn btn-default">
+														Cập nhật
+														</html:submit>
+												</c:if>
+												<c:if test="${outOfStock}">
+													<html:submit styleClass="btn btn-default">
+														Cập nhật
+														</html:submit>
+												</c:if>
+											</div>
+										</div>
+									</html:form>
+								</div>
 							</logic:iterate>
-							<tr>
-								<html:form action="/showCart" method="post">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
-										<h5>Nhập mã khuyến mãi</h5>
-									</td>
-									<td class="text-right"><html:text property="promotionCode"
-											styleClass="form-control" /> <span style="color: red;">
-											<html:errors property="promotionCodeError" />
-									</span></td>
-									<td><html:submit styleClass="btn btn-default">Xác nhận</html:submit></td>
-								</html:form>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>
-									<h5>Tổng tiền đơn hàng</h5>
-								</td>
-								<td class="text-right">
+						</div>
+						<div class="col-lg-4 col-md-12"
+							style="float: right; padding-left: 15px;">
+							<div class="visible-lg-block" id="sidebar">
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-sm-6 col-xs-6">
+										<div
+											style="border: 1px solid black; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-color: #ddd;">
+											<h5>
+												Tạm tính: <strong style="float: right;"> <bean:define
+														name="cartForm" property="amountTotal" id="amountTotal" />
+													<fmt:formatNumber value="${amountTotal}" type="currency"
+														maxFractionDigits="0" />
+												</strong>
+											</h5>
+											<h5 style="border-top: 2px solid #e54d42; padding-top: 12px;">
+												Thành tiền:</h5>
+										</div>
+									</div>
+									<div class="col-lg-12 col-md-12 col-sm-6 col-xs-6">
+										<html:link styleClass="btn btn-large btn-checkout"
+											action="/payCartFirstStep" style="margin-bottom:15px;">
+											TIẾN HÀNH ĐẶT HÀNG
+									</html:link>
+									</div>
+									<div class="col-lg-12 col-md-12 col-sm-6 col-xs-6">
+										<div class="promotion-group">
+											<div class="promotion-panel-heading"
+												style="padding: 15px; border: 1px solid transparent; background: linear-gradient(#fff, #f7f7f7); border-color: #ddd;">
+												<a data-toggle="collapse" href="#form-promotion"
+													class="form-promotion-name"
+													style="color: inherit; text-decoration: none;">Mã giảm
+													giá<span class="glyphicon glyphicon-chevron-down"
+													style="float: right;"></span>
+												</a>
+											</div>
+											<div id="form-promotion" class="collapse in">
+												<div class="panel-collapse"
+													style="padding: 15px; border: 1px solid transparent; border-color: #ddd;">
+													<html:form action="/showCart" method="post">
+														<div class="input-group collapse">
+															<html:text property="promotionCode"
+																styleClass="form-control" />
+															<span class="input-group-btn"> <html:submit
+																	styleClass="btn btn-default">Xác nhận</html:submit>
+															</span>
+														</div>
+														<div class="promotion-errors">
+															<span style="color: red;"> <html:errors
+																	property="promotionCodeError" /></span>
+														</div>
+													</html:form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row col-md-12 col-lg-12 col-sm-12 col-xs-12">
+						<html:link styleClass="btn btn-default" action="/index"
+							style="background: linear-gradient(#fff,#f7f7f7); margin-bottom:20px;">
+							<span class="glyphicon glyphicon-chevron-left"></span> Tiếp
+												tục mua sắm
+											</html:link>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 col-xs-6">
+							<div class="visible-xs-block visible-sm-block visible-md-block">
+								<div class="promotion-group">
+									<div class="promotion-panel-heading"
+										style="padding: 15px; border: 1px solid transparent; background: linear-gradient(#fff, #f7f7f7); border-color: #ddd;">
+										<a data-toggle="collapse" href="#form-promotion-2"
+											class="form-promotion-name"
+											style="color: inherit; text-decoration: none;">Mã giảm
+											giá<span class="glyphicon glyphicon-chevron-down"
+											style="float: right;"></span>
+										</a>
+									</div>
+									<div id="form-promotion-2" class="collapse in">
+										<div class="panel-collapse"
+											style="padding: 15px; border: 1px solid transparent; border-color: #ddd;">
+											<html:form action="/showCart" method="post">
+												<div class="input-group collapse">
+													<html:text property="promotionCode"
+														styleClass="form-control" />
+													<span class="input-group-btn"> <html:submit
+															styleClass="btn btn-default">Xác nhận</html:submit>
+													</span>
+												</div>
+												<div class="promotion-errors">
+													<span style="color: red;"> <html:errors
+															property="promotionCodeError" /></span>
+												</div>
+											</html:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-xs-6" style="float: right;">
+							<div class="visible-xs-block visible-sm-block visible-md-block">
+								<div
+									style="border: 1px solid black; padding: 15px; margin-bottom: 15px; border-radius: 5px; border-color: #ddd;">
 									<h5>
-										<strong> <bean:define name="cartForm"
-												property="amountTotal" id="amountTotal" /> <fmt:formatNumber
-												value="${amountTotal}" type="currency" maxFractionDigits="0" />
+										Tạm tính: <strong style="float: right;"> <bean:define
+												name="cartForm" property="amountTotal" id="amountTotal" />
+											<fmt:formatNumber value="${amountTotal}" type="currency"
+												maxFractionDigits="0" />
 										</strong>
 									</h5>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td><html:link styleClass="btn btn-default" action="/index">
-										<span class="glyphicon glyphicon-shopping-cart"></span>Tiếp
-										tục mua sắm
-									</html:link></td>
-								<td><html:link styleClass="btn btn-success"
-										action="/payCartFirstStep">
-									Thanh toán<span class="glyphicon glyphicon-play"> </span>
-									</html:link></td>
-							</tr>
-						</tbody>
-					</table>
+									<h5 style="border-top: 2px solid #e54d42; padding-top: 12px;">
+										Thành tiền:</h5>
+								</div>
+								<html:link styleClass="btn btn-large btn-checkout"
+									action="/payCartFirstStep" style="margin-bottom:15px;">
+											TIẾN HÀNH ĐẶT HÀNG
+									</html:link>
+							</div>
+						</div>
+					</div>
 				</c:if>
 			</div>
 		</div>
+		<%@include file="footer.jsp"%>
 	</div>
-	<%@include file="footer.jsp"%>
 </body>
 </html>

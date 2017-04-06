@@ -1,7 +1,6 @@
 package model.dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,13 +10,13 @@ import common.DataAccess;
 import model.beans.Author;
 
 public class AuthorDAO {
-	Statement stm;
-	PreparedStatement pstm;
-	ResultSet rs;
 
 	public ArrayList<Author> getListOfAuthors() {
 		ArrayList<Author> arr = new ArrayList<>();
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
 		String sql = "SELECT * FROM tacgia ;";
 		try {
 			stm = con.createStatement();
@@ -34,6 +33,8 @@ public class AuthorDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -43,6 +44,9 @@ public class AuthorDAO {
 
 	public Author findAuthorByAuthorNum(String authorNum) {
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
 		String sql = "SELECT * FROM tacgia WHERE ma_tg = '" + authorNum + "'";
 		Author a = new Author();
 		try {
@@ -58,6 +62,8 @@ public class AuthorDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

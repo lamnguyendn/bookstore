@@ -25,7 +25,8 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
 <!-- Style Css -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style1.css">
+<link rel="stylesheet" href="css/login.css">
 
 <style type="text/css">
 .dpimage {
@@ -50,193 +51,195 @@ input[type="file"] {
 </style>
 </head>
 <body>
-	<%@include file="navbar.jsp"%>
-	<bean:define id="actionBook" property="actionBook" name="bookForm" />
-	<bean:define id="submitName" property="submitName" name="bookForm" />
-	<bean:define id="actionName" property="actionName" name="bookForm" />
-	<div class="container">
-		<h2>${actionName}</h2>
-		<html:form action="${actionBook}" method="post" acceptCharset="UTF-8"
-			styleId="myForm" enctype="multipart/form-data" styleClass="col-md-12">
-			<div class="col-md-6">
-				<div class="form-group ">
-					<div class="col-md-11">
-						<label for="txt">Mã sách</label>
+	<div id="wrapper">
+		<%@include file="navbar.jsp"%>
+		<bean:define id="actionBook" property="actionBook" name="bookForm" />
+		<bean:define id="submitName" property="submitName" name="bookForm" />
+		<bean:define id="actionName" property="actionName" name="bookForm" />
+		<div class="container" id="content">
+			<h2>${actionName}</h2>
+			<html:form action="${actionBook}" method="post" acceptCharset="UTF-8"
+				styleId="myForm" enctype="multipart/form-data" styleClass="col-md-12">
+				<div class="col-md-6">
+					<div class="form-group ">
+						<div class="col-md-11">
+							<label for="txt">Mã sách</label>
+						</div>
+						<div class="col-md-1">
+							<span style='color: red; float: right'>*</span>
+						</div>
+						<c:if test="${submitName eq 'Sửa'}">
+							<html:text property="isbn" styleClass="form-control"
+								readonly="true" styleId="isbn" />
+							<bean:define id="bookDetail" name="bookForm" property="book" />
+							<span style="color: red;"> <html:errors
+									property="isbnError" />
+							</span>
+						</c:if>
+						<c:if test="${submitName eq 'Thêm'}">
+							<html:text property="isbn" styleClass="form-control"
+								styleId="isbn" />
+							<span style="color: red;"> <html:errors
+									property="isbnError" />
+							</span>
+						</c:if>
 					</div>
-					<div class="col-md-1">
-						<span style='color: red; float: right'>*</span>
-					</div>
-					<c:if test="${submitName eq 'Sửa'}">
-						<html:text property="isbn" styleClass="form-control"
-							readonly="true" styleId="isbn" />
-						<bean:define id="bookDetail" name="bookForm" property="book" />
-						<span style="color: red;"> <html:errors
-								property="isbnError" />
+					<div class="form-group ">
+						<div class="col-md-11">
+							<label for="txt">Tên sách</label>
+						</div>
+						<div class="col-md-1">
+							<span style='color: red; float: right'>*</span>
+						</div>
+						<html:text property="name" styleClass="form-control" styleId="name" />
+						<span style="color: red;"> <html:errors property="nameError" />
 						</span>
-					</c:if>
-					<c:if test="${submitName eq 'Thêm'}">
-						<html:text property="isbn" styleClass="form-control"
-							styleId="isbn" />
+					</div>
+					<div class="form-group">
+						<div class="col-md-11">
+							<label for="sel1">Thể loại</label>
+						</div>
+						<div class="col-md-1">
+							<span style='color: red; float: right'>*</span>
+						</div>
+						<html:select property="categoryNum" styleClass="form-control"
+							styleId="categoryNum">
+							<option value="">--Chọn thể loại--</option>
+							<html:optionsCollection name="bookForm"
+								property="listOfCategories" label="categoryName"
+								value="categoryNum" />
+						</html:select>
 						<span style="color: red;"> <html:errors
-								property="isbnError" />
+								property="categoryError" />
 						</span>
-					</c:if>
-				</div>
-				<div class="form-group ">
+					</div>
+					<div class="form-group">
+						<div class="col-md-11">
+							<label for="sel1">Tác giả</label>
+						</div>
+						<div class="col-md-1">
+							<span style='color: red; float: right'>*</span>
+						</div>
+						<html:select property="authorNum" styleClass="form-control"
+							styleId="authorNum">
+							<option value="">--Chọn tác giả--</option>
+							<html:optionsCollection name="bookForm" property="listOfAuthors"
+								label="authorName" value="authorNum" />
+						</html:select>
+						<span style="color: red;"> <html:errors
+								property="authorError" />
+						</span>
+					</div>
+					<div class="form-group">
+						<div class="col-md-11">
+							<label for="sel1">Nhà xuất bản</label>
+						</div>
+						<div class="col-md-1">
+							<span style='color: red; float: right'>*</span>
+						</div>
+						<html:select property="publisherNum" styleClass="form-control"
+							styleId="publisherNum">
+							<option value="">--Chọn nhà xuất bản--</option>
+							<html:optionsCollection name="bookForm"
+								property="listOfPublishers" label="publisherName"
+								value="publisherNum" />
+						</html:select>
+						<span style="color: red;"> <html:errors
+								property="publisherError" />
+						</span>
+					</div>
+					<div class="form-group">
+						<div class="col-md-11">
+							<label for="sel1">Ngày xuất bản</label>
+						</div>
+						<div class="col-md-1">
+							<span style='color: red; float: right'>*</span>
+						</div>
+						<div class="form-inline">
+							<html:text property="publishDate" styleId="publishDate"
+								styleClass="DatePicker form-control" readonly="true"
+								onkeypress="return isNumberKey(event)" />
+						</div>
+						<span style="color: red;"> <html:errors
+								property="publishDateError" />
+						</span>
+					</div>
 					<div class="col-md-11">
-						<label for="txt">Tên sách</label>
+						<label for="txt">Mô tả</label>
 					</div>
 					<div class="col-md-1">
 						<span style='color: red; float: right'>*</span>
 					</div>
-					<html:text property="name" styleClass="form-control" styleId="name" />
-					<span style="color: red;"> <html:errors property="nameError" />
-					</span>
+					<div class="form-group">
+						<html:textarea styleClass="form-control" property="description"
+							styleId="description" />
+						<span style="color: red;"> <html:errors
+								property="descriptionError" />
+						</span>
+					</div>
 				</div>
-				<div class="form-group">
-					<div class="col-md-11">
-						<label for="sel1">Thể loại</label>
+				<div class="col-md-6">
+					<div class="form-group ">
+						<div class="col-md-11">
+							<label for="txt">Số lượng</label>
+						</div>
+						<div class="col-md-1">
+							<span style='color: red; float: right'>*</span>
+						</div>
+						<html:text property="quantity" styleClass="form-control"
+							styleId="quantity" />
+						<span style="color: red;"> <html:errors
+								property="quantityError" />
+						</span>
 					</div>
-					<div class="col-md-1">
-						<span style='color: red; float: right'>*</span>
+					<div class="form-group ">
+						<div class="col-md-11">
+							<label for="txt">Đơn giá</label>
+						</div>
+						<div class="col-md-1">
+							<span style='color: red; float: right'>*</span>
+						</div>
+						<html:text property="price" styleClass="form-control"
+							styleId="price" />
+						<span style="color: red;"> <html:errors
+								property="priceError" />
+						</span>
 					</div>
-					<html:select property="categoryNum" styleClass="form-control"
-						styleId="categoryNum">
-						<option value="">--Chọn thể loại--</option>
-						<html:optionsCollection name="bookForm"
-							property="listOfCategories" label="categoryName"
-							value="categoryNum" />
-					</html:select>
-					<span style="color: red;"> <html:errors
-							property="categoryError" />
-					</span>
+					<div class="form-group ">
+						<div class="col-md-11">
+							<label for="txt">Hình ảnh :</label>
+						</div>
+						<div class="col-md-1">
+							<span style='color: red; float: right'>*</span>
+						</div>
+						<html:file property="image_1" accept="image/*" styleId="image_1"
+							onchange="previewFile1()" />
+						<span style="color: red;"> <html:errors
+								property="image_1Error" />
+						</span>
+						<html:img action="viewBookImage?isbn=${bookDetail.isbn}"
+							styleId="imgBook1" height="320" width="220" />
+					</div>
 				</div>
-				<div class="form-group">
-					<div class="col-md-11">
-						<label for="sel1">Tác giả</label>
-					</div>
-					<div class="col-md-1">
-						<span style='color: red; float: right'>*</span>
-					</div>
-					<html:select property="authorNum" styleClass="form-control"
-						styleId="authorNum">
-						<option value="">--Chọn tác giả--</option>
-						<html:optionsCollection name="bookForm" property="listOfAuthors"
-							label="authorName" value="authorNum" />
-					</html:select>
-					<span style="color: red;"> <html:errors
-							property="authorError" />
-					</span>
+				<div class="col-md-6">
+					<html:submit property="submit" value="${submitName}"
+						styleClass="btn btn-info">
+					</html:submit>
+					<html:reset styleClass="btn btn-info">
+						Hủy
+					</html:reset>
+					<button type="button" class="btn btn-default" onclick="goBack()">
+						Quay lại</button>
+					<script>
+						function goBack() {
+							window.history.back();
+						}
+					</script>
 				</div>
-				<div class="form-group">
-					<div class="col-md-11">
-						<label for="sel1">Nhà xuất bản</label>
-					</div>
-					<div class="col-md-1">
-						<span style='color: red; float: right'>*</span>
-					</div>
-					<html:select property="publisherNum" styleClass="form-control"
-						styleId="publisherNum">
-						<option value="">--Chọn nhà xuất bản--</option>
-						<html:optionsCollection name="bookForm"
-							property="listOfPublishers" label="publisherName"
-							value="publisherNum" />
-					</html:select>
-					<span style="color: red;"> <html:errors
-							property="publisherError" />
-					</span>
-				</div>
-				<div class="form-group">
-					<div class="col-md-11">
-						<label for="sel1">Ngày xuất bản</label>
-					</div>
-					<div class="col-md-1">
-						<span style='color: red; float: right'>*</span>
-					</div>
-					<div class="form-inline">
-						<html:text property="publishDate" styleId="publishDate"
-							styleClass="DatePicker form-control" readonly="true"
-							onkeypress="return isNumberKey(event)" />
-					</div>
-					<span style="color: red;"> <html:errors
-							property="publishDateError" />
-					</span>
-				</div>
-				<div class="col-md-11">
-					<label for="txt">Mô tả</label>
-				</div>
-				<div class="col-md-1">
-					<span style='color: red; float: right'>*</span>
-				</div>
-				<div class="form-group">
-					<html:textarea styleClass="form-control" property="description"
-						styleId="description" />
-					<span style="color: red;"> <html:errors
-							property="descriptionError" />
-					</span>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="form-group ">
-					<div class="col-md-11">
-						<label for="txt">Số lượng</label>
-					</div>
-					<div class="col-md-1">
-						<span style='color: red; float: right'>*</span>
-					</div>
-					<html:text property="quantity" styleClass="form-control"
-						styleId="quantity" />
-					<span style="color: red;"> <html:errors
-							property="quantityError" />
-					</span>
-				</div>
-				<div class="form-group ">
-					<div class="col-md-11">
-						<label for="txt">Đơn giá</label>
-					</div>
-					<div class="col-md-1">
-						<span style='color: red; float: right'>*</span>
-					</div>
-					<html:text property="price" styleClass="form-control"
-						styleId="price" />
-					<span style="color: red;"> <html:errors
-							property="priceError" />
-					</span>
-				</div>
-				<div class="form-group ">
-					<div class="col-md-11">
-						<label for="txt">Hình ảnh :</label>
-					</div>
-					<div class="col-md-1">
-						<span style='color: red; float: right'>*</span>
-					</div>
-					<html:file property="image_1" accept="image/*" styleId="image_1"
-						onchange="previewFile1()" />
-					<span style="color: red;"> <html:errors
-							property="image_1Error" />
-					</span>
-					<html:img action="viewBookImage?isbn=${bookDetail.isbn}"
-						styleId="imgBook1" height="320" width="220" />
-				</div>
-			</div>
-			<div class="col-md-6">
-				<html:submit property="submit" value="${submitName}"
-					styleClass="btn btn-info">
-				</html:submit>
-				<html:reset styleClass="btn btn-info">
-					Hủy
-				</html:reset>
-				<button type="button" class="btn btn-default" onclick="goBack()">
-					Quay lại</button>
-				<script>
-					function goBack() {
-						window.history.back();
-					}
-				</script>
-			</div>
-		</html:form>
+			</html:form>
+		</div>
+		<%@include file="footer.jsp"%>
 	</div>
-	<%@include file="footer.jsp"%>
 	<script type="text/javascript">
 		$(function() {
 			$('.DatePicker').datepicker({

@@ -96,4 +96,8 @@ public class BookBO {
 		return bookDAO.getListOfBooksByCategory(categoryNum);
 	}
 
+	public ArrayList<Book> getAllOfBooks() {
+		return bookDAO.getAllOfBooks();
+	}
+
 }

@@ -13,15 +13,17 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<form-bean name="danhSachKhuyenMaiForm" type="form.DanhSachKhuyenMaiForm" />
 		<form-bean name="accountForm" type="form.AccountForm" />
 		<form-bean name="danhSachAccountForm" type="form.DanhSachAccountForm" />
+		<form-bean name="thongKeForm" type="form.ThongKeForm" />
+		<form-bean name="booksSoldForm" type="form.BooksSoldForm" />
 	</form-beans>
 	<action-mappings>
 		<!-- Public -->
 		<action path="/checkLogin" name="loginForm" type="action.CheckLoginAction"
-			scope="request" input="/login.jsp">
+			scope="request" input="/index.do">
 			<forward name="loginAdminSuccess" path="/bookManagement.do"
 				redirect="true" />
 			<forward name="loginUserSuccess" path="/index.do" redirect="true" />
-			<forward name="loginFailed" path="/login.jsp" />
+			<forward name="loginFailed" path="/index.do" />
 		</action>
 		<action path="/logout" type="action.LogoutAction" scope="request">
 			<forward name="logout" path="/index.do" redirect="true" />
@@ -233,6 +235,34 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<!-- End Account Management -->
+
+		<!--Thong Ke -->
+		<action path="/thongke" name="thongKeForm" scope="request"
+			type="action.ThongKeAction">
+			<forward name="showbooksold" path="/thongkecharts.jsp" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<action path="/detail" name="booksSoldForm" scope="request"
+			type="action.DetailBooksSoldAction">
+			<forward name="showlistbookssold" path="/detailbookssold.jsp" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<action path="/ReloadChartDoanhThu" name="thongKeForm" scope="request"
+			type="action.ReloadColumnChartAction">
+		</action>
+		<action path="/paginationBooksSoldAction" name="booksSoldForm"
+			scope="request" type="action.PaginationBooksSoldAction">
+		</action>
+		<action path="/ReloadChartTacGia" name="thongKeForm" scope="request"
+			type="action.ReloadPieChartAuthorAction">
+		</action>
+		<action path="/ReloadChartTheLoai" name="thongKeForm" scope="request"
+			type="action.ReloadPieChartCategoryAction">
+		</action>
+		<action path="/reloadTableTop4Action" name="thongKeForm" scope="request"
+			type="action.ReloadTableTop4Action">
+		</action>
+		<!--Thong Ke End -->
 	</action-mappings>
 	<message-resources parameter="action.ApplicationResources" />
 </struts-config>

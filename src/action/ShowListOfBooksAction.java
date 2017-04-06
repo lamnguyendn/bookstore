@@ -59,14 +59,15 @@ public class ShowListOfBooksAction extends Action {
 					pages = 1;
 				}
 				int totalPages = pagination(findKey, isSearch);
-				if ((null == findKey || findKey.length() == 0 || "".equalsIgnoreCase(findKey)) && isSearch == 0) {
+				/*if ((null == findKey || findKey.length() == 0 || "".equalsIgnoreCase(findKey)) && isSearch == 0) {
 					listOfBooks = bookBO.getListOfBooksLimit(first, last);
 				} else if (((0 != findKey.length() || !"".equalsIgnoreCase(findKey)) && isSearch == 1)) {
 					listOfBooks = bookBO.getListOfBooksLimitByFindKey(first, last, findKey);
 				} else if (((null == findKey || 0 == findKey.length() || "".equalsIgnoreCase(findKey))
 						&& isSearch == 1)) {
 					listOfBooks = new ArrayList<>();
-				}
+				}*/
+				listOfBooks = bookBO.getAllOfBooks();
 				ArrayList<Category> listOfCategories = categoryBO.getListOfCategories();
 				bookForm.setListOfBooks(listOfBooks);
 				bookForm.setTotalPages(totalPages);

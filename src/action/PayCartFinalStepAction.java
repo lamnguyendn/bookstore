@@ -26,6 +26,7 @@ public class PayCartFinalStepAction extends Action {
 			HttpServletResponse response) throws Exception {
 		CartInfo cartInfo = CartProcess.getCartInSession(request);
 		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
+		request.setAttribute("logged", true);
 		// Cart have no products.
 		if (cartInfo.isEmpty()) {
 			// Redirect to shoppingCart page.

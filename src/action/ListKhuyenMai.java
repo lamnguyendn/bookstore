@@ -33,7 +33,6 @@ public class ListKhuyenMai extends Action {
 			request.setAttribute("logged", true);
 			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
 				request.setAttribute("admin", true);
-
 				DanhSachKhuyenMaiForm khuyenMaiForm = (DanhSachKhuyenMaiForm) form;
 				ArrayList<Promotion> listKhuyenMai;
 				PromotionBO khuyenMaiBO = new PromotionBO();

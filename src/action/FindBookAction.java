@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import form.BookForm;
+import model.beans.Account;
 import model.beans.Book;
 import model.bo.BookBO;
 import model.bo.CategoryBO;
@@ -27,7 +28,6 @@ public class FindBookAction extends Action {
 	CategoryBO categoryBO = new CategoryBO();
 	ArrayList<Book> result = new ArrayList<>();
 
-	@SuppressWarnings("null")
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -35,22 +35,37 @@ public class FindBookAction extends Action {
 		response.setCharacterEncoding("UTF-8");
 		BookForm bookForm = (BookForm) form;
 		bookForm.setListOfCategories(categoryBO.getListOfCategories());
+		Account account = (Account) request.getSession().getAttribute("userName");
+		CategoryBO categoryBO = new CategoryBO();
+		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
+		if (null != account) {
+			request.setAttribute("logged", true);
+			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
+				request.setAttribute("admin", true);
+			}
+		}
 		if (bookForm.getPage() != 0) {
 			pages = bookForm.getPage();
 		} else {
 			pages = 1;
 		}
 		String findKey = bookForm.getFindKey();
-		if (null != findKey || !"".equalsIgnoreCase(findKey) || findKey.length() != 0) {
+		System.out.println("findKey input : " + findKey);
+		if (null != findKey && !"".equalsIgnoreCase(findKey) && findKey.length() != 0) {
 			byte[] utf8 = findKey.getBytes(StandardCharsets.UTF_8);
 			findKey = new String(utf8, StandardCharsets.UTF_8);
 			bookForm.setFindKey(findKey);
+			System.out.println("findKey UTF-8 : " + findKey);
+			byte[] latin1 = new String(utf8, "UTF-8").getBytes("ISO-8859-1");
+			String latin = new String(latin1);
+			System.out.println("latin : " + latin);
 			int totalPages = pagination(findKey);
 			request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
 			bookForm.setListOfBooksByFindKey(bookBO.getListOfBooksLimitByFindKey(first, last, findKey));
 			bookForm.setTotalPages(totalPages);
+		} else {
+			bookForm.setListOfBooksByFindKey(new ArrayList<>());
 		}
-		bookForm.setListOfBooksByFindKey(new ArrayList<>());
 		return mapping.findForward("findBook");
 	}
 
@@ -60,10 +75,8 @@ public class FindBookAction extends Action {
 		last = 8;
 		if ((null == findKey || findKey.length() == 0)) {
 			total = bookBO.countRows();
-			System.out.println("total 1");
 		} else if (null != findKey || 0 != findKey.length()) {
 			total = bookBO.countRowsByFindKey(findKey);
-			System.out.println("total 2");
 		}
 
 		if (total <= 8) {

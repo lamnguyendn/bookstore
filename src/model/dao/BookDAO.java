@@ -11,12 +11,11 @@ import common.DataAccess;
 import model.beans.Book;
 
 public class BookDAO {
-	Statement stm;
-	PreparedStatement pstm;
-	ResultSet rs;
 
 	public void addBook(Book book) {
 		Connection con = DataAccess.connect();
+		PreparedStatement pstm = null;
+
 		String sql = "INSERT INTO sach(isbn,tensach,dongia,soluong,ngayxuatban,hinhanh_1,mota,ma_tg,ma_tl,ma_nxb) "
 				+ " VALUES(?,?,?,?,?,?,?,?,?,?)";
 		try {
@@ -39,6 +38,7 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				pstm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -47,6 +47,7 @@ public class BookDAO {
 
 	public void updateBook(Book book) {
 		Connection con = DataAccess.connect();
+		PreparedStatement pstm = null;
 
 		String sql = "UPDATE sach SET tensach = ?, dongia = ?, soluong = ?, ngayxuatban = ?,"
 				+ " hinhanh_1 = ?, mota = ?, ma_tg = ?, ma_tl = ?, ma_nxb = ?" + " WHERE isbn = ?";
@@ -70,6 +71,7 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				pstm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -78,6 +80,7 @@ public class BookDAO {
 
 	public void deleteBook(String isbn) {
 		Connection con = DataAccess.connect();
+		PreparedStatement pstm = null;
 
 		String sql = "DELETE FROM sach WHERE isbn = ?";
 		try {
@@ -90,6 +93,7 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				pstm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -98,10 +102,14 @@ public class BookDAO {
 
 	public Book findBookByIsbn(String isbn) {
 		Connection con = DataAccess.connect();
+		PreparedStatement pstm = null;
+
 		String sql = "SELECT s.*, tg.ten_tg, tl.ten_tl, nxb.ten_nxb, tg.ten_tg" + " FROM sach s"
 				+ " INNER JOIN theloai tl ON s.ma_tl = tl.ma_tl" + " INNER JOIN tacgia tg ON s.ma_tg = tg.ma_tg"
 				+ " INNER JOIN nhaxuatban nxb ON s.ma_nxb = nxb.ma_nxb and s.isbn = ? ;";
 		Book book = new Book();
+		ResultSet rs = null;
+
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, isbn);
@@ -126,6 +134,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				pstm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -136,11 +146,14 @@ public class BookDAO {
 
 	public ArrayList<Book> getListOfBooksLimit(int first, int last) {
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
 
 		ArrayList<Book> arr = new ArrayList<>();
 		String sql = "SELECT s.*, c.ten_tl, tg.ten_tg, nxb.ten_nxb" + " FROM sach s"
 				+ " INNER JOIN theloai c ON s.ma_tl = c.ma_tl" + " INNER JOIN tacgia tg ON s.ma_tg = tg.ma_tg"
 				+ " INNER JOIN nhaxuatban nxb ON s.ma_nxb = nxb.ma_nxb" + " limit " + first + " , " + last + ";";
+
 		try {
 			stm = con.createStatement();
 			rs = stm.executeQuery(sql);
@@ -166,6 +179,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -175,6 +190,9 @@ public class BookDAO {
 
 	public ArrayList<Book> getListOfBooksLimitByCategoryNum(int first, int last, String categoryNum) {
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
 		ArrayList<Book> arr = new ArrayList<>();
 		String sql = "SELECT s.*, c.ten_tl, tg.ten_tg, nxb.ten_nxb" + " FROM sach s"
 				+ " INNER JOIN theloai c ON s.ma_tl = c.ma_tl AND c.ma_tl = '" + categoryNum + "'"
@@ -206,6 +224,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -215,6 +235,9 @@ public class BookDAO {
 
 	public int countRows() {
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
 		int count = 0;
 		String sql = "SELECT count(isbn) FROM sach;";
 		try {
@@ -229,6 +252,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -238,6 +263,8 @@ public class BookDAO {
 
 	public int countRowsByCategoryNum(String categoryNum) {
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
 
 		String sql = "SELECT count(b.isbn) FROM sach b" + " INNER JOIN theloai c ON c.ma_tl = b.ma_tl AND b.ma_tl = '"
 				+ categoryNum + "' ;";
@@ -253,6 +280,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -262,6 +291,9 @@ public class BookDAO {
 
 	public int countRowsByFindKey(String findKey) {
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
 		int count = 0;
 
 		String sql = "SELECT count(isbn)" + " FROM sach b"
@@ -278,6 +310,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -287,6 +321,8 @@ public class BookDAO {
 
 	public ArrayList<Book> getListOfBooksLimitByFindKey(int first, int last, String findKey) {
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
 
 		ArrayList<Book> arr = new ArrayList<>();
 		String sql = "SELECT b.*, tl.ten_tl, nxb.ten_nxb, tg.ten_tg" + " FROM sach b"
@@ -323,6 +359,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -332,6 +370,8 @@ public class BookDAO {
 
 	public ArrayList<Book> getListOfSuggestedBook() {
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
 
 		ArrayList<Book> arr = new ArrayList<>();
 		String sql = "SELECT isbn, tensach, mota,hinhanh_1 FROM sach ORDER BY isbn DESC LIMIT 4";
@@ -351,6 +391,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -360,7 +402,11 @@ public class BookDAO {
 
 	public ArrayList<Book> getListOfRelatedBooks(String isbn) {
 		ArrayList<Book> arr = new ArrayList<>();
-		String sql = "SELECT isbn, tensach, mota,hinhanh_1 FROM sach" + " WHERE isbn <> '" + isbn + "' ORDER BY isbn LIMIT 4";
+		ResultSet rs = null;
+		Statement stm = null;
+
+		String sql = "SELECT isbn, tensach, mota,hinhanh_1 FROM sach" + " WHERE isbn <> '" + isbn
+				+ "' ORDER BY isbn LIMIT 4";
 		Connection con = DataAccess.connect();
 		try {
 			stm = con.createStatement();
@@ -378,6 +424,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -388,6 +436,8 @@ public class BookDAO {
 	public void updateQuantity(String isbn, int quantity) {
 		String sql = "UPDATE sach SET soluong = soluong -" + quantity + "" + " WHERE isbn = '" + isbn + "'";
 		Connection con = DataAccess.connect();
+		Statement stm = null;
+
 		try {
 			stm = con.createStatement();
 			stm.executeUpdate(sql);
@@ -396,6 +446,7 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -405,6 +456,9 @@ public class BookDAO {
 	public boolean notExistsIsbn(String isbn) {
 		String sql = "SELECT isbn FROM sach WHERE isbn ='" + isbn + "'";
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
 		try {
 			stm = con.createStatement();
 			rs = stm.executeQuery(sql);
@@ -416,6 +470,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -427,6 +483,9 @@ public class BookDAO {
 		ArrayList<Book> arr = new ArrayList<>();
 		String sql = "SELECT * FROM sach" + " WHERE ma_tg = '" + authorNum + "'";
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
 		try {
 			stm = con.createStatement();
 			rs = stm.executeQuery(sql);
@@ -449,6 +508,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -646,6 +707,7 @@ public class BookDAO {
 	 */
 	public void themLuotXem(String userName, String isbn) {
 		Connection con = DataAccess.connect();
+		PreparedStatement pstm = null;
 		String sql = "INSERT INTO viewsach VALUES(?,?,?)";
 		try {
 			pstm = con.prepareStatement(sql);
@@ -658,6 +720,7 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				pstm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -787,9 +850,12 @@ public class BookDAO {
 
 	public ArrayList<Book> getListOfBooksByCategory(String categoryNum) {
 		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
 		ArrayList<Book> arr = new ArrayList<>();
-		String sql = "SELECT isbn, tensach, mota,hinhanh_1 FROM sach WHERE ma_tl = '" + categoryNum
-				+ "' ORDER BY isbn DESC LIMIT 3";
+		String sql = "SELECT isbn, tensach, dongia,hinhanh_1 FROM sach WHERE ma_tl = '" + categoryNum
+				+ "' ORDER BY isbn DESC LIMIT 4";
 		try {
 			stm = con.createStatement();
 			rs = stm.executeQuery(sql);
@@ -798,7 +864,7 @@ public class BookDAO {
 				book.setIsbn(rs.getString("isbn"));
 				book.setName(rs.getString("tensach"));
 				book.setImage_1(rs.getBytes("hinhanh_1"));
-				book.setDescription(rs.getString("mota"));
+				book.setPrice(rs.getFloat("dongia"));
 				arr.add(book);
 			}
 		} catch (SQLException e) {
@@ -806,6 +872,8 @@ public class BookDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -830,6 +898,49 @@ public class BookDAO {
 			}
 		}
 		return false;
+	}
+
+	public ArrayList<Book> getAllOfBooks() {
+		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
+		ArrayList<Book> arr = new ArrayList<>();
+		String sql = "SELECT s.*, c.ten_tl, tg.ten_tg, nxb.ten_nxb" + " FROM sach s"
+				+ " INNER JOIN theloai c ON s.ma_tl = c.ma_tl" + " INNER JOIN tacgia tg ON s.ma_tg = tg.ma_tg"
+				+ " INNER JOIN nhaxuatban nxb ON s.ma_nxb = nxb.ma_nxb" + ";";
+		try {
+			stm = con.createStatement();
+			rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				Book book = new Book();
+				book.setIsbn(rs.getString("isbn"));
+				book.setName(rs.getString("tensach"));
+				book.setPrice(rs.getInt("dongia"));
+				book.setQuantity(rs.getInt("soluong"));
+				book.setPublishDate(rs.getDate("ngayxuatban"));
+				book.setImage_1(rs.getBytes("hinhanh_1"));
+				book.setDescription(rs.getString("mota"));
+				book.setAuthorNum(rs.getString("ma_tg"));
+				book.setCategoryNum(rs.getString("ma_tl"));
+				book.setPublisherNum(rs.getString("ma_nxb"));
+				book.setAuthorName(rs.getString("ten_tg"));
+				book.setCategoryName(rs.getString("ten_tl"));
+				book.setPublisherName(rs.getString("ten_nxb"));
+				arr.add(book);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+				rs.close();
+				stm.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return arr;
 	}
 
 }

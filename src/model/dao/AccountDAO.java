@@ -12,13 +12,13 @@ import model.beans.Account;
 
 public class AccountDAO {
 	DataAccess da = new DataAccess();
-	PreparedStatement pstm;
-	Statement stm;
 
 	public Account checkLogin(String userName, String password) {
 		Account account = new Account();
 		Connection con = DataAccess.connect();
-		ResultSet rs;
+		ResultSet rs = null;
+		PreparedStatement pstm = null;
+
 		String sql = "SELECT * FROM taikhoan WHERE username =  ? and password = ?";
 		try {
 			pstm = con.prepareStatement(sql);
@@ -35,6 +35,8 @@ public class AccountDAO {
 		} finally {
 			try {
 				con.close();
+				rs.close();
+				pstm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

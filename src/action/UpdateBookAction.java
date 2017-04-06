@@ -23,7 +23,7 @@ import model.bo.CategoryBO;
 import model.bo.PublisherBO;
 
 /**
- * Quản lý sách - Cập nhật sách
+ * Quáº£n lÃ½ sÃ¡ch - Cáº­p nháº­t sÃ¡ch
  * 
  * @author LamNX
  *

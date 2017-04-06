@@ -8,6 +8,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,7 +24,7 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
 <!-- Style Css -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style1.css">
 
 <style type="text/css">
 hr.style18 {
@@ -50,7 +52,6 @@ hr.style18:before {
             white-space: nowrap;
             overflow:hidden !important;
             text-overflow: ellipsis;*/
-	height: 80px;
 	overflow: hidden;
 }
 
@@ -68,98 +69,100 @@ hr.style18:before {
 </style>
 </head>
 <body>
-	<%@include file="navbar.jsp"%>
-	<div class="container marketing" id="content">
-		<bean:define id="listOfBooksByFindKey" name="bookForm"
-			property="listOfBooksByFindKey" />
-		<c:if test="${not empty listOfBooksByFindKey}">
-			<center>
-				<h1 style="margin-bottom: 100px;">
-					<bean:write property="categoryName" name="bookForm" />
-				</h1>
-			</center>
-			<center>
-				<div class="container">
-					<div class="row col-lg-12 category-detail" id="dataTable">
-						<logic:iterate id="book" property="listOfBooksByFindKey"
-							name="bookForm">
-							<div class="col-lg-3">
-								<bean:define id="image_1" property="image_1" name="book" />
-								<html:img action="viewBookImage?isbn=${book.isbn}"
-									styleClass="img-circle" alt="Generic placeholder image"
-									width="140" height="140"></html:img>
-								<h2 class="title-book">
-									<bean:write name="book" property="name" />
-								</h2>
-								<p class="description">
-									<bean:write name="book" property="description" />
-								</p>
-								<p>
-									<html:link styleClass="btn btn-default"
-										action="detailBook?isbn=${book.isbn}">
+	<div id="wrapper">
+		<%@include file="navbar.jsp"%>
+		<div class="container marketing" id="content">
+			<bean:define id="listOfBooksByFindKey" name="bookForm"
+				property="listOfBooksByFindKey" />
+			<c:if test="${fn:length(listOfBooksByFindKey)>0}">
+				<center>
+					<h1 style="margin-bottom: 100px;">
+						<bean:write property="categoryName" name="bookForm" />
+					</h1>
+				</center>
+				<center>
+					<div class="container">
+						<div class="row col-lg-12 category-detail" id="dataTable">
+							<logic:iterate id="book" property="listOfBooksByFindKey"
+								name="bookForm">
+								<div class="col-md-3 col-lg-3 col-sm-4 col-xs-6 book-info">
+									<bean:define id="image_1" property="image_1" name="book" />
+									<html:img action="viewBookImage?isbn=${book.isbn}"
+										style="height: 250px; width: 200px; margin-bottom: 20px;"></html:img>
+									<h2 class="title-book">
+										<bean:write name="book" property="name" />
+									</h2>
+									<p class="description">
+										<bean:write name="book" property="description" />
+									</p>
+									<p>
+										<html:link styleClass="btn btn-default"
+											action="detailBook?isbn=${book.isbn}">
 								Xem thêm &raquo;
 							</html:link>
-								</p>
-							</div>
-						</logic:iterate>
-					</div>
-					<bean:define id="totalPages" property="totalPages" name="bookForm" />
-					<bean:define id="categoryNum" property="categoryNum"
-						name="bookForm" />
+									</p>
+								</div>
+							</logic:iterate>
+						</div>
+						<bean:define id="totalPages" property="totalPages" name="bookForm" />
+						<bean:define id="categoryNum" property="categoryNum"
+							name="bookForm" />
 
-					<nav aria-label="Page navigation">
-					<ul class="pagination" id="pagination"></ul>
-					</nav>
-				</div>
-			</center>
-		</c:if>
-		<c:if test="${empty listOfBooksByFindKey}">
-			<center>
-				<h1 style="margin-top:100px;">Không tìm thấy dữ liệu tương ứng</h1>
-				<button style="margin-top:50px;" type="button" class="btn btn-default" onclick="goBack()">
-				Quay lại</button>
-			<script>
-				function goBack() {
-					window.history.back();
+						<nav aria-label="Page navigation">
+						<ul class="pagination" id="pagination"></ul>
+						</nav>
+					</div>
+				</center>
+			</c:if>
+			<c:if test="${empty listOfBooksByFindKey}">
+				<center>
+					<h1 style="margin-top: 100px;">Không tìm thấy dữ liệu tương
+						ứng</h1>
+					<html:link styleClass="btn btn-success" action="/index">
+					Trở lại trang chủ
+									</html:link>
+				</center>
+			</c:if>
+			<bean:define id="totalPages" property="totalPages" name="bookForm" />
+			<bean:define id="findKey" property="findKey" name="bookForm" />
+		</div>
+		<script type="text/javascript">
+			var categoryNum = '${categoryNum}';
+			$(function() {
+				window.pagObj = $('#pagination')
+						.twbsPagination({
+							totalPages :
+		<%=totalPages%>
+			,
+							visiblePages : 3,
+							first : "Trang đầu",
+							last : "Trang cuối",
+							prev : "Trước",
+							next : "Sau"
+						})
+						.on(
+								'page',
+								function(event, page) {
+									$
+											.ajax({
+												type : "POST",
+												contentType : "application/json; charset=utf-8",
+												url : "paginationFindBook.do?findKey="
+														+ categoryNum
+														+ "&page=" + page,
+												timeout : 100000,
+												success : function(data) {
+													console.log(data);
+													display(data);
+												}
+											});
+								});
+				function display(data) {
+					$("#dataTable").html(data);
 				}
-			</script>
-			</center>
-		</c:if>
-		<bean:define id="totalPages" property="totalPages" name="bookForm" />
-		<bean:define id="findKey" property="findKey" name="bookForm" />
+			});
+		</script>
+		<%@include file="footer.jsp"%>
 	</div>
-	<script type="text/javascript">
-		var categoryNum = '${categoryNum}';
-		$(function() {
-			window.pagObj = $('#pagination').twbsPagination({
-				totalPages :
-	<%=totalPages%>
-		,
-				visiblePages : 3,
-				first : "Trang đầu",
-				last : "Trang cuối",
-				prev : "Trước",
-				next : "Sau"
-			}).on(
-					'page',
-					function(event, page) {
-						$.ajax({
-							type : "POST",
-							contentType : "application/json; charset=utf-8",
-							url : "paginationFindBook.do?findKey="
-									+ categoryNum + "&page=" + page,
-							timeout : 100000,
-							success : function(data) {
-								console.log(data);
-								display(data);
-							}
-						});
-					});
-			function display(data) {
-				$("#dataTable").html(data);
-			}
-		});
-	</script>
-	<%@include file="footer.jsp"%>
 </body>
 </html>

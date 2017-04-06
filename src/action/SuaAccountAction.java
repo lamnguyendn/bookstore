@@ -61,7 +61,6 @@ public class SuaAccountAction extends Action {
 					}
 					saveErrors(request, actionErrors);
 					if (actionErrors.size() > 0) {
-						System.out.println("sua 1");
 						return mapping.findForward("suaAcc");
 					}
 				}
@@ -73,7 +72,6 @@ public class SuaAccountAction extends Action {
 					String email = accountForm.getEmail();
 					String quyen = accountForm.getQuyen();
 					accountBO.suaAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen);
-					System.out.println("sua 2");
 					return mapping.findForward("suaAccXong");
 				} else {
 					Account account = accountBO.getThongTinAccount(userName);
@@ -83,7 +81,6 @@ public class SuaAccountAction extends Action {
 					accountForm.setDiaChi(account.getDiaChi());
 					accountForm.setEmail(account.getEmail());
 					accountForm.setQuyen(account.getRole());
-					System.out.println("sua 3");
 					return mapping.findForward("suaAcc");
 				}
 			}

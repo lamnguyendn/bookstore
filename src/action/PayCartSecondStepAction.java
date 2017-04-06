@@ -32,11 +32,14 @@ public class PayCartSecondStepAction extends Action {
 
 		Account account = (Account) request.getSession().getAttribute("userName");
 		if (null != account) {
+			request.setAttribute("logged", true);
 			CartInfo cartInfo = CartProcess.getCartInSession(request);
 			CustomerForm customerForm = (CustomerForm) form;
 			// check information customer here
 			// validate -> has error -> forward('payCartFirstStep')
 			// else
+			cartInfo.setAmountTotalAfterUsingPromotionCode(cartInfo.getAmountTotalAfterUsingPromotionCode());
+			customerForm.setAmountTotal(cartInfo.getAmountTotalAfterUsingPromotionCode());
 			cartInfo.setCustomerInfo(customerForm);
 			return mapping.findForward("payCartThirdStep");
 		}
