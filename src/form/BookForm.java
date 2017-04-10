@@ -48,6 +48,26 @@ public class BookForm extends ActionForm {
 	private ArrayList<Book> listOfBooksByFindKey;
 	private ArrayList<Book> listOfBooksByAuthor;
 
+	private String[] multiSelectedAuthor = {};
+
+	private String[] multiSelectedCategory = {};
+
+	public String[] getMultiSelectedAuthor() {
+		return multiSelectedAuthor;
+	}
+
+	public void setMultiSelectedAuthor(String[] multiSelectedAuthor) {
+		this.multiSelectedAuthor = multiSelectedAuthor;
+	}
+
+	public String[] getMultiSelectedCategory() {
+		return multiSelectedCategory;
+	}
+
+	public void setMultiSelectedCategory(String[] multiSelectedCategory) {
+		this.multiSelectedCategory = multiSelectedCategory;
+	}
+
 	private int page;
 	private int totalPages;
 	private String findKey = "";

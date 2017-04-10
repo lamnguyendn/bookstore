@@ -12,7 +12,8 @@ public class TestLinhTinh {
 	public static void main(String[] args) {
 		TestLinhTinh t = new TestLinhTinh();
 		// System.out.println(t.convertDateSqlToDateUtil());
-		t.getContextPath();
+		// t.getContextPath();
+		System.out.println("length = " + t.getLengthString());
 
 	}
 
@@ -37,16 +38,6 @@ public class TestLinhTinh {
 	}
 
 	private void getContextPath() {
-		// URL resource = getClass().getResource("/");
-		// String path = resource.getPath().substring(1);
-		// path = path.replace("build/classes/",
-		// "WebContent\\\\images\\\\books\\\\");
-		// path = path.replace("/", "\\\\");
-		// System.out.println(path);
-		// File currDir = new File(".");
-		// String path = currDir.getAbsolutePath();
-		// path = path.substring(0, path.length() - 1);
-		// System.out.println(path);
 		URL u = getClass().getProtectionDomain().getCodeSource().getLocation();
 		File f = null;
 		try {
@@ -63,5 +54,11 @@ public class TestLinhTinh {
 		Date date = new Date();
 		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		return formatter.format(date);
+	}
+
+	private int getLengthString() {
+		String temp = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque aliquam quisquam odit architecto earum impedit nostrum debitis, unde totam optio, mollitia suscipit reiciendis tempore pariatur iusto aspernatur repellat ab laborum repellendus voluptatum sunt nisi. Quo omnis, deleniti officia dolorum porro molestiae ex quos, ipsum. Omnis facere repellendus porro ducimus aliquam voluptatem quisquam perferendis iure labore quia placeat, laudantium fugit doloremque eveniet. Cum quos quasi quidem facere rem ipsam, corrupti voluptate fugiat enim dolore suscipit, deleniti. Fugit quia sed nam facilis temporibus saepe aliquam ipsam quis delectus explicabo nostrum aperiam recusandae voluptate dignissimos eos harum neque fugiat fuga id dolorem, debitis. Quos eaque laboriosam eveniet, optio repellat quo quas expedita quaerat quibusdam quasi? Officiis odio dicta, praesentium officia doloribus reprehenderit eos cum quod animi architecto, voluptate ipsa laboriosam repellendus expedita veniam. Recusandae doloremque eos, ullam voluptatem sapiente ad similique laborum ratione illo magni. Pariatur sed deleniti excepturi tempore dignissimos, temporibus eius illo dolor magni fugiat dolores, necessitatibus provident aspernatur natus aperiam incidunt repellendus adipisci asperiores error assumenda. Delectus, nisi. Veniam tempore nulla soluta ipsum est, voluptatem culpa enim similique placeat repellat iste consequuntur, numquam. Deleniti culpa debitis corporis accusamus sit ad et quos doloribus veritatis, quod maiores reiciendis quas possimus ipsam aut, sapiente quaerat eveniet consequatur delectus officia mollitia soluta sed. Illo voluptatem perferendis magni velit placeat dolore quae molestiae assumenda voluptates earum reiciendis commodi ducimus autem porro sit obcae";
+		String[] arr = temp.split(" ");
+		return arr.length;
 	}
 }
