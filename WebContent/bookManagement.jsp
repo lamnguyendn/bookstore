@@ -27,18 +27,12 @@
 <!-- Style Css -->
 <link rel="stylesheet" href="css/style1.css">
 
-
-<script
-	src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<script
-	src="https://cdn.datatables.net/plug-ins/1.10.13/sorting/currency.js"></script>
-<script
-	src="https://cdn.datatables.net/plug-ins/1.10.13/sorting/numeric-comma.js"></script>
-<script
-	src="https://cdn.datatables.net/1.1
-	0.13/js/dataTables.bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
+<!-- DataTable -->
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/currency.js"></script>
+<script src="js/numeric-comma.js"></script>
+<script src="js/dataTables.bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
 
 <script>
 	$(document).ready(function() {
@@ -54,33 +48,33 @@
 			}
 		});
 		$('#example').DataTable({
-			/* pagingType : 'full', */
+			pagingType : 'full_numbers',
+	        "lengthMenu": [[5,10, 25, 50, -1], [5,10, 25, 50, "Tất cả"]],
 			"aoColumnDefs" : [ {
 				"sType" : "my-currency",
 				"aTargets" : [ 5 ]
 			} ],
 			language : {
-				/* "decimal" : "",
-				"thousands" : ",", */
 				"search" : "Tìm kiếm:",
 				"zeroRecords" : "Không tìm thấy dữ liệu tương ứng",
 				"info" : "Hiển thị _START_ đến _END_ của _TOTAL_ dòng",
-				"infoEmpty": "Hiển thị 0 đến 0 của 0 dòng",
-				"infoFiltered": "(đã lọc từ _MAX_ dòng)",
+				"infoEmpty" : "Hiển thị 0 đến 0 của 0 dòng",
+				"infoFiltered" : "(đã lọc từ _MAX_ dòng)",
+			    "lengthMenu" : "Hiển thị _MENU_ dòng",
 				paginate : {
 					first : 'Đầu tiên',
 					previous : 'Trước',
 					next : 'Sau',
 					last : 'Cuối'
 				},
-			/* aria : {
-				paginate : {
-					first : 'Đầu tiên',
-					previous : 'Trước',
-					next : 'Sau',
-					last : 'Cuối'
+				aria : {
+					paginate : {
+						first : 'Đầu tiên',
+						previous : 'Trước',
+						next : 'Sau',
+						last : 'Cuối'
+					}
 				}
-			} */
 			}
 		});
 	});
@@ -179,11 +173,11 @@
 									<td><bean:write name="book" property="authorName" /></td>
 									<td><bean:write name="book" property="categoryName" /></td>
 									<td><bean:write name="book" property="publisherName" /></td>
-									<td><bean:define name="book" property="price" id="price" />
+									<td>
+										<bean:define name="book" property="price" id="price" />
 										<fmt:formatNumber value="${price}" type="currency" var="pat"
-											maxFractionDigits="0" />
-											 ${fn:replace(pat, ".", ",")}
-											</td>
+											maxFractionDigits="0" /> ${fn:replace(pat, ".", ",")}
+									</td>
 									<td class="text-right"><bean:write name="book"
 											property="quantity" /></td>
 									<td><a data-href="/BookStore/deleteBook.do?isbn=${isbn}"
@@ -200,7 +194,7 @@
 				<bean:define id="categoryNum" property="categoryNum" name="bookForm" />
 				<bean:define id="findKey" property="findKey" name="bookForm" />
 
-				<nav aria-label="Page navigation">
+				<%-- <nav aria-label="Page navigation">
 				<ul class="pagination" id="pagination"></ul>
 				</nav>
 			</div>
@@ -242,7 +236,7 @@
 						$("#dataTable").html(data);
 					}
 				});
-			</script>
+			</script> --%>
 			<script>
 				$('#confirm-delete').on(
 						'show.bs.modal',

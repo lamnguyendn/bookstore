@@ -36,15 +36,13 @@ public class DangKyAccountAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception, IOException {
 		request.setCharacterEncoding("utf-8");
-		
+
 		AccountForm accountForm = (AccountForm) form;
 		HttpSession session = request.getSession();
 		AccountBO accountBO = new AccountBO();
-		// kiem tra quyen
 		if (session.getAttribute("quyen") == "khachhang") {
 			return mapping.findForward("dangNhapRoi");
 		}
-		// them account
 		if ("Đăng ký".equals(accountForm.getSubmit())) {
 			ActionErrors actionErrors = new ActionErrors();
 			if (StringProcess.notValid(accountForm.getUserName())) {
@@ -60,6 +58,8 @@ public class DangKyAccountAction extends Action {
 			}
 			saveErrors(request, actionErrors);
 			if (actionErrors.size() > 0) {
+				System.out.println("1");
+				request.getSession().setAttribute("errorRegistration", "true");
 				return mapping.findForward("dkAccError");
 			}
 		}
@@ -72,9 +72,10 @@ public class DangKyAccountAction extends Action {
 			String email = accountForm.getEmail();
 			String quyen = "ROLE_USER";
 			accountBO.themAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen);
-			session.setAttribute("dkx", "#modalLogin");
+			System.out.println("2");
 			return mapping.findForward("dkAccXong");
 		} else {
+			System.out.println("3");
 			return mapping.findForward("dkAcc");
 		}
 	}

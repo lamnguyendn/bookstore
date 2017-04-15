@@ -1,6 +1,6 @@
 $(function() {
     var offset = $("#sidebar").offset();
-    var topPadding = 75;
+    var topPadding = 95;
     $(window).scroll(function() {
         if ($(window).scrollTop() >= offset.top) {
             $("#sidebar").stop().animate({

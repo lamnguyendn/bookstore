@@ -35,7 +35,9 @@
 </head>
 <body>
 	<%@include file="navbar.jsp"%>
+	<div id="content">
 		<h1>Cảm ơn bạn đã đặt hàng!</h1>
+	</div>
 	<%@include file="footer.jsp"%>
 </body>
 </html>

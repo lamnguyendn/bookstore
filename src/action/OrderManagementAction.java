@@ -45,20 +45,21 @@ public class OrderManagementAction extends Action {
 				findKey = new String(utf8, StandardCharsets.UTF_8);
 				orderForm.setFindKey(findKey);
 
-				if (orderForm.getPage() != 0) {
-					page = orderForm.getPage();
-				} else {
-					page = 1;
-				}
-				int totalPages = pagination(findKey);
-				if (null == findKey || findKey.length() == 0) {
-					result = orderBO.getListOfOrdersLimit(first, last);
-				} else if (null != findKey || 0 != findKey.length()) {
-					result = orderBO.getListOfOrdersLimitByFindKey(first, last, findKey);
-				}
-				if (null != result)
-					orderForm.setListOfOrders(result);
-				orderForm.setTotalPages(totalPages);
+//				if (orderForm.getPage() != 0) {
+//					page = orderForm.getPage();
+//				} else {
+//					page = 1;
+//				}
+//				int totalPages = pagination(findKey);
+//				if (null == findKey || findKey.length() == 0) {
+//					result = orderBO.getListOfOrdersLimit(first, last);
+//				} else if (null != findKey || 0 != findKey.length()) {
+//					result = orderBO.getListOfOrdersLimitByFindKey(first, last, findKey);
+//				}
+//				if (null != result)
+//					orderForm.setListOfOrders(result);
+				orderForm.setListOfOrders(orderBO.getListOfOrders());
+//				orderForm.setTotalPages(totalPages);
 
 				return mapping.findForward("listOfOrders");
 			}

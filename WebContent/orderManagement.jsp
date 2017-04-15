@@ -9,6 +9,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,8 +24,67 @@
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
-
+<!-- Style CSS/JS -->
 <link rel="stylesheet" href="css/style1.css">
+
+<!-- DataTable -->
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/currency.js"></script>
+<script src="js/numeric-comma.js"></script>
+<script src="js/dataTables.bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+
+<script>
+	$(document)
+			.ready(
+					function() {
+						jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+							"my-currency-pre" : function(a) {
+								return parseFloat(a.replace(/,/gi, ''));
+							},
+							"my-currency-asc" : function(a, b) {
+								return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+							},
+							"my-currency-desc" : function(a, b) {
+								return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+							}
+						});
+						$('#example')
+								.DataTable(
+										{
+											pagingType : 'full_numbers',
+											"lengthMenu" : [
+													[ 5, 10, 25, 50, -1 ],
+													[ 5, 10, 25, 50, "Tất cả" ] ],
+											"aoColumnDefs" : [ {
+												"sType" : "my-currency",
+												"aTargets" : [ 4 ]
+											} ],
+											language : {
+												"search" : "Tìm kiếm:",
+												"zeroRecords" : "Không tìm thấy dữ liệu tương ứng",
+												"info" : "Hiển thị _START_ đến _END_ của _TOTAL_ dòng",
+												"infoEmpty" : "Hiển thị 0 đến 0 của 0 dòng",
+												"infoFiltered" : "(đã lọc từ _MAX_ dòng)",
+												"lengthMenu" : "Hiển thị _MENU_ dòng",
+												paginate : {
+													first : 'Đầu tiên',
+													previous : 'Trước',
+													next : 'Sau',
+													last : 'Cuối'
+												},
+												aria : {
+													paginate : {
+														first : 'Đầu tiên',
+														previous : 'Trước',
+														next : 'Sau',
+														last : 'Cuối'
+													}
+												}
+											}
+										});
+					});
+</script>
 
 </head>
 <body>
@@ -42,21 +103,16 @@
 				</center>
 				<c:if test="${not empty listOfOrders}">
 					<h2>Quản lý đơn hàng</h2>
-					<html:form action="/orderManagement">
-						<div class="form-group col-md-8">
-							<html:text property="findKey" styleClass="form-control" />
-						</div>
-						<html:submit styleClass="btn btn-info">
-					Tìm kiếm đơn hàng
-				</html:submit>
-					</html:form>
-					<table class="table table-hover">
+					<hr size="2px">
+					<div class="row" style="margin-top: 20px; margin-bottom: 20px;"></div>
+					<table class="table table-hover" id="example">
 						<thead>
 							<tr>
 								<th class="text-center">Ngày tạo</th>
 								<th class="text-center">Tên khách hàng</th>
 								<th class="text-center">Số điện thoại khách hàng</th>
 								<th class="text-center">Địa chỉ khách hàng</th>
+								<th class="text-center">Tổng tiền</th>
 								<th class="text-center">Trạng thái</th>
 								<th class="text-center">Chi tiết</th>
 							</tr>
@@ -71,6 +127,9 @@
 									<td><bean:write name="order" property="customerName" /></td>
 									<td><bean:write name="order" property="customerPhone" /></td>
 									<td><bean:write name="order" property="customerAddress" /></td>
+									<td><bean:define name="order" property="total" id="total" />
+										<fmt:formatNumber value="${total}" type="currency" var="pat"
+											maxFractionDigits="0" /> ${fn:replace(pat, ".", ",")}</td>
 									<bean:define id="status" name="order" property="status" />
 									<td id="status-${orderNum}" class="text-center"><a
 										href="javascript:void(0)"
@@ -91,7 +150,7 @@
 					<bean:define id="totalPages" property="totalPages" name="orderForm" />
 					<bean:define id="findKey" property="findKey" name="orderForm" />
 
-					<nav aria-label="Page navigation">
+					<!-- <nav aria-label="Page navigation">
 					<ul class="pagination" id="pagination"></ul>
 					</nav>
 					<script type="text/javascript">
@@ -126,6 +185,7 @@
 							}
 						});
 					</script>
+					-->
 					<script type="text/javascript">
 						function setDelivery(orderNum) {
 							$
@@ -146,6 +206,7 @@
 						}
 					</script>
 				</c:if>
+
 			</div>
 		</div>
 		<%@include file="footer.jsp"%>

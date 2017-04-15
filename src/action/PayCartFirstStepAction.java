@@ -31,6 +31,7 @@ public class PayCartFirstStepAction extends Action {
 		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
 		Account account = (Account) request.getSession().getAttribute("userName");
 		if (null != account) {
+			request.setAttribute("logged", true);
 			CartInfo cartInfo = CartProcess.getCartInSession(request);
 			if (cartInfo.isEmpty()) {
 				return mapping.findForward("cartIsEmpty");

@@ -116,14 +116,8 @@
 																				timeout : 100000,
 																				success : function(
 																						data) {
-																					$(
-																							"#myModal")
-																							.modal(
-																									'hide');
-																					$(
-																							'#modalSuccess')
-																							.modal(
-																									'show');
+																					$("#myModal").modal('hide');
+																					$('#modalSuccess').modal('show');
 																				}
 																			});
 																	return false;

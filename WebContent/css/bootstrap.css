@@ -5896,6 +5896,7 @@ button.close {
 .modal-open .modal {
   overflow-x: hidden;
   overflow-y: auto;
+  background: rgba(43, 46, 56, 0.9);
 }
 .modal-dialog {
   position: relative;

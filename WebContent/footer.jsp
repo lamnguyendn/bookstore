@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<div id="footer">
-	<div class="footer navbar-bottom"">
+<div id="footer" class="container">
+	<div class="footer navbar-bottom">
 		<!-- FOOTER -->
 		<hr class="featurette-divider" style="margin: 10px 0;">
 		<p class="pull-right">

@@ -25,7 +25,47 @@
 <script src="js/bootstrap.min.js"></script>
 <!-- Style Css -->
 <link rel="stylesheet" href="css/style1.css">
+<!-- DataTable -->
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/currency.js"></script>
+<script src="js/numeric-comma.js"></script>
+<script src="js/dataTables.bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
 
+<script>
+	$(document).ready(function() {
+		$('#example').DataTable({
+			pagingType : 'full_numbers',
+	        "lengthMenu": [[5,10, 25, 50, -1], [5,10, 25, 50, "Tất cả"]],
+			"aoColumnDefs" : [ {
+				"sType" : "my-currency",
+				"aTargets" : [ 5 ]
+			} ],
+			language : {
+				"search" : "Tìm kiếm:",
+				"zeroRecords" : "Không tìm thấy dữ liệu tương ứng",
+				"info" : "Hiển thị _START_ đến _END_ của _TOTAL_ dòng",
+				"infoEmpty" : "Hiển thị 0 đến 0 của 0 dòng",
+				"infoFiltered" : "(đã lọc từ _MAX_ dòng)",
+			    "lengthMenu" : "Hiển thị _MENU_ dòng",
+				paginate : {
+					first : 'Đầu tiên',
+					previous : 'Trước',
+					next : 'Sau',
+					last : 'Cuối'
+				},
+				aria : {
+					paginate : {
+						first : 'Đầu tiên',
+						previous : 'Trước',
+						next : 'Sau',
+						last : 'Cuối'
+					}
+				}
+			}
+		});
+	});
+</script>
 </head>
 <body>
 	<div id="wrapper">
@@ -54,11 +94,12 @@
 			</div>
 			<div class="container">
 				<h2>Quản lý khuyến mãi</h2>
-				<div>
-					<html:link styleClass="btn btn-info" action="/themKM">
+				<hr size="2px">
+				<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+					<html:link styleClass="btn btn-info" action="/themKM" style="float:right;">
 						<span class="glyphicon glyphicon-plus-sign"></span> Thêm khuyến mại</html:link>
 				</div>
-				<table class="table table-hover">
+				<table class="table table-hover" id="example">
 					<thead>
 						<tr>
 							<th class="text-center">Mã khuyến mãi</th>
@@ -73,10 +114,15 @@
 						<logic:iterate name="danhSachKhuyenMaiForm"
 							property="listKhuyenMai" id="km">
 							<tr>
-								<th scope="row"><bean:write name="km" property="maKM" /></th>
+								<th scope="row">
+									<bean:write name="km" property="maKM" />
+								</th>
 								<bean:define id="maKm" name="km" property="maKM" />
-								<td><bean:write name="km" property="tenKM" /></td>
-								<td class="text-right"><bean:write name="km"
+								<td>
+									<bean:write name="km" property="tenKM" />
+								</td>
+								<td class="text-center">
+									<bean:write name="km"
 										property="phanTramKM" /> %</td>
 								<bean:define id="trangThai" property="trangThai" name="km" />
 								<td id="trangThai-${maKm}" class="text-center"><a
@@ -126,8 +172,8 @@
 					});
 				}
 			</script>
-			<%@include file="footer.jsp"%>
 		</div>
+		<%@include file="footer.jsp"%>
 	</div>
 </body>
 </html>

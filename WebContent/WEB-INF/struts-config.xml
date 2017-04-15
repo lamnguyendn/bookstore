@@ -214,10 +214,10 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 			<forward name="themAccXong" path="/danh-sach.do" redirect="true" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
-		<action input="/dangKy.jsp" name="accountForm" path="/dang-ky"
+		<action input="/navbar.jsp" name="accountForm" path="/dang-ky"
 			scope="request" type="action.DangKyAccountAction" validate="true">
 			<forward name="dkAcc" path="/dangKy.jsp" />
-			<forward name="dkAccError" path="/dangKy.jsp" />
+			<forward name="dkAccError" path="/index.do" />
 			<forward name="dkAccXong" path="/index.do" redirect="true" />
 			<forward name="dangNhapRoi" path="/index.do" redirect="true" />
 			<forward name="404" path="/404.html" redirect="true" />

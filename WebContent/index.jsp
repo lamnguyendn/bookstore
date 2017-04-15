@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
 <link href="css/carousel.css" rel="stylesheet">
-<!-- Style Css -->
+<!-- Style CSS/JS -->
 <link rel="stylesheet" href="css/style1.css">
 <script src="js/scrollBar.js"></script>
 
@@ -52,10 +52,16 @@ hr.style18:before {
             text-overflow: ellipsis;*/
 	/* height: 80px; */
 	overflow: hidden;
-	font-size: 14px; color : #444; font-weight : 700; padding : 5px 0 0;
+	font-size: 14px;
+	color: #444;
+	font-weight: 700;
+	padding: 5px 0 0;
 	text-align: left;
 	color: #444;
 	font-weight: 700;
+	padding: 5px 0 0;
+	font-weight: 700;
+	padding: 5px 0 0;
 	padding: 5px 0 0;
 }
 
@@ -136,7 +142,7 @@ body {
 	border-bottom: 18px solid transparent;
 	position: absolute;
 	top: 0;
-	right: -13px;
+	right: -12px;
 }
 
 a {
@@ -223,12 +229,12 @@ a {
 		<%@include file="navbar.jsp"%>
 		<fmt:setLocale value="vi-VN" />
 		<div id="content" style="margin-top: 50px;">
-			<div class="container">
+			<div class="container-fluid">
 				<div class="row" style="margin-top: 25px;">
 					<div class="col-md-2 col-lg-2 visible-lg-block">
 						<ul id="sidebar" class="list-category">
 							<li id="title-category"
-								style="display: block; color: #000; font-size: 12px; padding: 12px 15px; font-weight: 700; border-bottom: 1px solid #ddd;">Danh
+								style="display: block; color: #000; font-size: 14px; padding: 12px 15px; font-weight: 700; border-bottom: 1px solid #ddd;">Danh
 								mục sách</li>
 							<c:forEach items="${listOfCategories}" var="category">
 								<li class="list-category-item"><bean:define
@@ -241,9 +247,8 @@ a {
 						</ul>
 					</div>
 					<div class="col-md-12 col-sm-12 col-xs-12 col-lg-10">
-						<!-- <hr class="style18"> -->
-						<div class="container marketing">
-							<div class="row col-md-12 col-lg-10">
+						<div class="marketing">
+							<div class="col-md-12 col-lg-10">
 								<center>
 									<div class="home-header">
 										<h2>
@@ -253,8 +258,8 @@ a {
 								</center>
 							</div>
 							<center>
-								<div class="container">
-									<div class="row col-md-12 col-lg-10">
+								<div class="row">
+									<div class="col-md-12 col-lg-10">
 										<logic:iterate id="book" property="listOfBestBookSeller"
 											name="publicForm">
 											<div class="col-lg-3 col-md-3 col-sm-4 book-info">
@@ -280,61 +285,20 @@ a {
 									</div>
 								</div>
 							</center>
-						</div>
-						<div class="container marketing">
-							<center>
-								<div class="row col-md-12 col-lg-10">
-									<center>
-										<div class="home-header">
-											<h2>
-												<a>Có thể bạn quan tâm</a>
-											</h2>
-										</div>
-									</center>
-									<logic:iterate id="book" property="listOfSuggestedBook"
-										name="publicForm">
-										<div class="row col-lg-3 col-md-3 col-sm-4 book-info">
-											<bean:define id="image_1" property="image_1" name="book" />
-											<html:img action="viewBookImage?isbn=${book.isbn}"
-												style="height: 250px; width: 200px; margin-bottom: 20px;"></html:img>
-											<h2 class="title-book">
-												<bean:write name="book" property="name" />
-											</h2>
-											<p class="description">
-												<bean:define name="book" property="price" id="price" />
-												<strong> <fmt:formatNumber value="${price}"
-														type="currency" maxFractionDigits="0" />
-												</strong>
-											</p>
-											<p style="margin-top: 20px;">
-												<html:link styleClass="btn btn-default btn-sm"
-													action="detailBook?isbn=${book.isbn}">
-								Xem thêm &raquo;
-							</html:link>
-											</p>
-										</div>
-									</logic:iterate>
-								</div>
-							</center>
-						</div>
-						<bean:define id="listOfCategories" property="listOfCategories"
-							name="publicForm" />
-						<c:forEach items="${listOfCategories}" var="cat">
-							<c:if test="${fn:length(cat.listOfBooksByCategory)>0}">
-								<!-- <hr class="style18"> -->
-								<div class="container marketing">
-									<center>
-										<div class="row col-md-12 col-lg-10">
+							<div class="marketing">
+								<center>
+									<div class="col-md-12 col-lg-10">
+										<div class="row">
+
 											<center>
 												<div class="home-header">
 													<h2>
-														<a
-															href="/BookStore/category.do?categoryNum=${cat.categoryNum}">
-															${cat.categoryName} </a>
+														<a>Có thể bạn quan tâm</a>
 													</h2>
 												</div>
 											</center>
-											<c:forEach items="${cat.listOfBooksByCategory}" var="book">
+											<logic:iterate id="book" property="listOfSuggestedBook"
+												name="publicForm">
 												<div class="col-lg-3 col-md-3 col-sm-4 book-info">
 													<bean:define id="image_1" property="image_1" name="book" />
 													<html:img action="viewBookImage?isbn=${book.isbn}"
@@ -348,24 +312,69 @@ a {
 																type="currency" maxFractionDigits="0" />
 														</strong>
 													</p>
-													<p>
+													<p style="margin-top: 20px;">
 														<html:link styleClass="btn btn-default btn-sm"
 															action="detailBook?isbn=${book.isbn}">
 								Xem thêm &raquo;
 							</html:link>
 													</p>
 												</div>
-											</c:forEach>
+											</logic:iterate>
 										</div>
-									</center>
-								</div>
-							</c:if>
-						</c:forEach>
+									</div>
+								</center>
+							</div>
+							<bean:define id="listOfCategories" property="listOfCategories"
+								name="publicForm" />
+							<c:forEach items="${listOfCategories}" var="cat">
+								<c:if test="${fn:length(cat.listOfBooksByCategory)>0}">
+									<!-- <hr class="style18"> -->
+									<div class="marketing">
+										<center>
+											<div class="col-md-12 col-lg-10">
+												<div class="row">
+													<center>
+														<div class="home-header">
+															<h2>
+																<a
+																	href="/BookStore/category.do?categoryNum=${cat.categoryNum}">
+																	${cat.categoryName} </a>
+															</h2>
+														</div>
+													</center>
+													<c:forEach items="${cat.listOfBooksByCategory}" var="book">
+														<div class="col-lg-3 col-md-3 col-sm-4 book-info">
+															<bean:define id="image_1" property="image_1" name="book" />
+															<html:img action="viewBookImage?isbn=${book.isbn}"
+																style="height: 250px; width: 200px; margin-bottom: 20px;"></html:img>
+															<h2 class="title-book">
+																<bean:write name="book" property="name" />
+															</h2>
+															<p class="description">
+																<bean:define name="book" property="price" id="price" />
+																<strong> <fmt:formatNumber value="${price}"
+																		type="currency" maxFractionDigits="0" />
+																</strong>
+															</p>
+															<p>
+																<html:link styleClass="btn btn-default btn-sm"
+																	action="detailBook?isbn=${book.isbn}">
+								Xem thêm &raquo;
+							</html:link>
+															</p>
+														</div>
+													</c:forEach>
+												</div>
+											</div>
+										</center>
+									</div>
+								</c:if>
+							</c:forEach>
+						</div>
 					</div>
 				</div>
 			</div>
+			<%@include file="footer.jsp"%>
 		</div>
-		<%@include file="footer.jsp"%>
-	</div>
 </body>
 </html>
