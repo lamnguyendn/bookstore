@@ -33,7 +33,6 @@ public class BookDAO {
 
 			pstm.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("Add new book has Error");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -66,7 +65,6 @@ public class BookDAO {
 
 			pstm.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("Update book has Error");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -88,7 +86,6 @@ public class BookDAO {
 			pstm.setString(1, isbn);
 			pstm.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("Delete book has Error");
 			e.printStackTrace();
 		} finally {
 			try {

@@ -45,6 +45,8 @@ public class AddBookAction extends Action {
 			request.setAttribute("logged", true);
 			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
 				request.setAttribute("admin", true);
+				request.setAttribute("management", "Book");
+				
 				bookForm.setListOfCategories(categoryBO.getListOfCategories());
 				bookForm.setListOfPublishers(publisherBO.getListOfPublishers());
 				bookForm.setListOfAuthors(authorBO.getListOfAuthors());
@@ -78,9 +80,9 @@ public class AddBookAction extends Action {
 					} else if (StringProcess.notValidNumber(bookForm.getQuantity())) {
 						actionErrors.add("quantityError", new ActionMessage("error.quantityDoesNotMatchFormat"));
 					} else if (StringProcess.quantityGreaterThanZero(bookForm.getQuantity())) {
-						actionErrors.add("quantityError", new ActionMessage("error.quantityDoesNotLeftThanZero"));
+						actionErrors.add("quantityError", new ActionMessage("error.quantityDoesNotLessThanZero"));
 					} else if (StringProcess.quantityLessThanOneThousand(bookForm.getQuantity())) {
-						actionErrors.add("quantityError", new ActionMessage("error.quantityLessThanOneThousand"));
+						actionErrors.add("quantityError", new ActionMessage("error.quantityLessThanTwenty"));
 					}
 					if (StringProcess.notValid(bookForm.getPublishDate())) {
 						actionErrors.add("publishDateError", new ActionMessage("error.publishDateError"));
@@ -92,7 +94,7 @@ public class AddBookAction extends Action {
 					} else if (StringProcess.notValidNumber(bookForm.getPrice())) {
 						actionErrors.add("priceError", new ActionMessage("error.priceDoesNotMatchFormat"));
 					} else if (StringProcess.priceGreaterThanZero(bookForm.getPrice())) {
-						actionErrors.add("priceError", new ActionMessage("error.priceDoesNotLeftThanZero"));
+						actionErrors.add("priceError", new ActionMessage("error.priceDoesNotLessThanZero"));
 					} else if (StringProcess.priceLessThanTenMillion(bookForm.getPrice())) {
 						actionErrors.add("priceError", new ActionMessage("error.priceDoesNotLessThanTenMillion"));
 					}

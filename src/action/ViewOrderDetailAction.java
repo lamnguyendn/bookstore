@@ -37,7 +37,8 @@ public class ViewOrderDetailAction extends Action {
 			request.setAttribute("logged", true);
 			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
 				request.setAttribute("admin", true);
-
+				request.setAttribute("management", "OrderDetail");
+				
 				OrderForm orderForm = (OrderForm) form;
 				request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
 				String orderNum = orderForm.getOrderNum();

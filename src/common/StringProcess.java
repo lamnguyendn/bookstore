@@ -9,12 +9,18 @@ import java.util.regex.Pattern;
 import org.apache.commons.validator.routines.DateValidator;
 import org.apache.struts.upload.FormFile;
 
+import model.dao.AuthorDAO;
 import model.dao.BookDAO;
+import model.dao.CategoryDAO;
 import model.dao.PromotionDAO;
+import model.dao.PublisherDAO;
 
 public class StringProcess {
 	static PromotionDAO khuyenMaiDAO = new PromotionDAO();
 	static BookDAO bookDAO = new BookDAO();
+	static CategoryDAO categoryDAO = new CategoryDAO();
+	static PublisherDAO publisherDAO = new PublisherDAO();
+	static AuthorDAO authorDAO = new AuthorDAO();
 
 	/**
 	 * Ham tra ve gioi tinh: 1=Nam, 0=Nu
@@ -98,7 +104,6 @@ public class StringProcess {
 	public static String convertDateSqlToDateUtil(Date publishDate) {
 		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		String newPublishDate = formatter.format(publishDate);
-		System.out.println("newPublishDate : " + newPublishDate);
 		return newPublishDate;
 	}
 
@@ -188,4 +193,16 @@ public class StringProcess {
 		return bookDAO.duplicateIsbn(isbn);
 	}
 
+	public static boolean duplicateIdCategory(String s) {
+		return categoryDAO.duplicateIdCategory(s);
+	}
+
+	public static boolean duplicateIdPublisher(String s) {
+
+		return publisherDAO.duplicateIdPublisher(s);
+	}
+
+	public static boolean duplicateIdAuthor(String s) {
+		return authorDAO.duplicateIdAuthor(s);
+	}
 }

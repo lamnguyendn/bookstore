@@ -46,6 +46,7 @@ public class UpdateBookAction extends Action {
 			request.setAttribute("logged", true);
 			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
 				request.setAttribute("admin", true);
+				request.setAttribute("management", "Book");
 
 				BookForm bookForm = (BookForm) form;
 				bookForm.setListOfCategories(categoryBO.getListOfCategories());

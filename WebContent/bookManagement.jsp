@@ -110,26 +110,7 @@
 			<div class="container">
 				<h2>Quản lý sách</h2>
 				<hr size="2px">
-				<%-- <div class="row">
-					<html:form action="/bookManagement" styleId="myForm">
-						<div class="form-group col-md-8">
-							<html:text property="findKey" styleClass="form-control"
-								styleId="findKey" />
-							<html:hidden property="isSearch" value="1" />
-						</div>
-						<html:submit styleClass="btn btn-info">
-						Tìm kiếm sách
-					</html:submit>
-					</html:form>
-				</div> --%>
 				<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
-					<%-- <div class="col-md-1">
-						<html:form action="/bookManagement" styleId="myForm">
-							<html:hidden property="isSearch" value="0" />
-							<html:submit styleClass="btn btn-warning">Xem tất cả
-							</html:submit>
-						</html:form>
-					</div> --%>
 					<html:link action="/addBook" styleClass="btn btn-success"
 						style="float:right;">
 						<span class="glyphicon glyphicon-plus-sign"></span> Thêm sách

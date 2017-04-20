@@ -15,6 +15,9 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<form-bean name="danhSachAccountForm" type="form.DanhSachAccountForm" />
 		<form-bean name="thongKeForm" type="form.ThongKeForm" />
 		<form-bean name="booksSoldForm" type="form.BooksSoldForm" />
+		<form-bean name="categoryForm" type="form.CategoryForm" />
+		<form-bean name="authorForm" type="form.AuthorForm" />
+		<form-bean name="publisherForm" type="form.PublisherForm" />
 	</form-beans>
 	<action-mappings>
 		<!-- Public -->
@@ -51,22 +54,23 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 			<forward name="view" path="/bookDetail.jsp" />
 		</action>
 		<!-- End Public -->
+
 		<!-- Book Management -->
 		<action path="/bookManagement" name="bookForm" scope="request"
-			input="/login.jsp" type="action.ShowListOfBooksAction">
-			<forward name="listBooks" path="/bookManagement.jsp" />
+			input="/login.jsp" type="action.BookManagementAction">
+			<forward name="listBooks" path="/admin/index.jsp" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action path="/addBook" name="bookForm" scope="request" input="/book.jsp"
 			type="action.AddBookAction">
-			<forward name="addBookSuccess" path="/bookManagement.do"
+			<forward name="addBookSuccess" path="bookManagement.do"
 				redirect="true" />
-			<forward name="addBook" path="/book.jsp" />
+			<forward name="addBook" path="/admin/index.jsp" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action path="/updateBook" name="bookForm" scope="request"
 			input="/bookManagement.jsp" type="action.UpdateBookAction">
-			<forward name="updateBook" path="/book.jsp" />
+			<forward name="updateBook" path="/admin/index.jsp" />
 			<forward name="updateBookSuccess" path="/bookManagement.do"
 				redirect="true" />
 			<forward name="404" path="/404.html" redirect="true" />
@@ -153,7 +157,7 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<!-- Order Processing -->
 		<action path="/orderManagement" name="orderForm" scope="request"
 			type="action.OrderManagementAction">
-			<forward name="listOfOrders" path="/orderManagement.jsp" />
+			<forward name="listOfOrders" path="/admin/index.jsp" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action path="/confirmOrder" type="action.ConfirmOrderAction"
@@ -161,7 +165,7 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		</action>
 		<action path="/viewOrderDetail" type="action.ViewOrderDetailAction"
 			scope="request" name="orderForm">
-			<forward name="view" path="/orderDetail.jsp" />
+			<forward name="view" path="/admin/index.jsp" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action path="/paginationOrder" type="action.PaginationOrderManagementAction"
@@ -183,21 +187,18 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 			<forward name="suaKM" path="/suaKhuyenMai.jsp" />
 			<forward name="suaKMxong" path="/showlistkm.do" />
 			<forward name="404" path="/404.html" redirect="true" />
-
 		</action>
 		<action input="/themKhuyenMai.jsp" name="khuyenMaiForm" path="/themKM"
 			scope="request" type="action.ThemKhuyenMaiAction" validate="true">
 			<forward name="themKMerror" path="/themKhuyenMai.jsp" />
 			<forward name="themKMxong" path="/showlistkm.do" />
 			<forward name="404" path="/404.html" redirect="true" />
-
 		</action>
 		<action path="/showlistkm" name="danhSachKhuyenMaiForm" scope="request"
 			type="action.ListKhuyenMai">
 			<forward name="thanhcong" path="/listKhuyenMai.jsp" />
 			<forward name="thatbai" path="/test.jsp" />
 			<forward name="404" path="/404.html" redirect="true" />
-
 		</action>
 		<!-- End Promotion Management -->
 
@@ -263,6 +264,78 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 			type="action.ReloadTableTop4Action">
 		</action>
 		<!--Thong Ke End -->
+
+		<!-- Category Management -->
+		<action path="/showlistcategory" name="categoryForm" scope="request"
+			type="action.ListCategoryAction">
+			<forward name="showcategorysuccess" path="/admin/index.jsp" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<action path="/deleteCategory" name="categoryForm" scope="request"
+			type="action.DeleleCategoryAction" input="/listCategory.jsp">
+			<forward name="delete" path="/showlistcategory.do" />
+		</action>
+		<action path="/editCategory" name="categoryForm" scope="request"
+			type="action.EditCategoryAction">
+			<forward name="editcategory" path="/admin/index.jsp" />
+			<forward name="editsuccess" path="/showlistcategory.do" />
+		</action>
+		<action path="/addCategory" name="categoryForm" scope="request"
+			type="action.AddCategoryAction">
+			<forward name="addsuccess" path="//showlistcategory.do" />
+			<forward name="adderror" path="/admin/index.jsp" />
+		</action>
+		<!-- End Category Management -->
+
+		<!-- Author Management -->
+		<action path="/showlistauthor" name="authorForm" scope="request"
+			type="action.ListAuthorAction">
+			<forward name="showauthorsuccess" path="/admin/index.jsp" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<action path="/detailAuthor" name="authorForm" scope="request"
+			type="action.DetailAuthorAction">
+			<forward name="detailauthor" path="/admin/index.jsp" />
+		</action>
+		<action path="/deleteAuthor" name="authorForm" scope="request"
+			type="action.DeleteAuthorAction" input="/listAuthor.jsp">
+			<forward name="delete" path="/showlistauthor.do" redirect="true" />
+		</action>
+		<action path="/editAuthor" name="authorForm" scope="request"
+			type="action.EditAuthorAction">
+			<forward name="editauthor" path="/admin/index.jsp" />
+			<forward name="editsuccess" path="/showlistauthor.do"
+				redirect="true" />
+		</action>
+		<action path="/addAuthor" name="authorForm" scope="request"
+			type="action.AddAuthorAction">
+			<forward name="addsuccess" path="/showlistauthor.do"
+				redirect="true" />
+			<forward name="adderror" path="/admin/index.jsp" />
+		</action>
+		<!-- End Author Management -->
+
+		<!-- Publisher Management -->
+		<action path="/showlistpublisher" name="publisherForm" scope="request"
+			type="action.ListPublisherAction">
+			<forward name="showpublishersuccess" path="/admin/index.jsp" />
+			<forward name="404" path="/404.html" redirect="true" />
+		</action>
+		<action path="/deletePublisher" name="publisherForm" scope="request"
+			type="action.DeletePublisherAction" input="/listPublisher.jsp">
+			<forward name="delete" path="/showlistpublisher.do" />
+		</action>
+		<action path="/editPublisher" name="publisherForm" scope="request"
+			type="action.EditPublisherAction">
+			<forward name="editpublisher" path="/admin/index.jsp" />
+			<forward name="editsuccess" path="/showlistpublisher.do" />
+		</action>
+		<action path="/addPublisher" name="publisherForm" scope="request"
+			type="action.AddPublisherAction">
+			<forward name="addsuccess" path="/showlistpublisher.do" />
+			<forward name="adderror" path="/admin/index.jsp" />
+		</action>
+		<!-- End Publisher Management -->
 
 		<!-- Multi Selected -->
 		<action path="/testMultipleSelected" scope="request"
