@@ -80,7 +80,7 @@ label.error {
 	color: #FFF;
 	border-radius: 3px 4px 4px 3px;
 	background-color: #CE5454;
-	max-width: 200px;
+	/* max-width: 200px; */
 	white-space: pre;
 	position: relative;
 	left: -15px;
@@ -161,6 +161,10 @@ label.error::after {
 				<!-- page content -->
 				<%@include file="content-Category-Add.jsp"%>
 			</c:if>
+			<c:if test="${management eq 'EditCategory'}">
+				<!-- page content -->
+				<%@include file="content-Category-Edit.jsp"%>
+			</c:if>
 			<c:if test="${management eq 'CategoryManagement'}">
 				<!-- page content -->
 				<%@include file="content-Category-Management.jsp"%>
@@ -178,16 +182,44 @@ label.error::after {
 				<!-- page content -->
 				<%@include file="content-Publisher-Edit.jsp"%>
 			</c:if>
-			
+
+
+			<c:if test="${management eq 'PromotionManagement'}">
+				<!-- page content -->
+				<%@include file="content-Promotion-Management.jsp"%>
+			</c:if>
+			<c:if test="${management eq 'AddPromotion'}">
+				<!-- page content -->
+				<%@include file="content-Promotion-Add.jsp"%>
+			</c:if>
+			<c:if test="${management eq 'EditPromotion'}">
+				<!-- page content -->
+				<%@include file="content-Promotion-Edit.jsp"%>
+			</c:if>
+
+			<c:if test="${management eq 'AccountManagement'}">
+				<!-- page content -->
+				<%@include file="content-Account-Management.jsp"%>
+			</c:if>
+			<c:if test="${management eq 'AddAccount'}">
+				<!-- page content -->
+				<%@include file="content-Account-Add.jsp"%>
+			</c:if>
+			<c:if test="${management eq 'EditAccount'}">
+				<!-- page content -->
+				<%@include file="content-Account-Edit.jsp"%>
+			</c:if>
 			<!-- /page content -->
+
+			<!-- footer content -->
+			<footer>
+			<div class="pull-right">BookStoreVN</div>
+			<div class="clearfix"></div>
+			</footer>
+			<!-- /footer content -->
+			
 		</div>
 
-		<!-- footer content -->
-		<footer>
-		<div class="pull-right">BookStoreVN</div>
-		<div class="clearfix"></div>
-		</footer>
-		<!-- /footer content -->
 	</div>
 
 	<!-- Bootstrap -->

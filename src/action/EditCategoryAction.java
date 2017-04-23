@@ -21,18 +21,14 @@ public class EditCategoryAction extends Action {
 		CategoryForm categoryForm = (CategoryForm) form;
 		CategoryBO categoryBO = new CategoryBO();
 		String categoryNum = categoryForm.getCategoryNum();
-		if ("submit".equals(categoryForm.getSubmit())) {
+		request.setAttribute("management", "EditCategory");
+
+		if ("Sửa".equals(categoryForm.getSubmit())) {
 			String categoryName = categoryForm.getCategoryName();
 			categoryBO.editCategory(categoryNum, categoryName);
 			return mapping.findForward("editsuccess");
 		} else {
-			Category category = categoryBO.getInfoCategory(categoryNum); // hien
-																			// thi
-																			// thong
-																			// tin
-																			// ra
-																			// cac
-																			// truong
+			Category category = categoryBO.getInfoCategory(categoryNum);
 			categoryForm.setCategoryNum(category.getCategoryNum());
 			categoryForm.setCategoryName(category.getCategoryName());
 			return mapping.findForward("editcategory");

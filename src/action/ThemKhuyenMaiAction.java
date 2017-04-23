@@ -37,9 +37,10 @@ public class ThemKhuyenMaiAction extends Action {
 			request.setAttribute("logged", true);
 			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
 				request.setAttribute("admin", true);
+				request.setAttribute("management", "AddPromotion");
 
 				KhuyenMaiForm khuyenMaiForm = (KhuyenMaiForm) form;
-				if ("submit".equals(khuyenMaiForm.getSubmit())) {
+				if ("Thêm".equals(khuyenMaiForm.getSubmit())) {
 					ActionErrors actionErrors = new ActionErrors();
 					if (StringProcess.notValid(khuyenMaiForm.getMaKm())) {
 						actionErrors.add("maKmError", new ActionMessage("error.mkm.trong"));
@@ -53,7 +54,7 @@ public class ThemKhuyenMaiAction extends Action {
 						return mapping.findForward("themKMerror");
 					}
 				}
-				if ("submit".equals(khuyenMaiForm.getSubmit())) {
+				if ("Thêm".equals(khuyenMaiForm.getSubmit())) {
 					String maKm = khuyenMaiForm.getMaKm();
 					String tenKm = khuyenMaiForm.getTenKm();
 					float phanTramKm = khuyenMaiForm.getPhanTramKm();

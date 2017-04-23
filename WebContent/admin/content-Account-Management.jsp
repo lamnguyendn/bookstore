@@ -76,7 +76,7 @@
 	<div class="">
 		<div class="page-title">
 			<div class="title_left">
-				<h3>Quản lý danh mục</h3>
+				<h3>Quản lý tài khoản</h3>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -84,7 +84,7 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Danh sách danh mục</h2>
+						<h2>Danh sách tài khoản</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
@@ -94,38 +94,47 @@
 					<div class="x_content">
 						<div id="datatable_wrapper"
 							class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-							<bean:define id="listOfCategories" property="listOfCategories"
-								name="categoryForm" />
-							<c:if test="${not empty listOfCategories}">
-								<table class="table table-hover table-striped" id="example">
-									<thead>
+							<table class="table table-hover" id="example">
+								<thead>
+									<tr>
+										<th>Tài khoản</th>
+										<th>Tên</th>
+										<th>Số điện thoại</th>
+										<th>Địa chỉ</th>
+										<th>Email</th>
+										<th class="text-center">Sửa</th>
+										<th class="text-center">Xóa</th>
+									</tr>
+								</thead>
+								<tbody>
+									<logic:iterate name="danhSachAccountForm"
+										property="listAccount" id="acc">
 										<tr>
-											<th>Mã danh mục</th>
-											<th>Tên danh mục</th>
-											<th>Xóa</th>
-											<th>Sửa</th>
-										</tr>
-									</thead>
-									<tbody id="dataTable">
-										<logic:iterate id="c" property="listOfCategories"
-											name="categoryForm">
-											<tr>
-												<bean:define id="categoryNum" name="c"
-													property="categoryNum" />
-												<td><bean:write name="c" property="categoryNum" /></td>
-												<td><bean:write name="c" property="categoryName" /></td>
-												<td><a
-													data-href="/BookStore/deleteCategory.do?categoryNum=${categoryNum}"
+											<th scope="row"><bean:write name="acc"
+													property="userName" /></th>
+											<td><bean:write name="acc" property="ten" /></td>
+											<td><bean:write name="acc" property="soDienThoai" /></td>
+											<td><bean:write name="acc" property="diaChi" /></td>
+											<td><bean:write name="acc" property="email" /></td>
+											<td class="text-center"><bean:define id="userName"
+													name="acc" property="userName"></bean:define> <html:link
+													action="/suaAcc?userName=${userName}">
+													<span class="glyphicon glyphicon-edit"></span>
+												</html:link></td>
+											<td class="text-center">
+												<%-- <html:link
+													action="/xoaAcc?userName=${userName}">
+													<span class="glyphicon glyphicon-trash"></span>
+												</html:link> --%>
+												<a
+													data-href="/BookStore/xoaAcc.do?userName=${userName}"
 													data-toggle="modal" data-target="#confirm-delete"><span
-														class="glyphicon glyphicon-trash"></span> </a></td>
-												<td><html:link
-														action="/editCategory?categoryNum=${categoryNum}"
-														styleClass="glyphicon glyphicon-edit"></html:link></td>
-											</tr>
-										</logic:iterate>
-									</tbody>
-								</table>
-							</c:if>
+														class="glyphicon glyphicon-trash"></span> </a>
+											</td>
+										</tr>
+									</logic:iterate>
+								</tbody>
+							</table>
 							<script>
 								$('#confirm-delete').on(
 										'show.bs.modal',

@@ -12,7 +12,7 @@
 	<div class="">
 		<div class="page-title">
 			<div class="title_left">
-				<h3>Quản lý nhà xuất bản</h3>
+				<h3>Quản lý khuyến mãi</h3>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -20,7 +20,7 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Sửa nhà xuất bản</h2>
+						<h2>Thêm khuyến mãi</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
@@ -28,23 +28,26 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<html:form action="/editPublisher" method="post"
+						<html:form action="/themKM" method="post"
 							styleClass="form-horizontal form-label-left" styleId="myForm">
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mã
-									nhà xuất bản <span class="required">*</span>
+									khuyến mại <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<html:text property="publisherNum" styleId="publisherNum"
-										styleClass="form-control col-md-7 col-xs-12" readonly="true" />
+								<div class="col-md-5 col-sm-6 col-xs-12">
+									<html:text property="maKm" styleId="maKm"
+										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
-								<div id="publisherNum1"></div>
+								<div id="maKm1"></div>
 								<logic:messagesPresent>
 									<html:messages id="msg">
-										<c:if test="${msg eq 'Vui lòng nhập mã nhà xuất bản!' }">
+										<c:if test="${msg eq 'Vui lòng nhập mã khuyến mãi!' }">
 											<label class="error">${msg}</label>
 										</c:if>
-										<c:if test="${msg eq 'Mã nhà xuất bản đã tồn tại!' }">
+										<c:if test="${msg eq 'Mã khuyến mãi đã tồn tại!' }">
+											<label class="error">${msg}</label>
+										</c:if>
+										<c:if test="${msg eq 'Mã khuyến mãi không được chứa kí tự đặc biệt!' }">
 											<label class="error">${msg}</label>
 										</c:if>
 									</html:messages>
@@ -52,41 +55,50 @@
 							</div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
-									nhà xuất bản <span class="required">*</span>
+									khuyến mại <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<html:text property="publisherName" styleId="publisherName"
+								<div class="col-md-5 col-sm-6 col-xs-12">
+									<html:text property="tenKm" styleId="tenKm"
 										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
-								<div id="publisherName1"></div>
+								<div id="tenKm1"></div>
+								<logic:messagesPresent>
+									<html:messages id="msg">
+										<c:if test="${msg eq 'Vui lòng nhập tên khuyến mãi!' }">
+											<label class="error">${msg}</label>
+										</c:if>
+									</html:messages>
+								</logic:messagesPresent>
 							</div>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Địa
-									chỉ <span class="required">*</span>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Phần
+									trăm khuyến mại <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<html:text property="publisherAddress"
+								<div class="col-md-5 col-sm-6 col-xs-12">
+									<html:text property="phanTramKm" styleId="phanTramKm"
 										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
-								<div id="publisherAddress1"></div>
+								<div id="phanTramKm1"></div>
 							</div>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Số
-									điện thoại <span class="required">*</span>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Trạng
+									Thái <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<html:text property="publisherPhoneNumber"
-										styleId="publisherPhoneNumber"
-										styleClass="form-control col-md-7 col-xs-12" />
+								<div class="col-md-5 col-sm-6 col-xs-12">
+									<html:select property="trangThai" styleId="trangThai"
+										styleClass="form-control col-md-7 col-xs-12">
+										<html:option value="0">Chưa kích hoạt</html:option>
+										<html:option value="1">Kích hoạt</html:option>
+									</html:select>
 								</div>
-								<div id="publisherPhoneNumber1"></div>
+								<div id="trangThai1"></div>
 							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-6 col-md-offset-3">
 									<html:submit styleClass="btn btn-success" property="submit"
-										value="Sửa"></html:submit>
-									<html:link action="/showlistpublisher"
+										value="Thêm"></html:submit>
+									<html:link action="/showlistauthor"
 										styleClass="btn btn-default">Quay lại</html:link>
 								</div>
 							</div>
@@ -105,43 +117,37 @@
 	$(document).ready(function() {
 		$('#myForm').validate({
 			errorPlacement : function(error, element) {
-				if (element.attr("name") == "publisherNum")
-					error.insertAfter("#publisherNum1");
-				else if (element.attr("name") == "publisherName")
-					error.insertAfter("#publisherName1");
-				else if (element.attr("name") == "publisherAddress")
-					error.insertAfter("#publisherAddress1");
-				else if (element.attr("name") == "publisherPhoneNumber")
-					error.insertAfter("#publisherPhoneNumber1");
+				if (element.attr("name") == "maKm")
+					error.insertAfter("#maKm1");
+				else if (element.attr("name") == "tenKm")
+					error.insertAfter("#tenKm1");
+				else if (element.attr("name") == "phanTramKm")
+					error.insertAfter("#phanTramKm1");
 			},
 			rules : {
-				publisherNum : {
+				maKm : {
+					required : true,
+					pattern : /[A-Za-z0-9]+/
+				},
+				tenKm : {
 					required : true,
 				},
-				publisherName : {
+				phanTramKm : {
 					required : true,
-				},
-				publisherAddress : {
-					required : true,
-				},
-				publisherPhoneNumber : {
-					required : true,
-					pattern : /\d{10,11}/
+					min : 10
 				}
 			},
 			messages : {
-				publisherNum : {
-					required : 'Vui lòng nhập mã nhà xuất bản!',
+				maKm : {
+					required : 'Vui lòng nhập mã khuyến mãi!',
+					pattern : 'Mã khuyến mãi không được chứa kí tự đặc biệt!',
 				},
-				publisherName : {
-					required : 'Vui lòng nhập tên nhà xuất bản!',
+				tenKm : {
+					required : 'Vui lòng nhập tên khuyến mãi!',
 				},
-				publisherAddress : {
-					required : 'Vui lòng nhập địa chỉ!',
-				},
-				publisherPhoneNumber : {
-					required : 'Vui lòng nhập số điện thoại!',
-					pattern : "Vui lòng nhập đúng định dạng!",
+				phanTramKm : {
+					min : 'Vui lòng nhập phần trăm khuyến mãi!',
+					required : 'Vui lòng nhập phần trăm khuyến mãi!',
 				}
 			}
 		});

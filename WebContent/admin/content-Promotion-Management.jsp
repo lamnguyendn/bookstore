@@ -76,7 +76,7 @@
 	<div class="">
 		<div class="page-title">
 			<div class="title_left">
-				<h3>Quản lý danh mục</h3>
+				<h3>Quản lý khuyến mãi</h3>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -84,7 +84,7 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Danh sách danh mục</h2>
+						<h2>Danh sách khuyến mãi</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
@@ -94,38 +94,49 @@
 					<div class="x_content">
 						<div id="datatable_wrapper"
 							class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-							<bean:define id="listOfCategories" property="listOfCategories"
-								name="categoryForm" />
-							<c:if test="${not empty listOfCategories}">
-								<table class="table table-hover table-striped" id="example">
-									<thead>
+							<table class="table table-hover" id="example">
+								<thead>
+									<tr>
+										<th class="text-center">Mã khuyến mãi</th>
+										<th class="text-center">Tên khuyến mãi</th>
+										<th class="text-center">Phần trăm khuyến mãi</th>
+										<th class="text-center">Trạng thái</th>
+										<th class="text-center">Sửa</th>
+										<th class="text-center">Xóa</th>
+									</tr>
+								</thead>
+								<tbody>
+									<logic:iterate name="danhSachKhuyenMaiForm"
+										property="listKhuyenMai" id="km">
 										<tr>
-											<th>Mã danh mục</th>
-											<th>Tên danh mục</th>
-											<th>Xóa</th>
-											<th>Sửa</th>
+											<td scope="row"><bean:write name="km" property="maKM" />
+											</td>
+											<bean:define id="maKm" name="km" property="maKM" />
+											<td><bean:write name="km" property="tenKM" /></td>
+											<td class="text-center"><bean:write name="km"
+													property="phanTramKM" /> %</td>
+											<bean:define id="trangThai" property="trangThai" name="km" />
+											<td id="trangThai-${maKm}" class="text-center"><a
+												href="javascript:void(0)"
+												onclick="return setDelivery('${maKm}')"> <c:if
+														test="${trangThai == 1}">
+														<i class="glyphicon glyphicon-ok"></i>
+													</c:if> <c:if test="${trangThai == 0}">
+														<i class="glyphicon glyphicon-remove"></i>
+													</c:if>
+											</a></td>
+											<td class="text-center"><html:link
+													action="/suaKM?maKm=${maKm}" style="margin-left: 30px;">
+													<span class="glyphicon glyphicon-edit"></span>
+												</html:link></td>
+											<td class="text-center"><a
+												data-href="/BookStore/xoaKm.do?maKm=${maKm}"
+												data-toggle="modal" data-target="#confirm-delete"><span
+													class="glyphicon glyphicon-trash"></span> </a></td>
 										</tr>
-									</thead>
-									<tbody id="dataTable">
-										<logic:iterate id="c" property="listOfCategories"
-											name="categoryForm">
-											<tr>
-												<bean:define id="categoryNum" name="c"
-													property="categoryNum" />
-												<td><bean:write name="c" property="categoryNum" /></td>
-												<td><bean:write name="c" property="categoryName" /></td>
-												<td><a
-													data-href="/BookStore/deleteCategory.do?categoryNum=${categoryNum}"
-													data-toggle="modal" data-target="#confirm-delete"><span
-														class="glyphicon glyphicon-trash"></span> </a></td>
-												<td><html:link
-														action="/editCategory?categoryNum=${categoryNum}"
-														styleClass="glyphicon glyphicon-edit"></html:link></td>
-											</tr>
-										</logic:iterate>
-									</tbody>
-								</table>
-							</c:if>
+									</logic:iterate>
+								</tbody>
+							</table>
 							<script>
 								$('#confirm-delete').on(
 										'show.bs.modal',
@@ -136,10 +147,31 @@
 															'href'));
 										});
 							</script>
+							<script type="text/javascript">
+								function setDelivery(maKm) {
+									$
+											.ajax({
+												url : "trangThaiKM.do?maKm="
+														+ maKm,
+												type : "POST",
+												contentType : "application/json; charset=utf-8",
+												success : function(data) {
+													$("#trangThai-" + maKm)
+															.html(data);
+													console.log(data);
+												},
+												timeout : 100000,
+												error : function(e) {
+													console.log(e);
+												}
+											});
+								}
+							</script>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </div>

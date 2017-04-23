@@ -12,7 +12,7 @@
 	<div class="">
 		<div class="page-title">
 			<div class="title_left">
-				<h3>Quản lý nhà xuất bản</h3>
+				<h3>Quản lý danh mục</h3>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -20,7 +20,7 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Sửa nhà xuất bản</h2>
+						<h2>Sửa danh mục</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
@@ -28,23 +28,27 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<html:form action="/editPublisher" method="post"
+						<html:form action="/editCategory" method="post"
 							styleClass="form-horizontal form-label-left" styleId="myForm">
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mã
-									nhà xuất bản <span class="required">*</span>
+									danh mục <span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<html:text property="publisherNum" styleId="publisherNum"
-										styleClass="form-control col-md-7 col-xs-12" readonly="true" />
+									<html:text property="categoryNum" styleId="categoryNum"
+										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
-								<div id="publisherNum1"></div>
+								<div id="categoryNum1"></div>
 								<logic:messagesPresent>
 									<html:messages id="msg">
-										<c:if test="${msg eq 'Vui lòng nhập mã nhà xuất bản!' }">
+										<c:if test="${msg eq 'Vui lòng nhập mã danh mục!' }">
 											<label class="error">${msg}</label>
 										</c:if>
-										<c:if test="${msg eq 'Mã nhà xuất bản đã tồn tại!' }">
+										<c:if test="${msg eq 'Mã danh mục đã tồn tại!' }">
+											<label class="error">${msg}</label>
+										</c:if>
+										<c:if
+											test="${msg eq 'Mã danh mục không được chứa kí tự đặc biệt!' }">
 											<label class="error">${msg}</label>
 										</c:if>
 									</html:messages>
@@ -52,41 +56,20 @@
 							</div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
-									nhà xuất bản <span class="required">*</span>
+									danh mục <span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<html:text property="publisherName" styleId="publisherName"
+									<html:text property="categoryName" styleId="categoryName"
 										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
-								<div id="publisherName1"></div>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Địa
-									chỉ <span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<html:text property="publisherAddress"
-										styleClass="form-control col-md-7 col-xs-12" />
-								</div>
-								<div id="publisherAddress1"></div>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Số
-									điện thoại <span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<html:text property="publisherPhoneNumber"
-										styleId="publisherPhoneNumber"
-										styleClass="form-control col-md-7 col-xs-12" />
-								</div>
-								<div id="publisherPhoneNumber1"></div>
+								<div id="categoryName1"></div>
 							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-6 col-md-offset-3">
 									<html:submit styleClass="btn btn-success" property="submit"
 										value="Sửa"></html:submit>
-									<html:link action="/showlistpublisher"
+									<html:link action="/showlistauthor"
 										styleClass="btn btn-default">Quay lại</html:link>
 								</div>
 							</div>
@@ -105,43 +88,25 @@
 	$(document).ready(function() {
 		$('#myForm').validate({
 			errorPlacement : function(error, element) {
-				if (element.attr("name") == "publisherNum")
-					error.insertAfter("#publisherNum1");
-				else if (element.attr("name") == "publisherName")
-					error.insertAfter("#publisherName1");
-				else if (element.attr("name") == "publisherAddress")
-					error.insertAfter("#publisherAddress1");
-				else if (element.attr("name") == "publisherPhoneNumber")
-					error.insertAfter("#publisherPhoneNumber1");
+				if (element.attr("name") == "categoryNum")
+					error.insertAfter("#categoryNum1");
+				else if (element.attr("name") == "categoryName")
+					error.insertAfter("#categoryName1");
 			},
 			rules : {
-				publisherNum : {
+				categoryNum : {
 					required : true,
 				},
-				publisherName : {
+				categoryName : {
 					required : true,
-				},
-				publisherAddress : {
-					required : true,
-				},
-				publisherPhoneNumber : {
-					required : true,
-					pattern : /\d{10,11}/
 				}
 			},
 			messages : {
-				publisherNum : {
-					required : 'Vui lòng nhập mã nhà xuất bản!',
+				categoryNum : {
+					required : 'Vui lòng nhập mã danh mục!',
 				},
-				publisherName : {
-					required : 'Vui lòng nhập tên nhà xuất bản!',
-				},
-				publisherAddress : {
-					required : 'Vui lòng nhập địa chỉ!',
-				},
-				publisherPhoneNumber : {
-					required : 'Vui lòng nhập số điện thoại!',
-					pattern : "Vui lòng nhập đúng định dạng!",
+				categoryName : {
+					required : 'Vui lòng nhập tên danh mục!',
 				}
 			}
 		});

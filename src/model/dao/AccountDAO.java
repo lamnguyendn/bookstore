@@ -28,6 +28,7 @@ public class AccountDAO {
 			while (rs.next()) {
 				account.setUserName(rs.getString("username"));
 				account.setRole(rs.getString("role"));
+				account.setTen(rs.getString("ten"));
 				return account;
 			}
 		} catch (SQLException e) {

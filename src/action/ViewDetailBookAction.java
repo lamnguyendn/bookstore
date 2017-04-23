@@ -12,6 +12,7 @@ import form.BookForm;
 import model.beans.Account;
 import model.bo.BookBO;
 import model.bo.CategoryBO;
+import model.bo.CommentBO;
 
 /**
  * Hiển thị chi tiết sách và các đầu sách liên quan
@@ -22,6 +23,7 @@ import model.bo.CategoryBO;
 public class ViewDetailBookAction extends Action {
 	BookBO bookBO = new BookBO();
 	CategoryBO categoryBO = new CategoryBO();
+	CommentBO commentBO = new CommentBO();
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -32,6 +34,7 @@ public class ViewDetailBookAction extends Action {
 		bookForm.setBook(bookBO.findBookByIsbn(isbn));
 		bookForm.setListOfRelatedBooks(bookBO.getListOfRelatedBooks(isbn));
 		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
+		request.setAttribute("listOfComments", commentBO.getListOfComments(isbn));
 		if (null != account) {
 			request.setAttribute("logged", true);
 			String userName = account.getUserName();

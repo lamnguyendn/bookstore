@@ -69,13 +69,15 @@
 							</div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tiểu
-									sử tác giả </span>
+									sử tác giả <span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<html:textarea property="authorInformation"
+										styleId="authorInformation"
 										styleClass="form-control col-md-7 col-xs-12" cols="25"
 										rows="5" />
 								</div>
+								<div id="authorInformation1"></div>
 							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">
@@ -105,12 +107,17 @@
 					error.insertAfter("#authorNum1");
 				else if (element.attr("name") == "authorName")
 					error.insertAfter("#authorName1");
+				else if (element.attr("name") == "authorInformation")
+					error.insertAfter("#authorInformation1");
 			},
 			rules : {
 				authorNum : {
 					required : true,
 				},
 				authorName : {
+					required : true,
+				},
+				authorInformation : {
 					required : true,
 				}
 			},
@@ -120,6 +127,9 @@
 				},
 				authorName : {
 					required : 'Vui lòng nhập tên tác giả!',
+				},
+				authorInformation : {
+					required : 'Vui lòng nhập tiểu sử tác giả!',
 				}
 			}
 		});

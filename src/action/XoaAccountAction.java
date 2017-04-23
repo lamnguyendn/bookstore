@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionMapping;
 import form.AccountForm;
 import model.beans.Account;
 import model.bo.AccountBO;
-import model.bo.CategoryBO;
 
 /**
  * XoaAccountAction.java
@@ -37,29 +36,16 @@ public class XoaAccountAction extends Action {
 		AccountForm accountForm = (AccountForm) form;
 		AccountBO accountBO = new AccountBO();
 		Account accountSession = (Account) request.getSession().getAttribute("userName");
-		CategoryBO categoryBO = new CategoryBO();
-		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
 		if (null != accountSession) {
 			request.setAttribute("logged", true);
 			if ("ROLE_ADMIN".equalsIgnoreCase(accountSession.getRole())) {
 				request.setAttribute("admin", true);
-				// xoa account
 				String userName = accountForm.getUserName();
-				if ("submit".equals(accountForm.getSubmit())) {
-					accountBO.xoaAccount(userName);
-					return mapping.findForward("xoaAccXong");
-				} else if (userName.equals(accountSession.getUserName())) {
-					return mapping.findForward("xoaAccXong");
+				if (userName.equals(accountSession.getUserName())) {
 				} else {
-					Account account = accountBO.getThongTinAccount(userName);
-					accountForm.setPassWord(account.getPassword());
-					accountForm.setTen(account.getTen());
-					accountForm.setDiaChi(account.getDiaChi());
-					accountForm.setSoDienThoai(account.getSoDienThoai());
-					accountForm.setEmail(account.getEmail());
-					accountForm.setQuyen(account.getRole());
-					return mapping.findForward("xoaAcc");
+					accountBO.xoaAccount(userName);
 				}
+				return mapping.findForward("xoaAccXong");
 			}
 		}
 		return mapping.findForward("404");

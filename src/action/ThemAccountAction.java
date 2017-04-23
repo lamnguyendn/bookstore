@@ -46,8 +46,10 @@ public class ThemAccountAction extends Action {
 			request.setAttribute("logged", true);
 			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
 				request.setAttribute("admin", true);
+				request.setAttribute("management", "AddAccount");
+
 				// them account
-				if ("Thêm mới".equals(accountForm.getSubmit())) {
+				if ("Thêm".equals(accountForm.getSubmit())) {
 					ActionErrors actionErrors = new ActionErrors();
 					if (StringProcess.notValid(accountForm.getUserName())) {
 						actionErrors.add("userError", new ActionMessage("error.username.trong"));
@@ -68,7 +70,7 @@ public class ThemAccountAction extends Action {
 						return mapping.findForward("themAccError");
 					}
 				}
-				if ("Thêm mới".equals(accountForm.getSubmit())) {
+				if ("Thêm".equals(accountForm.getSubmit())) {
 					String userName = accountForm.getUserName();
 					String passWord = accountForm.getPassWord();
 					String ten = accountForm.getTen();

@@ -34,7 +34,7 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mã
 									nhà xuất bản <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:text property="publisherNum" styleId="publisherNum"
 										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
@@ -54,7 +54,7 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
 									nhà xuất bản <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-5 col-xs-12">
 									<html:text property="publisherName" styleId="publisherName"
 										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
@@ -64,7 +64,7 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Địa
 									chỉ <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-5 col-xs-12">
 									<html:text property="publisherAddress"
 										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
@@ -74,7 +74,7 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Số
 									điện thoại <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-5 col-xs-12">
 									<html:text property="publisherPhoneNumber"
 										styleId="publisherPhoneNumber"
 										styleClass="form-control col-md-7 col-xs-12" />
@@ -83,7 +83,7 @@
 							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">
-								<div class="col-md-6 col-md-offset-3">
+								<div class="col-md-5 col-md-offset-3">
 									<html:submit styleClass="btn btn-success" property="submit"
 										value="Thêm"></html:submit>
 									<html:link action="/showlistpublisher"
@@ -126,7 +126,8 @@
 				},
 				publisherPhoneNumber : {
 					required : true,
-					pattern : /[0-9]{10,11}/
+					pattern : /\d{10}/,
+					maxlength : 11,
 				}
 			},
 			messages : {
@@ -137,11 +138,12 @@
 					required : 'Vui lòng nhập tên nhà xuất bản!',
 				},
 				publisherAddress : {
-					required : 'Vui lòng nhập địa chỉ!',
+					required : 'Vui lòng nhập địa chỉ nhà xuất bản!',
 				},
 				publisherPhoneNumber : {
-					required : 'Vui lòng nhập số điện thoại!',
-					pattern : "Vui lòng nhập đúng định dạng!",
+					required : 'Vui lòng nhập số điện thoại nhà xuất bản!',
+					pattern : "Vui lòng nhập đúng định dạng số điện thoại!",
+					maxlength : "Vui lòng nhập đúng định dạng số điện thoại!!",
 				}
 			}
 		});

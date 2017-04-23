@@ -58,7 +58,6 @@ public class DangKyAccountAction extends Action {
 			}
 			saveErrors(request, actionErrors);
 			if (actionErrors.size() > 0) {
-				System.out.println("1");
 				request.getSession().setAttribute("errorRegistration", "true");
 				return mapping.findForward("dkAccError");
 			}
@@ -72,10 +71,9 @@ public class DangKyAccountAction extends Action {
 			String email = accountForm.getEmail();
 			String quyen = "ROLE_USER";
 			accountBO.themAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen);
-			System.out.println("2");
+			request.getSession().setAttribute("dkx", "#modalLogin");
 			return mapping.findForward("dkAccXong");
 		} else {
-			System.out.println("3");
 			return mapping.findForward("dkAcc");
 		}
 	}

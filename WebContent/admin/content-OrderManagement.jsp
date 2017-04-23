@@ -68,6 +68,26 @@
 					});
 </script>
 <fmt:setLocale value="vi-VN" />
+<div class="modal fade" id="confirm-ThanhToan" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Xác nhận đơn hàng</h4>
+			</div>
+			<div class="modal-body">
+				<p>Bạn có muốn xác nhận đơn hàng này không ?</p>
+				<p class="debug-url"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+				<a class="btn btn-danger btn-ok">Có</a>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -100,6 +120,7 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
+						<h2>Danh sách đơn hàng</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
@@ -140,8 +161,9 @@
 													${fn:replace(pat, ".", ",")}</td>
 												<bean:define id="status" name="order" property="status" />
 												<td id="status-${orderNum}" class="text-center"><a
+													data-toggle="modal" data-target="#confirm-ThanhToan"
 													href="javascript:void(0)"
-													onclick="return setDelivery('${orderNum}')"> <c:if
+													data-href="return setDelivery('${orderNum}')"> <c:if
 															test="${status == 1}">
 															<i class="glyphicon glyphicon-ok"></i>
 														</c:if> <c:if test="${status == 0}">
@@ -166,7 +188,8 @@
 													success : function(data) {
 														$("#status-" + orderNum)
 																.html(data);
-														console.log(data);
+														$('#confirm-ThanhToan')
+																.modal('hide');
 													},
 													timeout : 100000,
 													error : function(e) {
@@ -174,6 +197,16 @@
 													}
 												});
 									}
+								</script>
+								<script>
+									$('#confirm-ThanhToan').on(
+											'show.bs.modal',
+											function(e) {
+												$(this).find('.btn-ok').attr(
+														'onclick',
+														$(e.relatedTarget)
+																.data('href'));
+											});
 								</script>
 							</c:if>
 						</div>

@@ -29,6 +29,8 @@ public class DanhSachAccountAction extends Action {
 			request.setAttribute("logged", true);
 			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
 				request.setAttribute("admin", true);
+				request.setAttribute("management", "AccountManagement");
+
 				ArrayList<Account> listAccount;
 				AccountBO accountBO = new AccountBO();
 				String userName = nguoiDungForm.getUserName();

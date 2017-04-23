@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//WebContent/admin/content-Book-Management.jsp=UTF-8
 encoding//WebContent/admin/index.jsp=UTF-8
 encoding//WebContent/admin/leftside-navbar.jsp=UTF-8
+encoding//WebContent/admin/top-navbar.jsp=UTF-8
 encoding//WebContent/testMultipleSelected.jsp=UTF-8
 encoding//src/action/BookManagementAction.java=UTF-8
 encoding//src/action/ConfirmOrderAction.java=UTF-8

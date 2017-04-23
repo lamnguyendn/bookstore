@@ -18,13 +18,13 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<form-bean name="categoryForm" type="form.CategoryForm" />
 		<form-bean name="authorForm" type="form.AuthorForm" />
 		<form-bean name="publisherForm" type="form.PublisherForm" />
+		<form-bean name="commentForm" type="form.CommentForm" />
 	</form-beans>
 	<action-mappings>
 		<!-- Public -->
 		<action path="/checkLogin" name="loginForm" type="action.CheckLoginAction"
 			scope="request" input="/index.do">
-			<forward name="loginAdminSuccess" path="/bookManagement.do"
-				redirect="true" />
+			<forward name="loginAdminSuccess" path="/bookManagement.do" />
 			<forward name="loginUserSuccess" path="/index.do" redirect="true" />
 			<forward name="loginFailed" path="/index.do" />
 		</action>
@@ -179,25 +179,24 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		</action>
 		<action path="/xoaKm" name="khuyenMaiForm" scope="request"
 			type="action.XoaKhuyenMaiAction" input="/listKhuyenMai.jsp">
-			<forward name="xoaKm" path="/showlistkm.do" />
+			<forward name="xoaKm" path="/showlistkm.do" redirect="true" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action input="/suaKhuyenMai.jsp" name="khuyenMaiForm" path="/suaKM"
 			scope="request" type="action.SuaKhuyenMaiAction">
-			<forward name="suaKM" path="/suaKhuyenMai.jsp" />
-			<forward name="suaKMxong" path="/showlistkm.do" />
+			<forward name="suaKM" path="/admin/index.jsp" />
+			<forward name="suaKMxong" path="/showlistkm.do" redirect="true" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action input="/themKhuyenMai.jsp" name="khuyenMaiForm" path="/themKM"
 			scope="request" type="action.ThemKhuyenMaiAction" validate="true">
-			<forward name="themKMerror" path="/themKhuyenMai.jsp" />
-			<forward name="themKMxong" path="/showlistkm.do" />
+			<forward name="themKMerror" path="/admin/index.jsp" />
+			<forward name="themKMxong" path="/showlistkm.do" redirect="true" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action path="/showlistkm" name="danhSachKhuyenMaiForm" scope="request"
 			type="action.ListKhuyenMai">
-			<forward name="thanhcong" path="/listKhuyenMai.jsp" />
-			<forward name="thatbai" path="/test.jsp" />
+			<forward name="thanhcong" path="/admin/index.jsp" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<!-- End Promotion Management -->
@@ -205,27 +204,26 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<!-- Account Management -->
 		<action input="/login.jsp" name="danhSachAccountForm" path="/danh-sach"
 			scope="request" type="action.DanhSachAccountAction">
-			<forward name="dsAccount" path="/danhSachAccount.jsp" />
+			<forward name="dsAccount" path="/admin/index.jsp" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action input="/themAccount.jsp" name="accountForm" path="/themAcc"
 			scope="request" type="action.ThemAccountAction" validate="true">
-			<forward name="themAcc" path="/themAccount.jsp" />
-			<forward name="themAccError" path="/themAccount.jsp" />
+			<forward name="themAcc" path="/admin/index.jsp" />
+			<forward name="themAccError" path="/admin/index.jsp" />
 			<forward name="themAccXong" path="/danh-sach.do" redirect="true" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action input="/navbar.jsp" name="accountForm" path="/dang-ky"
 			scope="request" type="action.DangKyAccountAction" validate="true">
-			<forward name="dkAcc" path="/dangKy.jsp" />
+			<forward name="dkAcc" path="/index.do" />
 			<forward name="dkAccError" path="/index.do" />
 			<forward name="dkAccXong" path="/index.do" redirect="true" />
 			<forward name="dangNhapRoi" path="/index.do" redirect="true" />
-			<forward name="404" path="/404.html" redirect="true" />
 		</action>
 		<action input="/suaAccount.jsp" name="accountForm" path="/suaAcc"
 			scope="request" type="action.SuaAccountAction">
-			<forward name="suaAcc" path="/suaAccount.jsp" />
+			<forward name="suaAcc" path="/admin/index.jsp" />
 			<forward name="suaAccXong" path="/danh-sach.do" redirect="true" />
 			<forward name="404" path="/404.html" redirect="true" />
 		</action>
@@ -273,7 +271,7 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		</action>
 		<action path="/deleteCategory" name="categoryForm" scope="request"
 			type="action.DeleleCategoryAction" input="/listCategory.jsp">
-			<forward name="delete" path="/showlistcategory.do" />
+			<forward name="delete" path="/showlistcategory.do" redirect="true" />
 		</action>
 		<action path="/editCategory" name="categoryForm" scope="request"
 			type="action.EditCategoryAction">
@@ -323,19 +321,27 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		</action>
 		<action path="/deletePublisher" name="publisherForm" scope="request"
 			type="action.DeletePublisherAction" input="/listPublisher.jsp">
-			<forward name="delete" path="/showlistpublisher.do" />
+			<forward name="delete" path="/showlistpublisher.do" redirect="true" />
 		</action>
 		<action path="/editPublisher" name="publisherForm" scope="request"
 			type="action.EditPublisherAction">
 			<forward name="editpublisher" path="/admin/index.jsp" />
-			<forward name="editsuccess" path="/showlistpublisher.do" />
+			<forward name="editsuccess" path="/showlistpublisher.do"
+				redirect="true" />
 		</action>
 		<action path="/addPublisher" name="publisherForm" scope="request"
 			type="action.AddPublisherAction">
-			<forward name="addsuccess" path="/showlistpublisher.do" />
+			<forward name="addsuccess" path="/showlistpublisher.do"
+				redirect="true" />
 			<forward name="adderror" path="/admin/index.jsp" />
 		</action>
 		<!-- End Publisher Management -->
+
+		<!-- Comment Management -->
+		<action path="/addComment" name="commentForm" scope="request"
+			type="action.CommentAction">
+		</action>
+		<!-- End Comment Management -->
 
 		<!-- Multi Selected -->
 		<action path="/testMultipleSelected" scope="request"

@@ -32,11 +32,12 @@ public class SuaKhuyenMaiAction extends Action {
 			request.setAttribute("logged", true);
 			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
 				request.setAttribute("admin", true);
+				request.setAttribute("management", "EditPromotion");
 
 				KhuyenMaiForm khuyenMaiForm = (KhuyenMaiForm) form;
 				PromotionBO khuyenMaiBO = new PromotionBO();
 				String maKm = khuyenMaiForm.getMaKm();
-				if ("submit".equals(khuyenMaiForm.getSubmit())) {
+				if ("Sửa".equals(khuyenMaiForm.getSubmit())) {
 					String tenKm = khuyenMaiForm.getTenKm();
 					float phanTramKm = khuyenMaiForm.getPhanTramKm();
 					int trangThai = khuyenMaiForm.getTrangThai();

@@ -11,7 +11,11 @@
 <bean:define id="actionBook" property="actionBook" name="bookForm" />
 <bean:define id="submitName" property="submitName" name="bookForm" />
 <bean:define id="actionName" property="actionName" name="bookForm" />
-
+<style>
+input[type="file"] {
+	color: transparent;
+}
+</style>
 <div class="right_col" role="main">
 	<div class="">
 		<div class="page-title">
@@ -227,7 +231,7 @@
 								<div id="price1"></div>
 								<logic:messagesPresent>
 									<html:messages id="msg">
-										<c:if test="${msg eq 'Vui lòng nhập mã sách!' }">
+										<c:if test="${msg eq 'Vui lòng nhập đơn giá!' }">
 											<label class="error">${msg}</label>
 										</c:if>
 										<c:if test="${msg eq 'Mã sách đã tồn tại!' }">

@@ -12,7 +12,7 @@
 <!-- Validate -->
 <script type="text/javascript" src="js/jquery-validation.js"></script>
 <script type="text/javascript" src="js/additional-methods.min.js"></script>
-<script type="text/javascript" src="js/validateRegistration.js"></script>
+<!-- <script type="text/javascript" src="js/validateRegistration.js"></script> -->
 <script type="text/javascript">
 	function displayModalLogin() {
 		$('#modalLogin').modal('show');
@@ -24,7 +24,70 @@
 		$('#modalRegistration').modal('show');
 	}
 </script>
+<style>
+.ln_solid {
+	border-top: 1px solid #e5e5e5;
+	color: #ffffff;
+	background-color: #ffffff;
+	height: 1px;
+	margin: 20px 0;
+}
+</style>
+<style>
+input.error, select.error, textarea.error {
+	border: 1px solid #CE5454;
+	box-shadow: 0 0 4px -2px #CE5454;
+	position: relative;
+	left: 0;
+	-moz-animation: .7s 1 shake linear;
+	-webkit-animation: 0.7s 1 shake linear;
+}
 
+.error-form-control {
+	border: 1px solid #CE5454;
+	box-shadow: 0 0 4px -2px #CE5454;
+	position: relative;
+	left: 0;
+	-moz-animation: .7s 1 shake linear;
+	-webkit-animation: 0.7s 1 shake linear;
+}
+
+label.error {
+	left: 0;
+	float: left;
+	margin: 0 0 0 40px;
+	padding: 3px 10px;
+	color: #FFF;
+	border-radius: 3px 4px 4px 3px;
+	background-color: #CE5454;
+	/* max-width: 200px; */
+	white-space: pre;
+	position: relative;
+	left: -15px;
+	opacity: 1;
+	z-index: 1;
+	transition: 0.15s ease-out;
+	border: 1px solid transparent;
+	font-weight: 400 !important;
+}
+
+label.error::after {
+	content: '';
+	display: block;
+	height: 0;
+	width: 0;
+	border-color: transparent #CE5454 transparent transparent;
+	border-style: solid;
+	border-width: 11px 7px;
+	position: absolute;
+	left: -13px;
+	top: 1px;
+}
+@media screen and (min-width: 768px) {
+	#modalRegistration .modal-dialog  {width:800px;}
+
+}
+</style>
 <nav class="navbar navbar-inverse navbar-fixed-top" id="header"
 	style="background: #189eff; padding-top: 10px;">
 	<div class="container-fluid">
@@ -40,9 +103,8 @@
 			<ul class="nav navbar-nav">
 				<c:if test="${logged}">
 					<c:if test="${admin}">
-						<li class="dropdown"><a class="dropdown-toggle"
-							data-toggle="dropdown" href="#">Quản lý<span class="caret"></span></a>
-							<ul class="dropdown-menu">
+						<li class="dropdown"><a href="/BookStore/bookManagement.do">Quản
+								lý</a> <%-- <ul class="dropdown-menu">
 								<li><html:link action="/orderManagement">Đơn hàng</html:link>
 								</li>
 								<li><html:link action="/danh-sach">Tài
@@ -52,7 +114,7 @@
 								Mãi</html:link></li>
 								<li><html:link action="/thongke">Thống
 										Kê</html:link></li>
-							</ul></li>
+							</ul> --%></li>
 					</c:if>
 				</c:if>
 				<li class="dropdown"><a class="dropdown-toggle"
@@ -234,91 +296,110 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<html:form styleId="myForm"
-							styleClass="form-horizontal form-label-left" action="/dang-ky"
-							method="post">
-							<div class="form-group">
-								<label class="control-label col-md-4 col-sm-3 col-xs-12"
-									for="userName">Tên tài khoản <span class="required">*</span>
+						<html:form action="/dang-ky" method="post"
+							styleClass="form-horizontal form-label-left" styleId="myForm">
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
+									tài khoản <span class="required">*</span>
 								</label>
-								<div class="col-md-8 col-sm-9 col-xs-12">
-									<html:text styleId="userName" property="userName"
+								<div class="col-md-4 col-sm-6 col-xs-12">
+									<html:text property="userName" styleId="userName"
 										styleClass="form-control col-md-7 col-xs-12" />
-									<span style="color: red;"> <html:errors
-											property="userError" />
-									</span>
 								</div>
+								<div id="userName1"></div>
+								<logic:messagesPresent>
+									<html:messages id="msg">
+										<c:if test="${msg eq 'Vui lòng nhập tên tài khoản!' }">
+											<label class="error">${msg}</label>
+										</c:if>
+										<c:if test="${msg eq 'Tên tài khoản đã tồn tại!' }">
+											<label class="error">${msg}</label>
+										</c:if>
+									</html:messages>
+								</logic:messagesPresent>
 							</div>
-							<div class="form-group">
-								<label class="control-label col-md-4 col-sm-4 col-xs-12"
-									for="passWord">Mật khẩu <span class="required">*</span>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mật
+									khẩu <span class="required">*</span>
 								</label>
-								<div class="col-md-8 col-sm-8 col-xs-12">
-									<html:password property="passWord"
-										styleClass="form-control col-md-7 col-xs-12"
-										styleId="passWord" />
-									<span style="color: red;"><html:errors
-											property="passError" /></span>
+								<div class="col-md-4 col-sm-6 col-xs-12">
+									<html:password property="passWord" styleId="passWord"
+										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
+								<div id="passWord1"></div>
+								<logic:messagesPresent>
+									<html:messages id="msg">
+										<c:if test="${msg eq 'Vui lòng nhập mật khẩu!' }">
+											<label class="error">${msg}</label>
+										</c:if>
+									</html:messages>
+								</logic:messagesPresent>
 							</div>
-							<div class="form-group">
-								<label for="re-password"
-									class="control-label col-md-4 col-sm-4 col-xs-12">Nhập
-									lại mật khẩu <span class="required">*</span>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Xác
+									nhận mật khẩu <span class="required">*</span>
 								</label>
-								<div class="col-md-8 col-sm-8 col-xs-12">
-									<html:password property="passWord1"
-										styleClass="form-control col-md-7 col-xs-12"
-										styleId="passWord1" />
+								<div class="col-md-4 col-sm-6 col-xs-12">
+									<html:password property="passWord1" styleId="passWord1"
+										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
+								<div id="passWord11"></div>
 							</div>
-							<div class="form-group">
-								<label class="control-label col-md-4 col-sm-4 col-xs-12">Họ
-									và tên <span class="required">*</span>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Họ
+									tên <span class="required">*</span>
 								</label>
-								<div class="col-md-8 col-sm-8 col-xs-12">
-									<html:text styleId="ten"
-										styleClass="form-control col-md-7 col-xs-12 col-md-7 col-xs-12"
-										property="ten" />
+								<div class="col-md-4 col-sm-6 col-xs-12">
+									<html:text property="ten" styleId="ten"
+										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
+								<div id="ten1"></div>
 							</div>
-							<div class="form-group">
-								<label class="control-label col-md-4 col-sm-4 col-xs-12">Số
-									điện thoại </label>
-								<div class="col-md-8 col-sm-8 col-xs-12">
-									<html:text property="soDienThoai"
-										styleClass="form-control col-md-7 col-xs-12"
-										styleId="soDienThoai" />
-									<span style="color: red;"><html:errors
-											property="phoneError" /></span>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Số
+									điện thoại <span class="required">*</span>
+								</label>
+								<div class="col-md-4 col-sm-6 col-xs-12">
+									<html:text property="soDienThoai" styleId="soDienThoai"
+										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
+								<div id="soDienThoai1"></div>
+								<logic:messagesPresent>
+									<html:messages id="msg">
+										<c:if
+											test="${msg eq 'Vui lòng nhập đúng định dạng số điện thoại!' }">
+											<label class="error">${msg}</label>
+										</c:if>
+									</html:messages>
+								</logic:messagesPresent>
 							</div>
-							<div class="form-group">
-								<label class="control-label col-md-4 col-sm-4 col-xs-12">Địa
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Địa
 									chỉ <span class="required">*</span>
 								</label>
-								<div class="col-md-8 col-sm-8 col-xs-12">
-									<html:text property="diaChi"
+								<div class="col-md-4 col-sm-6 col-xs-12">
+									<html:text property="diaChi" styleId="diaChi"
 										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
+								<div id="diaChi1"></div>
 							</div>
-							<div class="form-group">
-								<label class="control-label col-md-4 col-sm-4 col-xs-12">Email
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Email
 									<span class="required">*</span>
 								</label>
-								<div class="col-md-8 col-sm-8 col-xs-12">
-									<html:text property="email"
+								<div class="col-md-4 col-sm-6 col-xs-12">
+									<html:text property="email" styleId="email"
 										styleClass="form-control col-md-7 col-xs-12" />
-									<span style="color: red;"> <html:errors
-											property="emailError" /></span>
 								</div>
+								<div id="email1"></div>
 							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">
-								<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-									<html:submit styleClass="remodal-confirm" property="submit"
+								<div class="col-md-6 col-md-offset-3">
+									<html:submit styleClass="btn btn-success" property="submit"
 										value="Đăng ký"></html:submit>
-									<html:reset styleClass="remodal-cancel">Nhập lại</html:reset>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Quay lại</button>
 								</div>
 							</div>
 						</html:form>
@@ -345,11 +426,100 @@
 		session.removeAttribute("dkx");
 	%>
 </c:if>
-s
-<!-- <script type="text/javascript">
-	$(document).ready(function() {
-		$('#modalRegistration').modal('show');
-	});
-</script> -->
 <script src="dist/remodal.min.js"></script>
 <script src="build/js/custom.min.js"></script>
+<script>
+	$(document)
+			.ready(
+					function() {
+						$('#myForm')
+								.validate(
+										{
+											errorPlacement : function(error,
+													element) {
+												if (element.attr("name") == "userName")
+													error
+															.insertAfter("#userName1");
+												else if (element.attr("name") == "passWord")
+													error
+															.insertAfter("#passWord1");
+												else if (element.attr("name") == "passWord1")
+													error
+															.insertAfter("#passWord11");
+												else if (element.attr("name") == "ten")
+													error.insertAfter("#ten1");
+												else if (element.attr("name") == "soDienThoai")
+													error
+															.insertAfter("#soDienThoai1");
+												else if (element.attr("name") == "diaChi")
+													error
+															.insertAfter("#diaChi1");
+												else if (element.attr("name") == "email")
+													error
+															.insertAfter("#email1");
+											},
+											rules : {
+												userName : {
+													required : true,
+													maxlength : 20
+												},
+												passWord : {
+													required : true,
+													maxlength : 20
+												},
+												passWord1 : {
+													required : true,
+													equalTo : '#passWord'
+												},
+												ten : {
+													required : true,
+													maxlength : 50,
+													pattern : /[a-zA-Z\s]+/
+												},
+												soDienThoai : {
+													required : true,
+													pattern : /[0-9]{10,11}/,
+												},
+												diaChi : {
+													required : true,
+													maxlength : 100
+												},
+												email : {
+													required : true,
+													pattern : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+												}
+											},
+											messages : {
+												userName : {
+													required : 'Vui lòng nhập tên tài khoản!',
+													maxlength : 'Tên tài khoản không được vượt quá 20 kí tự!'
+												},
+												passWord : {
+													required : 'Vui lòng nhập mật khẩu!',
+													maxlength : 'Mật khẩu không được vượt quá 20 kí tự!'
+												},
+												passWord1 : {
+													required : 'Vui lòng nhập xác nhận mật khẩu!',
+													equalTo : 'Mật khẩu phải trùng khớp!',
+												},
+												ten : {
+													required : 'Vui lòng nhập họ tên!',
+													maxlength : 'Họ tên không được vượt quá 50 kí tự!',
+													pattern : 'Họ tên không được chứa kí tự đặc biệt',
+												},
+												soDienThoai : {
+													required : 'Vui lòng nhập số điện thoại!',
+													pattern : 'Vui lòng nhập đúng định dạng số điện thoại!',
+												},
+												diaChi : {
+													required : 'Vui lòng nhập địa chỉ!',
+													maxlength : 'Địa chỉ không được vượt quá 100 kí tự!'
+												},
+												email : {
+													required : 'Vui lòng nhập email!',
+													pattern : 'Vui lòng nhập đúng định dạng email!'
+												}
+											}
+										});
+					});
+</script>

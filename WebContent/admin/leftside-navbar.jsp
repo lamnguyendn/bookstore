@@ -10,6 +10,7 @@
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 	<div class="menu_section">
 		<ul class="nav side-menu">
+			<li><a href="/BookStore/index.do"><i class="fa fa-home"></i> Trang chủ </a></li>
 			<li><a><i class="fa fa-book"></i> Quản lý sách <span
 					class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu">
@@ -27,14 +28,14 @@
 					<li><a href="form_upload.html">Form Upload</a></li>
 					<li><a href="form_buttons.html">Form Buttons</a></li>
 				</ul></li>
-			<li><a><i class="fa fa-home"></i> Quản lý nhà xuất bản <span
-					class="fa fa-chevron-down"></span></a>
+			<li><a><i class="fa fa-paint-brush"></i> Quản lý nhà xuất
+					bản <span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu">
 					<li><html:link action="/showlistpublisher">  Danh sách
 							</html:link></li>
 					<li><html:link action="/addPublisher"> Thêm mới </html:link></li>
 				</ul></li>
-			<li><a><i class="fa fa-user"></i> Quản lý tác giả <span
+			<li><a><i class="fa fa-edit"></i> Quản lý tác giả <span
 					class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu">
 					<li><html:link action="/showlistauthor">  Danh sách
@@ -53,6 +54,18 @@
 				<ul class="nav child_menu">
 					<li><html:link action="/orderManagement">Danh sách</html:link>
 					</li>
+				</ul></li>
+			<li><a><i class="fa fa-bullhorn"></i> Quản lý khuyến mãi <span
+					class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li><html:link action="/showlistkm">Danh sách</html:link></li>
+					<li><html:link action="/themKM"> Thêm mới </html:link></li>
+				</ul></li>
+			<li><a><i class="fa fa-user"></i> Quản lý tài khoản <span
+					class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li><html:link action="/danh-sach">Danh sách</html:link></li>
+					<li><html:link action="/themAcc"> Thêm mới </html:link></li>
 				</ul></li>
 		</ul>
 	</div>

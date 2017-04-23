@@ -34,7 +34,7 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mã
 									danh mục <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-5 col-xs-12">
 									<html:text property="categoryNum" styleId="categoryNum"
 										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
@@ -58,7 +58,7 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
 									danh mục <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-5 col-xs-12">
 									<html:text property="categoryName" styleId="categoryName"
 										styleClass="form-control col-md-7 col-xs-12" />
 								</div>

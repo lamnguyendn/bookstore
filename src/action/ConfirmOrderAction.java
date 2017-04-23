@@ -40,11 +40,15 @@ public class ConfirmOrderAction extends Action {
 				int status = orderBO.getStatusOrder(orderNum);
 				if (status == 0) {
 					status = 1;
-					result = "<a href=\"javascript:void(0)\" onclick=\"return setDelivery('" + orderNum + "')\">"
+					result = "<a href=\"javascript:void(0)\" "
+							+ " data-toggle=\"modal\" data-target=\"#confirm-ThanhToan\""
+							+ " data-href=\"return setDelivery('" + orderNum + "')\">"
 							+ " <i class=\"glyphicon glyphicon-ok\"></i>" + "</a>";
 				} else {
 					status = 0;
-					result = "<a href=\"javascript:void(0)\" onclick=\"return setDelivery('" + orderNum + "')\">"
+					result = "<a href=\"javascript:void(0)\" "
+							+ " data-toggle=\"modal\" data-target=\"#confirm-ThanhToan\""
+							+ "data-href=\"return setDelivery('" + orderNum + "')\">"
 							+ "<i class=\"glyphicon glyphicon-remove\"></i>" + "</a>";
 				}
 				orderBO.updateOrder(orderNum, status);

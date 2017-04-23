@@ -139,6 +139,55 @@ hr.style18:before {
 	text-decoration: underline;
 }
 </style>
+<style>
+.x_panel {
+	position: relative;
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 10px 17px;
+	display: inline-block;
+	background: #fff;
+	border: 1px solid #E6E9ED;
+	-webkit-column-break-inside: avoid;
+	-moz-column-break-inside: avoid;
+	column-break-inside: avoid;
+	opacity: 1;
+	transition: all .2s ease;
+}
+
+.x_title {
+	border-bottom: 2px solid #E6E9ED;
+	padding: 1px 5px 6px;
+	margin-bottom: 10px;
+}
+
+.x_title h2 {
+	margin: 5px 0 6px;
+	float: left;
+	display: block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+h2 {
+	font-size: 18px;
+	font-weight: 400;
+}
+
+.panel_toolbox {
+	float: right;
+	min-width: 70px;
+}
+
+.panel_toolbox>li {
+	float: left;
+	cursor: pointer;
+}
+</style>
+<!-- Font Awesome -->
+<link href="admin/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
 </head>
 <body>
 	<div id="wrapper">
@@ -188,6 +237,42 @@ hr.style18:before {
 						thêm</button>
 				</center> --%>
 					<!-- </div> -->
+				</div>
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>Bình luận</h2>
+								<ul class="nav navbar-right panel_toolbox">
+									<li><a class="collapse-link"><i
+											class="fa fa-chevron-up"></i></a></li>
+								</ul>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<form action="/BookStore/addComment.do" method="post"
+									class="form-horizontal form-label-left" id="myForm">
+									<div class="item form-group">
+										<label class="control-label">Viết nhận xét của bạn vào
+											bên dưới: </label>
+										<div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+											<textarea name="noiDung" id="noiDung"
+												class="form-control col-md-7 col-xs-12"></textarea>
+											<input type="hidden" name="isbn" value="${bookDetail.isbn}">
+										</div>
+										<div id="noiDung1"></div>
+									</div>
+									<div class="ln_solid"></div>
+									<div class="form-group">
+										<div class="col-md-6 col-md-offset-3">
+											<input type="submit" class="btn btn-success"
+												value="Gửi bình luận" />
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<hr class="style18">
@@ -242,6 +327,29 @@ hr.style18:before {
 				$('#content1').removeClass('content1-after');
 				$('#content1').addClass('content1-before');
 			}
+		});
+	</script>
+	<!-- Validate  -->
+	<script type="text/javascript" src="js/jquery-validation.js"></script>
+	<script type="text/javascript" src="js/additional-methods.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#myForm').validate({
+				errorPlacement : function(error, element) {
+					if (element.attr("name") == "noiDung")
+						error.insertAfter("#noiDung1");
+				},
+				rules : {
+					noiDung : {
+						required : true,
+					}
+				},
+				messages : {
+					noiDung : {
+						required : 'Vui lòng nhập nội dung bình luận!',
+					}
+				}
+			});
 		});
 	</script>
 </body>

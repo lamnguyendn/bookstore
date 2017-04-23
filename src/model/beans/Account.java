@@ -18,6 +18,17 @@ public class Account {
 		this.role = role;
 	}
 
+	public Account(String userName, String password, String ten, String soDienThoai, String diaChi, String email,
+			String role) {
+		this.userName = userName;
+		this.password = password;
+		this.ten = ten;
+		this.soDienThoai = soDienThoai;
+		this.diaChi = diaChi;
+		this.email = email;
+		this.role = role;
+	}
+
 	public String getUserName() {
 		return userName;
 	}

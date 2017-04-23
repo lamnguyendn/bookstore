@@ -46,9 +46,11 @@ public class SuaAccountAction extends Action {
 			request.setAttribute("logged", true);
 			if ("ROLE_ADMIN".equalsIgnoreCase(accountSession.getRole())) {
 				request.setAttribute("admin", true);
+				request.setAttribute("management", "EditAccount");
+
 				// sua account
 				String userName = accountForm.getUserName();
-				if ("Lưu lại".equals(accountForm.getSubmit())) {
+				if ("Sửa".equals(accountForm.getSubmit())) {
 					ActionErrors actionErrors = new ActionErrors();
 					if (!accountForm.getPassWord().equals(accountForm.getPassWord())) {
 						actionErrors.add("passError", new ActionMessage("error.password.trong"));
@@ -64,7 +66,7 @@ public class SuaAccountAction extends Action {
 						return mapping.findForward("suaAcc");
 					}
 				}
-				if ("Lưu lại".equals(accountForm.getSubmit())) {
+				if ("Sửa".equals(accountForm.getSubmit())) {
 					String passWord = accountForm.getPassWord();
 					String ten = accountForm.getTen();
 					String soDienThoai = accountForm.getSoDienThoai();
