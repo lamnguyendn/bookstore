@@ -52,4 +52,8 @@ public class ViewDetailBookAction extends Action {
 		return mapping.findForward("view");
 	}
 
+	public static void main(String[] args) {
+		String str = "Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that";
+		System.out.println(str.length());
+	}
 }

@@ -1,10 +1,8 @@
 package model.beans;
 
-import java.util.Date;
-
 public class Comment {
 	private String noiDung;
-	private Date ngayBinhLuan;
+	private String ngayBinhLuan;
 	private String isbn;
 	private int pheDuyet;
 	private String userName;
@@ -17,11 +15,11 @@ public class Comment {
 		this.noiDung = noiDung;
 	}
 
-	public Date getNgayBinhLuan() {
+	public String getNgayBinhLuan() {
 		return ngayBinhLuan;
 	}
 
-	public void setNgayBinhLuan(Date ngayBinhLuan) {
+	public void setNgayBinhLuan(String ngayBinhLuan) {
 		this.ngayBinhLuan = ngayBinhLuan;
 	}
 

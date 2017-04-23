@@ -1,15 +1,18 @@
 package form;
 
-import java.util.Date;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 
 import model.beans.Comment;
 
 public class CommentForm extends ActionForm {
 	private String noiDung;
-	private Date ngayBinhLuan;
+	private String ngayBinhLuan;
 	private String isbn;
 	private int pheDuyet;
 	private String userName;
@@ -23,11 +26,11 @@ public class CommentForm extends ActionForm {
 		this.noiDung = noiDung;
 	}
 
-	public Date getNgayBinhLuan() {
+	public String getNgayBinhLuan() {
 		return ngayBinhLuan;
 	}
 
-	public void setNgayBinhLuan(Date ngayBinhLuan) {
+	public void setNgayBinhLuan(String ngayBinhLuan) {
 		this.ngayBinhLuan = ngayBinhLuan;
 	}
 
@@ -63,4 +66,12 @@ public class CommentForm extends ActionForm {
 		this.listOfComments = listOfComments;
 	}
 
+	@Override
+	public void reset(ActionMapping mapping, HttpServletRequest request) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
 }

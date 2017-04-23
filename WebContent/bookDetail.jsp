@@ -56,7 +56,7 @@ hr.style18:before {
 }
 
 @media only screen and (max-width : 480px) {
-	img {
+	.img {
 		width: 70%;
 		height: 50%;
 	}
@@ -70,7 +70,7 @@ hr.style18:before {
 }
 
 @media only screen and (min-width : 480px) {
-	img {
+	.img {
 		width: 50%;
 	}
 	.content1-before {
@@ -92,7 +92,7 @@ hr.style18:before {
 }
 
 @media only screen and (min-width : 970px) {
-	img {
+	.img {
 		width: 70%;
 		height: 70%;
 	}
@@ -184,10 +184,63 @@ h2 {
 	float: left;
 	cursor: pointer;
 }
+
+<!--
+Binh luan -->.list-unstyled {
+	padding-left: 0;
+	list-style: none;
+}
+
+ul.msg_list li {
+	background: #f7f7f7;
+	padding: 5px;
+	display: -ms-flexbox;
+	display: flex;
+	margin: 6px 6px 0;
+	width: 96% !important;
+}
+
+ul.msg_list li a {
+	padding: 3px 5px !important;
+	text-decoration: none;
+}
+
+ul.msg_list li a .time {
+	font-size: 11px;
+	font-style: italic;
+	font-weight: bold;
+	position: absolute;
+	/* right: 35px; */
+}
+
+ul.msg_list li a .message {
+	display: block !important;
+	font-size: 15px;
+	color: #333;
+}
+
+.userName {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+ul.msg_list li .image img {
+	border-radius: 2px 2px 2px 2px;
+	-webkit-border-radius: 2px 2px 2px 2px;
+	float: left;
+	margin-right: 10px;
+	width: 75px;
+}
+
+.image:after {
+	content: ".";
+	visibility: hidden;
+}
 </style>
 <!-- Font Awesome -->
 <link href="admin/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
+
 </head>
 <body>
 	<div id="wrapper">
@@ -201,7 +254,8 @@ h2 {
 				<div class="row">
 					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 						<center>
-							<html:img action="viewBookImage?isbn=${bookDetail.isbn}" />
+							<html:img action="viewBookImage?isbn=${bookDetail.isbn}"
+								styleClass="img" />
 							<div class="row">
 								<html:link style="margin-top: 20px; margin-bottom: 20px;"
 									styleClass="btn btn-warning"
@@ -248,28 +302,49 @@ h2 {
 											class="fa fa-chevron-up"></i></a></li>
 								</ul>
 								<div class="clearfix"></div>
+								<logic:messagesPresent>
+									<html:messages id="msg">
+										<c:if test="${msg eq 'Bạn phải đăng nhập để bình luận!' }">
+											<label class="error">${msg}</label>
+										</c:if>
+									</html:messages>
+								</logic:messagesPresent>
 							</div>
 							<div class="x_content">
-								<form action="/BookStore/addComment.do" method="post"
-									class="form-horizontal form-label-left" id="myForm">
+								<div class="row">
+									<ul class="list-unstyled msg_list" id="listOfComments">
+										<c:forEach items="${listOfComments}" var="comment">
+											<li class="row"><span class="image col-lg-1"> <img
+													src="image/noavatar.png" alt="img col-lg-2"> &nbsp;
+											</span> <span class="col-lg-10"> <span
+													class="userName col-lg-12">${comment.userName} </span> <span
+													class="message col-lg-12">${comment.noiDung} </span>
+											</span> <span class="time">${comment.ngayBinhLuan}</span></li>
+										</c:forEach>
+									</ul>
+								</div>
+								<div class="ln_solid"></div>
+								<html:form action="/addComment" method="post"
+									acceptCharset="UTF-8" styleClass="form-horizontal"
+									styleId="myForm1">
 									<div class="item form-group">
-										<label class="control-label">Viết nhận xét của bạn vào
-											bên dưới: </label>
-										<div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-											<textarea name="noiDung" id="noiDung"
-												class="form-control col-md-7 col-xs-12"></textarea>
-											<input type="hidden" name="isbn" value="${bookDetail.isbn}">
+										<label class="control-label col-md-12 col-sm-12 col-xs-12"
+											style="margin-bottom: 10px; text-align: left;">Viết
+											nhận xét của bạn vào bên dưới <span class="required">*</span>
+										</label>
+										<div class="col-md-9 col-sm-9 col-lg-9 col-xs-12"
+											id="noiDung1">
+											<html:textarea property="noiDung" styleId="noiDung"
+												styleClass="form-control col-md-7 col-xs-12" />
+											<%-- <input type="hidden" name="isbn" value="${bookDetail.isbn}"> --%>
+											<html:hidden property="isbn" value="${bookDetail.isbn}" />
 										</div>
-										<div id="noiDung1"></div>
 									</div>
 									<div class="ln_solid"></div>
 									<div class="form-group">
-										<div class="col-md-6 col-md-offset-3">
-											<input type="submit" class="btn btn-success"
-												value="Gửi bình luận" />
-										</div>
+										<html:submit styleClass="btn btn-success" value="Gửi nhận xét" />
 									</div>
-								</form>
+								</html:form>
 							</div>
 						</div>
 					</div>
@@ -329,28 +404,73 @@ h2 {
 			}
 		});
 	</script>
+
 	<!-- Validate  -->
 	<script type="text/javascript" src="js/jquery-validation.js"></script>
 	<script type="text/javascript" src="js/additional-methods.min.js"></script>
 	<script>
-		$(document).ready(function() {
-			$('#myForm').validate({
-				errorPlacement : function(error, element) {
-					if (element.attr("name") == "noiDung")
-						error.insertAfter("#noiDung1");
-				},
-				rules : {
-					noiDung : {
-						required : true,
-					}
-				},
-				messages : {
-					noiDung : {
-						required : 'Vui lòng nhập nội dung bình luận!',
-					}
-				}
-			});
-		});
+		$(document)
+				.ready(
+						function() {
+							$('#myForm1')
+									.validate(
+											{
+												errorPlacement : function(
+														error, element) {
+													if (element.attr("name") == "noiDung")
+														error
+																.insertAfter("#noiDung1");
+												},
+												rules : {
+													noiDung : {
+														required : true,
+													}
+												},
+												messages : {
+													noiDung : {
+														required : 'Vui lòng nhập nội dung bình luận!'
+													}
+												},
+												submitHandler : function(form) {
+													var userName = '${sessionScope.userName}';
+													var noiDung = $('#noiDung')
+															.val();
+
+													if (userName == '') {
+														$(
+																"<label class='error'>Vui lòng đăng nhập để bình luận!</label>")
+																.insertAfter(
+																		'#noiDung1');
+														return false;
+													}
+													console.log(noiDung);
+													var isbn = '${bookDetail.isbn}';
+													$
+															.ajax({
+																url : "addComment.do?noiDung="
+																		+ noiDung
+																		+ "&isbn="
+																		+ isbn,
+																method : "post",
+																contentType : "application/json; charset=utf-8",
+																timeout : 100000,
+																success : function(
+																		data) {
+																	$(
+																			"#listOfComments")
+																			.load(
+																					location.href
+																							+ " #listOfComments");
+																	$(
+																			'#noiDung')
+																			.val(
+																					'');
+																}
+															});
+													return false;
+												}
+											});
+						});
 	</script>
 </body>
 </html>

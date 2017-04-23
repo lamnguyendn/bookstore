@@ -12,4 +12,8 @@ public class CommentBO {
 		return commentDAO.getListOfComments(isbn);
 	}
 
+	public void insertComment(Comment comment) {
+		commentDAO.insertComment(comment);
+	}
+
 }
