@@ -4,6 +4,7 @@ public class CartLineInfo {
 	private Book book;
 	private int quantity;
 	private boolean outOfStock;
+	private int inventoryQuantity;
 
 	public CartLineInfo() {
 		this.quantity = 0;
@@ -35,6 +36,14 @@ public class CartLineInfo {
 
 	public void setOutOfStock(boolean outOfStock) {
 		this.outOfStock = outOfStock;
+	}
+
+	public int getInventoryQuantity() {
+		return inventoryQuantity;
+	}
+
+	public void setInventoryQuantity(int inventoryQuantity) {
+		this.inventoryQuantity = inventoryQuantity;
 	}
 
 }

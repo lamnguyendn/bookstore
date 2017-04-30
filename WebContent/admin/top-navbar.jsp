@@ -35,11 +35,11 @@
 			</div>
 			<ul
 				class="nav navbar-nav navbar-right visible-sm-block visible-md-inline visible-lg-inline">
-				<li class="" id="wrapper"><a href="javascript:;" id="cityclick"
+				<li id="wrapper"><a href="javascript:;" id="cityclick"
 					class="user-profile dropdown-toggle" data-toggle="dropdown"
 					aria-expanded="false"> <span
 						style="font-size: 20px; display: inline-block; font-family: FontAwesome; font-style: normal; font-weight: normal;">
-							Xin chào <c:out value="${sessionScope.ten}"></c:out>
+							<c:out value="${sessionScope.ten}"></c:out>
 					</span>
 				</a>
 					<ul class="dropdown-menu dropdown-usermenu pull-right"

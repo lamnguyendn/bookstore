@@ -11,7 +11,7 @@ html, body {
 
 #content {
 	padding-bottom: 100px; /* Height of the footer element */
-	margin-top: 75px;
+	/* margin-top: 75px; */
 }
 
 #footer {

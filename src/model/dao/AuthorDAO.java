@@ -125,11 +125,14 @@ public class AuthorDAO {
 	public void editAuthor(String authorNum, String authorName, String authorInformation) {
 		Connection con = DataAccess.connect();
 
-		String sql = String.format("UPDATE tacgia " + " SET ten_tg = N'%s',tieusu_tg =N'%s'" + " WHERE ma_tg = '%s'",
-				authorName, authorInformation, authorNum);
+		String sql = "UPDATE tacgia " + " SET ten_tg = ?, tieusu_tg = ?" + " WHERE ma_tg = ? ";
 		try {
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate(sql);
+//			Statement stmt = con.createStatement();
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, authorName);
+			pstm.setString(2, authorInformation);
+			pstm.setString(3, authorNum);
+			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -187,5 +190,41 @@ public class AuthorDAO {
 			}
 		}
 		return a;
+	}
+
+	public ArrayList<Author> getListOfAuthorsByFindKey(String findKey) {
+		ArrayList<Author> arr = new ArrayList<>();
+		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+		String sql = "SELECT * FROM tacgia " + " WHERE ten_tg LIKE N'%" + findKey + "%' ;";
+		try {
+			stm = con.createStatement();
+			rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				Author a = new Author();
+				a.setAuthorNum(rs.getString("ma_tg"));
+				a.setAuthorName(rs.getString("ten_tg"));
+				a.setAuthorInformation(rs.getString("tieusu_tg"));
+				arr.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+				rs.close();
+				stm.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return arr;
 	}
 }

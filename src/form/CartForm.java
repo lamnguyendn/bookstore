@@ -8,6 +8,7 @@ import model.beans.CartInfo;
 public class CartForm extends ActionForm {
 	private CartInfo cart;
 	private double amountTotal;
+	private double amountTotalAfterUsingPromotionCode;
 	private String isbn;
 	private int quantity;
 	private String promotionCode;
@@ -50,6 +51,14 @@ public class CartForm extends ActionForm {
 
 	public void setPromotionCode(String promotionCode) {
 		this.promotionCode = promotionCode;
+	}
+
+	public double getAmountTotalAfterUsingPromotionCode() {
+		return amountTotalAfterUsingPromotionCode;
+	}
+
+	public void setAmountTotalAfterUsingPromotionCode(double amountTotalAfterUsingPromotionCode) {
+		this.amountTotalAfterUsingPromotionCode = amountTotalAfterUsingPromotionCode;
 	}
 
 }

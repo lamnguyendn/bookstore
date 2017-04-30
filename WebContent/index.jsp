@@ -226,11 +226,13 @@ a {
 <body>
 	<!-- Navbar -->
 	<div id="wrapper">
-		<%@include file="navbar.jsp"%>
+		<%@ include file="navbar.jsp" %>
 		<fmt:setLocale value="vi-VN" />
-		<div id="content" style="margin-top: 50px;">
+		<!-- <div id="content" style="margin-top: 50px;"> -->
+		<div id="content">
 			<div class="container-fluid">
-				<div class="row" style="margin-top: 25px;">
+				<!-- <div class="row" style="margin-top: 25px;"> -->
+				<div class="row">
 					<div class="col-md-2 col-lg-2 visible-lg-block">
 						<ul id="sidebar" class="list-category">
 							<li id="title-category"
@@ -374,7 +376,8 @@ a {
 					</div>
 				</div>
 			</div>
-			<%@include file="footer.jsp"%>
 		</div>
+		<%@include file="footer.jsp"%>
+	</div>
 </body>
 </html>

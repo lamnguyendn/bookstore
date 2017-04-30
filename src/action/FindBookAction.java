@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import form.BookForm;
 import model.beans.Account;
 import model.beans.Book;
+import model.bo.AuthorBO;
 import model.bo.BookBO;
 import model.bo.CategoryBO;
 import model.bo.PublisherBO;
@@ -27,6 +28,7 @@ public class FindBookAction extends Action {
 	PublisherBO publisherBO = new PublisherBO();
 	CategoryBO categoryBO = new CategoryBO();
 	ArrayList<Book> result = new ArrayList<>();
+	AuthorBO authorBO = new AuthorBO();
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -50,22 +52,37 @@ public class FindBookAction extends Action {
 			pages = 1;
 		}
 		String findKey = bookForm.getFindKey();
-		System.out.println("findKey input : " + findKey);
 		if (null != findKey && !"".equalsIgnoreCase(findKey) && findKey.length() != 0) {
 			byte[] utf8 = findKey.getBytes(StandardCharsets.UTF_8);
 			findKey = new String(utf8, StandardCharsets.UTF_8);
 			bookForm.setFindKey(findKey);
-			System.out.println("findKey UTF-8 : " + findKey);
-			byte[] latin1 = new String(utf8, "UTF-8").getBytes("ISO-8859-1");
-			String latin = new String(latin1);
-			System.out.println("latin : " + latin);
 			int totalPages = pagination(findKey);
-			request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
-			bookForm.setListOfBooksByFindKey(bookBO.getListOfBooksLimitByFindKey(first, last, findKey));
+
+			int rdSearch = bookForm.getRdSearch();
+			if (rdSearch == 0) {
+				// find Author
+				bookForm.setListOfAuthors(authorBO.getListOfAuthorsByFindKey(findKey));
+				bookForm.setListOfBooksLimitByAuthorNameOrBookName(new ArrayList<>());
+				bookForm.setListOfBooks(new ArrayList<>());
+			} else if (rdSearch == 1) {
+				// find Book
+				bookForm.setListOfBooks(bookBO.getListOfBooksLimitByFindKey(first, last, findKey));
+				bookForm.setListOfBooksLimitByAuthorNameOrBookName(new ArrayList<>());
+				bookForm.setListOfAuthors(new ArrayList<>());
+			} else {
+				// find All
+				bookForm.setListOfBooksLimitByAuthorNameOrBookName(
+						bookBO.getListOfBooksLimitByAuthorNameOrBookName(first, last, findKey));
+				bookForm.setListOfAuthors(new ArrayList<>());
+				bookForm.setListOfBooks(new ArrayList<>());
+			}
 			bookForm.setTotalPages(totalPages);
 		} else {
-			bookForm.setListOfBooksByFindKey(new ArrayList<>());
+			bookForm.setListOfBooksLimitByAuthorNameOrBookName(new ArrayList<>());
+			bookForm.setListOfAuthors(new ArrayList<>());
+			bookForm.setListOfBooks(new ArrayList<>());
 		}
+		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
 		return mapping.findForward("findBook");
 	}
 

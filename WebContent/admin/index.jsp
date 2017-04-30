@@ -209,6 +209,11 @@ label.error::after {
 				<!-- page content -->
 				<%@include file="content-Account-Edit.jsp"%>
 			</c:if>
+			
+			<c:if test="${management eq 'CommentManagement'}">
+				<!-- page content -->
+				<%@include file="content-Comment-Management.jsp"%>
+			</c:if>
 			<!-- /page content -->
 
 			<!-- footer content -->

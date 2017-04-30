@@ -8,20 +8,21 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-/**
- * Đăng xuất
- * 
- * @author LamNX
- *
- */
-public class LogoutAction extends Action {
+import form.CommentForm;
+import model.bo.CommentBO;
+
+public class CommentManagementAction extends Action {
+	CommentBO commentBO = new CommentBO();
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		request.getSession().removeAttribute("userName");
-		request.getSession().removeAttribute("logged");
-		return mapping.findForward("logout");
+		
+		CommentForm commentForm = (CommentForm) form;
+		request.setAttribute("management", "CommentManagement");
+
+		commentForm.setListOfComments(commentBO.getListOfComments());
+		return mapping.findForward("list");
 	}
 
 }

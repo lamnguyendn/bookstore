@@ -29,7 +29,7 @@ public class OrderDAO {
 	OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
 	PromotionDAO promotionDAO = new PromotionDAO();
 
-	public void saveOrder(CartInfo cartInfo, HttpServletRequest request) {
+	public void saveOrderTraSau(CartInfo cartInfo, HttpServletRequest request) {
 		Order order = new Order();
 		Account account = (Account) request.getSession().getAttribute("userName");
 
@@ -65,9 +65,44 @@ public class OrderDAO {
 
 			orderDetailDAO.saveOrderDetail(detail);
 		}
-
 	}
+	public void saveOrderTraTruoc(CartInfo cartInfo, HttpServletRequest request) {
+		Order order = new Order();
+		Account account = (Account) request.getSession().getAttribute("userName");
 
+		order.setOrderNum(UUID.randomUUID().toString());
+		order.setCreatedDate(new Date());
+		if (cartInfo.getListOfPromotionCodes().size() == 0) {
+			order.setTotal(cartInfo.getAmountTotal());
+		} else {
+			order.setTotal(cartInfo.getAmountTotalAfterUsingPromotionCode());
+		}
+		order.setUserName(account.getUserName());
+		order.setStatus(1);
+
+		CustomerForm customerForm = cartInfo.getCustomerInfo();
+		order.setCustomerName(customerForm.getName());
+		order.setCustomerEmail(customerForm.getEmail());
+		order.setCustomerPhone(customerForm.getPhone());
+		order.setCustomerAddress(customerForm.getAddress());
+
+		saveOrder(order);
+
+		for (Promotion promotion : cartInfo.getListOfPromotionCodes()) {
+			promotionDAO.addPromotionCodeIntoOrder(promotion.getMaKM(), order.getOrderNum());
+		}
+
+		for (CartLineInfo line : cartInfo.getCartLines()) {
+			OrderDetail detail = new OrderDetail();
+			detail.setOrderNum(order.getOrderNum());
+			detail.setPrice(line.getBook().getPrice());
+			detail.setQuantity(line.getQuantity());
+			String isbn = line.getBook().getIsbn();
+			detail.setBookNum(isbn);
+
+			orderDetailDAO.saveOrderDetail(detail);
+		}
+	}
 	private void saveOrder(Order order) {
 		String sql = "INSERT INTO donhang VALUES(?,?,?,?,?,?,?,?,?)";
 		Connection con = DataAccess.connect();

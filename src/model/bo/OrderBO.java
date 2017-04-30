@@ -11,8 +11,11 @@ import model.dao.OrderDAO;
 public class OrderBO {
 	OrderDAO orderDAO = new OrderDAO();
 
-	public void saveOrder(CartInfo cartInfo, HttpServletRequest request) {
-		orderDAO.saveOrder(cartInfo, request);
+	public void saveOrderTraTruoc(CartInfo cartInfo, HttpServletRequest request) {
+		orderDAO.saveOrderTraTruoc(cartInfo, request);
+	}
+	public void saveOrderTraSau(CartInfo cartInfo, HttpServletRequest request) {
+		orderDAO.saveOrderTraSau(cartInfo, request);
 	}
 
 	public int getStatusOrder(String orderNum) {

@@ -32,6 +32,56 @@
 </style>
 </head>
 <body>
+	<script>
+		function displayModalNotExists() {
+			$('#notExists').modal('show');
+		}
+		function displayModalBalanceNotEnough() {
+			$('#balanceNotEnough').modal('show');
+		}
+	</script>
+	<!-- Modal Thông báo tài khoản chưa đăng ký -->
+	<div id="notExists" class="modal fade" role="dialog">
+		<div class="modal-dialog" style="width:40%;">
+			<!-- Modal content-->
+			<div class="modal-content"
+				style="color: #E9EDEF; background-color: rgba(231, 76, 60, 0.88); border-color: rgba(231, 76, 60, 0.88);">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="modal-title">
+						<span class="glyphicon glyphicon-exclamation-sign"></span> Thông
+						báo!
+					</h3>
+				</div>
+				<div class="modal-body">
+					<p>Tài khoản chưa được đăng ký ở trang thanh toán trực tuyến!</p>
+					<p>Vui lòng sử dụng hình thức thanh toán khác!</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Thông báo tài khoản không đủ tiền để thanh toán -->
+	<div id="balanceNotEnough" class="modal fade" role="dialog">
+		<div class="modal-dialog"style="width:40%;">
+			<!-- Modal content-->
+			<div class="modal-content"
+				style="color: #E9EDEF; background-color: rgba(231, 76, 60, 0.88); border-color: rgba(231, 76, 60, 0.88);">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="modal-title">
+						<span class="glyphicon glyphicon-exclamation-sign"></span> Thông
+						báo!
+					</h3>
+				</div>
+				<div class="modal-body">
+					<p>Số dư tài khoản không đủ để thực hiện giao dịch!</p>
+					<p>Vui lòng sử dụng hình thức thanh toán khác hoặc nạp tiền vào
+						tài khoản!</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div id="wrapper">
 		<%@include file="navbar.jsp"%>
 		<fmt:setLocale value="vi-VN" />
@@ -53,17 +103,25 @@
 					</ul>
 				</div>
 				<div class="row">
-					<html:form method="POST" action="/payCartFourthStep">
-						<!-- Edit Cart -->
-						<html:link styleClass="navi-item" action="/showCart">
-					Cập nhật giỏ hàng
-				</html:link>
-						<html:link styleClass="navi-item"
-							action="/payCartFirstStep?edit=1">Sửa thông tin</html:link>
-						<div>
-							<html:submit value="Xác nhận" styleClass="btn btn-warning" />
-						</div>
-					</html:form>
+					<!-- Edit Cart -->
+					<html:link styleClass="navi-item btn btn-default"
+						action="/showCart">
+							Cập nhật giỏ hàng
+						</html:link>
+					<html:link styleClass="navi-item btn btn-info"
+						action="/payCartFirstStep?edit=1">Sửa thông tin</html:link>
+					<button data-toggle="collapse" data-target="#demo"
+						class="btn btn-primary">Thanh toán</button>
+					<div id="demo" class="collapse">
+						<html:form method="POST" action="/payCartFourthStep"
+							style="margin-top: 10px;">
+							<html:submit value="Trả sau" styleClass="btn btn-warning" />
+						</html:form>
+						<html:form method="POST" action="/thanhToanTraTruoc"
+							style="margin-top: 10px;">
+							<html:submit value="Trả trước" styleClass="btn btn-success" />
+						</html:form>
+					</div>
 				</div>
 				<div class="row" style="margin-top: 50px;">
 					<h3>Chi tiết đơn hàng</h3>
@@ -147,5 +205,21 @@
 		</div>
 		<%@include file="footer.jsp"%>
 	</div>
+	<c:if test="${sessionScope.balanceNotEnough eq 'true'}">
+		<script type="text/javascript">
+			displayModalBalanceNotEnough();
+		</script>
+		<%
+			session.removeAttribute("balanceNotEnough");
+		%>
+	</c:if>
+	<c:if test="${sessionScope.notExists eq 'true'}">
+		<script type="text/javascript">
+			displayModalNotExists();
+		</script>
+		<%
+			session.removeAttribute("notExists");
+		%>
+	</c:if>
 </body>
 </html>

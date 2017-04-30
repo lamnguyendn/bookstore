@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import form.CustomerForm;
+import model.bo.BookBO;
 
 public class CartInfo {
 	private String orderNum;
@@ -73,7 +74,7 @@ public class CartInfo {
 	public void setAmountTotal(double amountTotal) {
 	}
 
-	private CartLineInfo findLineByIsbn(String isbn) {
+	public CartLineInfo findLineByIsbn(String isbn) {
 		for (CartLineInfo line : this.cartLines) {
 			if (line.getBook().getIsbn().equals(isbn)) {
 				return line;
@@ -89,28 +90,29 @@ public class CartInfo {
 			line = new CartLineInfo();
 			line.setBook(book);
 			line.setQuantity(quantity);
+			line.setInventoryQuantity(book.getQuantity());
 			this.cartLines.add(line);
 			return;
 		}
-		int newQuantity = line.getQuantity() + quantity;
-		if (newQuantity <= 0) {
-			this.cartLines.remove(line);
-		} else {
-			line.setQuantity(newQuantity);
+		if (line.getQuantity() < 20) {
+			int newQuantity = line.getQuantity() + quantity;
+			if (newQuantity <= 0) {
+				this.cartLines.remove(line);
+			} else if (newQuantity <= 20 && book.getQuantity() >= newQuantity) {
+				line.setQuantity(newQuantity);
+			}
 		}
-	}
-
-	public void validate() {
-
 	}
 
 	public void updateBook(String isbn, int quantity) {
 		CartLineInfo line = this.findLineByIsbn(isbn);
-
+		BookBO bookBO = new BookBO();
+		Book book = bookBO.findBookByIsbn(isbn);
 		if (line != null) {
+			line.setInventoryQuantity(book.getQuantity());
 			if (quantity <= 0) {
 				this.cartLines.remove(line);
-			} else {
+			} else if (line.getQuantity() <= 20 && book.getQuantity() >= quantity) {
 				line.setQuantity(quantity);
 			}
 		}

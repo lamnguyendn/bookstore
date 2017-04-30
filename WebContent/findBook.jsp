@@ -72,57 +72,134 @@ hr.style18:before {
 	<div id="wrapper">
 		<%@include file="navbar.jsp"%>
 		<div class="container marketing" id="content">
-			<bean:define id="listOfBooksByFindKey" name="bookForm"
-				property="listOfBooksByFindKey" />
-			<c:if test="${fn:length(listOfBooksByFindKey)>0}">
-				<center>
-					<h1 style="margin-bottom: 100px;">
-						<bean:write property="categoryName" name="bookForm" />
-					</h1>
-				</center>
-				<center>
-					<div class="container">
-						<div class="row col-lg-12 category-detail" id="dataTable">
-							<logic:iterate id="book" property="listOfBooksByFindKey"
-								name="bookForm">
-								<div class="col-md-3 col-lg-3 col-sm-4 col-xs-6 book-info">
-									<bean:define id="image_1" property="image_1" name="book" />
-									<html:img action="viewBookImage?isbn=${book.isbn}"
-										style="height: 250px; width: 200px; margin-bottom: 20px;"></html:img>
-									<h2 class="title-book">
-										<bean:write name="book" property="name" />
-									</h2>
-									<p class="description">
-										<bean:write name="book" property="description" />
-									</p>
-									<p>
-										<html:link styleClass="btn btn-default"
-											action="detailBook?isbn=${book.isbn}">
+			<bean:define id="listOfBooksLimitByAuthorNameOrBookName"
+				name="bookForm" property="listOfBooksLimitByAuthorNameOrBookName" />
+			<bean:define id="listOfAuthors" name="bookForm"
+				property="listOfAuthors" />
+			<bean:define id="listOfBooks" name="bookForm" property="listOfBooks" />
+			<c:choose>
+				<%-- Find All --%>
+				<c:when
+					test="${fn:length(listOfBooksLimitByAuthorNameOrBookName)>0}">
+					<center>
+						<h1 style="margin-bottom: 100px;">
+							<bean:write property="categoryName" name="bookForm" />
+						</h1>
+					</center>
+					<center>
+						<div class="container">
+							<div class="row col-lg-12 category-detail" id="dataTable">
+								<logic:iterate id="book"
+									property="listOfBooksLimitByAuthorNameOrBookName"
+									name="bookForm">
+									<div class="col-md-3 col-lg-3 col-sm-4 col-xs-6 book-info">
+										<bean:define id="image_1" property="image_1" name="book" />
+										<html:img action="viewBookImage?isbn=${book.isbn}"
+											style="height: 250px; width: 200px; margin-bottom: 20px;"></html:img>
+										<h2 class="title-book">
+											<bean:write name="book" property="name" />
+										</h2>
+										<p class="description">
+											<bean:write name="book" property="description" />
+										</p>
+										<p>
+											<html:link styleClass="btn btn-default"
+												action="detailBook?isbn=${book.isbn}">
 								Xem thêm &raquo;
 							</html:link>
-									</p>
-								</div>
-							</logic:iterate>
-						</div>
-						<bean:define id="totalPages" property="totalPages" name="bookForm" />
-						<bean:define id="categoryNum" property="categoryNum"
-							name="bookForm" />
+										</p>
+									</div>
+								</logic:iterate>
+							</div>
+							<bean:define id="totalPages" property="totalPages"
+								name="bookForm" />
+							<bean:define id="categoryNum" property="categoryNum"
+								name="bookForm" />
 
-						<nav aria-label="Page navigation">
-						<ul class="pagination" id="pagination"></ul>
-						</nav>
+							<nav aria-label="Page navigation">
+							<ul class="pagination" id="pagination"></ul>
+							</nav>
+						</div>
+					</center>
+				</c:when>
+
+				<%-- find only Author --%>
+				<c:when test="${fn:length(listOfAuthors)>0}">
+					<link rel="stylesheet"
+						href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" />
+					<div class="container">
+						<c:forEach items="${listOfAuthors}" var="author">
+							<div class="well">
+								<div class="media">
+									<img class="media-object fa fa-user blue pull-left"
+										src="image/noavatar1.png" style="width: 10%;">
+									<div class="media-body">
+										<h4 class="media-heading">
+											<html:link
+												action="findBookByAuthor?authorNum=${author.authorNum}"
+												styleClass="link">${author.authorName}
+											</html:link>
+										</h4>
+										<p>${author.authorInformation}</p>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
 					</div>
-				</center>
-			</c:if>
-			<c:if test="${empty listOfBooksByFindKey}">
-				<center>
-					<h1 style="margin-top: 100px;">Không tìm thấy dữ liệu tương
-						ứng</h1>
-					<html:link styleClass="btn btn-success" action="/index">
-					Trở lại trang chủ
-									</html:link>
-				</center>
-			</c:if>
+				</c:when>
+
+				<%-- find only Book --%>
+				<c:when test="${fn:length(listOfBooks)>0}">
+					<center>
+						<h1 style="margin-bottom: 100px;">
+							<bean:write property="categoryName" name="bookForm" />
+						</h1>
+					</center>
+					<center>
+						<div class="container">
+							<div class="row col-lg-12 category-detail" id="dataTable">
+								<logic:iterate id="book" property="listOfBooks" name="bookForm">
+									<div class="col-md-3 col-lg-3 col-sm-4 col-xs-6 book-info">
+										<bean:define id="image_1" property="image_1" name="book" />
+										<html:img action="viewBookImage?isbn=${book.isbn}"
+											style="height: 250px; width: 200px; margin-bottom: 20px;"></html:img>
+										<h2 class="title-book">
+											<bean:write name="book" property="name" />
+										</h2>
+										<p class="description">
+											<bean:write name="book" property="description" />
+										</p>
+										<p>
+											<html:link styleClass="btn btn-default"
+												action="detailBook?isbn=${book.isbn}">
+								Xem thêm &raquo;
+							</html:link>
+										</p>
+									</div>
+								</logic:iterate>
+							</div>
+							<bean:define id="totalPages" property="totalPages"
+								name="bookForm" />
+							<bean:define id="categoryNum" property="categoryNum"
+								name="bookForm" />
+
+							<nav aria-label="Page navigation">
+							<ul class="pagination" id="pagination"></ul>
+							</nav>
+						</div>
+					</center>
+				</c:when>
+				<c:otherwise>
+					<center>
+						<h1 style="margin-top: 100px;">Không tìm thấy dữ liệu tương
+							ứng</h1>
+						<html:link styleClass="btn btn-default" action="/index">
+						Trở lại trang chủ
+					</html:link>
+					</center>
+				</c:otherwise>
+			</c:choose>
+
 			<bean:define id="totalPages" property="totalPages" name="bookForm" />
 			<bean:define id="findKey" property="findKey" name="bookForm" />
 		</div>

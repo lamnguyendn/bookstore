@@ -35,4 +35,8 @@ public class AuthorBO {
 		return authorDAO.findAuthorByAuthorNum(authorNum);
 	}
 
+	public ArrayList<Author> getListOfAuthorsByFindKey(String findKey) {
+		return authorDAO.getListOfAuthorsByFindKey(findKey);
+	}
+
 }

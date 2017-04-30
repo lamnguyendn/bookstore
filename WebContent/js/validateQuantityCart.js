@@ -5,13 +5,15 @@ $(document).ready(function(){
 				rules: {
 					quantity : {
 						required : /^[0-9]+$/,
-						min : 1
+						min : 1,
+						max : 20
 					}
 				},
 				messages: {
 					quantity : {
 						required : "<span style='color:red;'>Vui lòng nhập số lượng</span>",
 						min : "<span style='color:red;'>Vui lòng nhập số lượng lớn hơn 0</span>",
+						max : "<span style='color:red;'>Vui lòng nhập số lượng nhỏ hơn 20</span>"
 					}
 				}
 			});

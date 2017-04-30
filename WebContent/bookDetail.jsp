@@ -243,6 +243,26 @@ ul.msg_list li .image img {
 
 </head>
 <body>
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Xác nhận xóa</h4>
+				</div>
+				<div class="modal-body">
+					<p>Bạn có muốn xóa không ?</p>
+					<p class="debug-url"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+					<a class="btn btn-danger btn-ok">Có</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="wrapper">
 		<!-- Navbar -->
 		<%@include file="navbar.jsp"%>
@@ -314,12 +334,30 @@ ul.msg_list li .image img {
 								<div class="row">
 									<ul class="list-unstyled msg_list" id="listOfComments">
 										<c:forEach items="${listOfComments}" var="comment">
-											<li class="row"><span class="image col-lg-1"> <img
-													src="image/noavatar.png" alt="img col-lg-2"> &nbsp;
-											</span> <span class="col-lg-10"> <span
-													class="userName col-lg-12">${comment.userName} </span> <span
-													class="message col-lg-12">${comment.noiDung} </span>
-											</span> <span class="time">${comment.ngayBinhLuan}</span></li>
+											<li class="row"><span
+												class="image col-lg-1 col-md-1 col-sm-2 col-xs-2"> <img
+													src="image/noavatar.png" alt="img"> &nbsp;
+											</span> <span class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+													<span
+													class="userName col-lg-12 col-md-12 col-sm-12 col-xs-12">${comment.ten}
+												</span> <span class="message col-lg-12">${comment.noiDung} </span>
+											</span> <span class="col-lg-2 col-md-2"> <span
+													class="col-lg-12 col-sm-12 col-md-12"> <a> <span class="time">
+																${comment.ngayBinhLuan}</span></a>
+												</span> <c:if
+														test="${comment.userName eq sessionScope.userName.userName || sessionScope.userName.role eq 'ROLE_ADMIN'}">
+														<%-- <span class="col-lg-12"> <html:link
+																action="/editComment?userName=${comment.userName}&isbn=${comment.isbn}&ma_BL=${comment.ma_BL}">
+																<span class="glyphicon glyphicon-pencil col-lg-12"></span>
+															</html:link>
+														</span> --%>
+														<span class="col-lg-12"> <a data-toggle="modal"
+															data-target="#confirm-delete"
+															data-href="return deleteComment(${comment.ma_BL})"><span
+																class="glyphicon glyphicon-remove col-lg-12"></span> </a>
+														</span>
+													</c:if>
+											</span></li>
 										</c:forEach>
 									</ul>
 								</div>
@@ -336,7 +374,6 @@ ul.msg_list li .image img {
 											id="noiDung1">
 											<html:textarea property="noiDung" styleId="noiDung"
 												styleClass="form-control col-md-7 col-xs-12" />
-											<%-- <input type="hidden" name="isbn" value="${bookDetail.isbn}"> --%>
 											<html:hidden property="isbn" value="${bookDetail.isbn}" />
 										</div>
 									</div>
@@ -404,7 +441,31 @@ ul.msg_list li .image img {
 			}
 		});
 	</script>
-
+	<script>
+		function deleteComment(ma_BL) {
+			$.ajax({
+				url : "deleteComment.do?ma_BL=" + ma_BL,
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				success : function(data) {
+					$('#confirm-delete')
+					.modal('hide');
+					$("#listOfComments").load(
+							location.href + " #listOfComments");
+				},
+				timeout : 100000,
+				error : function(e) {
+					console.log(e);
+				}
+			});
+		}
+		$('#confirm-delete').on(
+				'show.bs.modal',
+				function(e) {
+					$(this).find('.btn-ok').attr('onclick',
+							$(e.relatedTarget).data('href'));
+				});
+	</script>
 	<!-- Validate  -->
 	<script type="text/javascript" src="js/jquery-validation.js"></script>
 	<script type="text/javascript" src="js/additional-methods.min.js"></script>
@@ -437,8 +498,11 @@ ul.msg_list li .image img {
 															.val();
 
 													if (userName == '') {
+														$(document).ready(function(){
+															$("label").remove(".error");
+														});
 														$(
-																"<label class='error'>Vui lòng đăng nhập để bình luận!</label>")
+																"<label for='noiDung' generated='true' class='error' style='display: block;'>Vui lòng đăng nhập để bình luận!</label>")
 																.insertAfter(
 																		'#noiDung1');
 														return false;

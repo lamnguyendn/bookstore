@@ -8,12 +8,20 @@ import model.dao.CommentDAO;
 public class CommentBO {
 	CommentDAO commentDAO = new CommentDAO();
 
-	public List<Comment> getListOfComments(String isbn) {
-		return commentDAO.getListOfComments(isbn);
+	public List<Comment> getListOfCommentsByIsbn(String isbn) {
+		return commentDAO.getListOfCommentsByIsbn(isbn);
 	}
 
 	public void insertComment(Comment comment) {
 		commentDAO.insertComment(comment);
+	}
+
+	public List<Comment> getListOfComments() {
+		return commentDAO.getListOfComments();
+	}
+
+	public void deleteComment(int ma_BL) {
+		commentDAO.deleteComment(ma_BL);
 	}
 
 }

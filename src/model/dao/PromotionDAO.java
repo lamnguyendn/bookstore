@@ -17,7 +17,7 @@ public class PromotionDAO {
 
 	public Promotion getPromotionByCode(String promotionCodeForm) {
 		Connection con = DataAccess.connect();
-		String sql = "SELECT * from khuyenmai WHERE ma_km = '" + promotionCodeForm + "'";
+		String sql = "SELECT * from khuyenmai WHERE ma_km = '" + promotionCodeForm + "' AND trangthai = 1";
 		Promotion promotion = new Promotion();
 		try {
 			stm = con.createStatement();

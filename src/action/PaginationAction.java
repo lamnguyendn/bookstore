@@ -45,7 +45,7 @@ public class PaginationAction extends Action {
 		if (null == categoryNum || categoryNum.length() == 0 && (null == findKey || findKey.length() == 0)) {
 			result = bookBO.getListOfBooksLimit(first, last);
 		} else if ((null != findKey || 0 != findKey.length()) && (null == categoryNum || categoryNum.length() == 0)) {
-			result = bookBO.getListOfBooksLimitByFindKey(first, last, findKey);
+			result = bookBO.getListOfBooksLimitByAuthorNameOrBookName(first, last, findKey);
 		} else if ((null != categoryNum || 0 != categoryNum.length()) && (null == findKey || findKey.length() == 0)) {
 			result = bookBO.getListOfBooksLimitByCategoryNum(first, last, categoryNum);
 		}

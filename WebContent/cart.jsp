@@ -17,7 +17,7 @@
 <script src="js/jquery-3.2.0.min.js"></script>
 <script type="text/javascript" src="js/jquery-validation.js"></script>
 <script type="text/javascript" src="js/additional-methods.min.js"></script>
-<script src="js/validateQuantityCart.js"></script>
+<!-- <script src="js/validateQuantityCart.js"></script> -->
 <script src="js/scrollBar.js"></script>
 <script src="js/jquery.bootstrap-touchspin.js"></script>
 <!-- Bootstrap -->
@@ -38,13 +38,66 @@
 .media-heading {
 	padding-bottom: 5px;
 }
+
+.alert-danger:before {
+	background-image: url(image/icon-close.svg);
+	height: 16px;
+}
+
+.alert:before {
+	display: inline-block;
+	background-size: cover;
+	vertical-align: top;
+	margin-right: 11px;
+}
+
+.alert-danger:before, .alert-success:before, .alert-warning:before,
+	.tiki-cart .alert-info:before {
+	content: '';
+	width: 16px;
+}
 </style>
+<script>
+	$(document).ready(function() {
+		$('.myForm').validate({
+			errorPlacement : function(error, element) {
+				if (element.attr("name") == "quantity") {
+					$("label").remove();
+					error.insertAfter("#error1");
+				}
+			},
+			rules : {
+				quantity : {
+					required : true,
+					min : 1,
+					max : 20
+				}
+			},
+			messages : {
+				quantity : {
+					required : "Vui lòng nhập số lượng",
+					min : "Vui lòng nhập số lượng lớn hơn 0",
+					max : "Vui lòng nhập số lượng nhỏ hơn 20"
+				}
+			}
+		});
+	});
+	function chkNumeric(e) {
+		-1 !== $.inArray(e.keyCode, [ 46, 8, 9, 27, 13 ])
+				|| /65|67|86|88/.test(e.keyCode)
+				&& (!0 === e.ctrlKey || !0 === e.metaKey) || 35
+		<= e.keyCode
+		&& 40 > = e.keyCode
+				|| (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode)
+				&& (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault()
+	}
+</script>
 </head>
 <body>
 	<div id="wrapper">
 		<fmt:setLocale value="vi-VN" />
 		<%@include file="navbar.jsp"%>
-		<div id="content" >
+		<div id="content">
 			<div class="container">
 				<bean:define id="cartInfo" name="cartForm" property="cart" />
 				<bean:define id="cartLines" name="cartInfo" property="cartLines" />
@@ -62,7 +115,9 @@
 				</center>
 				<c:if test="${not empty cartLines}">
 					<div class="row">
+						<html:errors property="cartIsOutOfStockError" />
 						<div class="col-lg-8 col-md-12">
+							<div class="row" id="error1"></div>
 							<div class="row"
 								style="border-bottom: 1px solid #e1e1e1; margin-bottom: 20px;">
 								<div class="title-cart">
@@ -82,7 +137,8 @@
 								indexId="id">
 								<div class="row"
 									style="border-bottom: 1px solid #e1e1e1; margin-bottom: 20px;">
-									<html:form action="/updateCart" method="post" styleId="myForm">
+									<html:form action="/updateCart" method="post"
+										styleClass="myForm">
 										<bean:define id="isbn" name="line" property="book.isbn" />
 										<bean:define id="book" name="line" property="book" />
 										<html:hidden property="isbn" name="cartForm" value="${isbn}" />
@@ -112,7 +168,7 @@
 													</p>
 													<html:link action="/removeBookFromCart?isbn=${isbn}">
 														Xóa
-												</html:link>
+													</html:link>
 												</div>
 											</div>
 										</div>
@@ -124,20 +180,19 @@
 										</div>
 										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
 											<bean:define id="quantity" name="line" property="quantity" />
+											<bean:define id="inventoryQuantity" name="line"
+												property="inventoryQuantity" />
 											<bean:define id="outOfStock" name="line"
 												property="outOfStock" />
-											<c:if test="${not outOfStock}">
-												<html:text styleClass="form-control" property="quantity"
-													styleId="quantity" name="line"
-													onkeydown="return chkNumeric(event)" />
+											<c:if test="${inventoryQuantity > 20}">
+												<input type="number" min="1" max="20" class="form-control"
+													name="quantity" required id="quantity" name="line"
+													value="${quantity}" onkeydown="return chkNumeric(event)" />
 											</c:if>
-											<c:if test="${outOfStock}">
-												<html:text styleClass="form-control" property="quantity"
-													styleId="quantity" name="line"
-													onkeydown="return chkNumeric(event)" />
-												<span style="color: red;"> <html:errors
-														property="cartIsOutOfStockError" />
-												</span>
+											<c:if test="${inventoryQuantity <= 20}">
+												<input type="number" min="1" max="${inventoryQuantity}" class="form-control"
+													name="quantity" required id="quantity" name="line"
+													value="${quantity}" onkeydown="return chkNumeric(event)" />
 											</c:if>
 											<div style="display: none;">
 												<c:if test="${not outOfStock}">
@@ -171,7 +226,14 @@
 												</strong>
 											</h5>
 											<h5 style="border-top: 2px solid #e54d42; padding-top: 12px;">
-												Thành tiền:</h5>
+												Thành tiền: <strong style="float: right;"> <bean:define
+														name="cartForm"
+														property="amountTotalAfterUsingPromotionCode"
+														id="amountTotalAfterUsingPromotionCode" /> <fmt:formatNumber
+														value="${amountTotalAfterUsingPromotionCode}"
+														type="currency" maxFractionDigits="0" />
+												</strong>
+											</h5>
 										</div>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-6 col-xs-6">
@@ -199,7 +261,8 @@
 															<html:text property="promotionCode"
 																styleClass="form-control" />
 															<span class="input-group-btn"> <html:submit
-																	styleClass="btn btn-default">Xác nhận</html:submit>
+																	styleClass="btn btn-default"
+																	style="border-radius: 0px;">Xác nhận</html:submit>
 															</span>
 														</div>
 														<div class="promotion-errors">
@@ -268,12 +331,19 @@
 										</strong>
 									</h5>
 									<h5 style="border-top: 2px solid #e54d42; padding-top: 12px;">
-										Thành tiền:</h5>
+										Thành tiền: <strong style="float: right;"> <bean:define
+												name="cartForm"
+												property="amountTotalAfterUsingPromotionCode"
+												id="amountTotalAfterUsingPromotionCode" /> <fmt:formatNumber
+												value="${amountTotalAfterUsingPromotionCode}"
+												type="currency" maxFractionDigits="0" />
+										</strong>
+									</h5>
 								</div>
 								<html:link styleClass="btn btn-large btn-checkout"
 									action="/payCartFirstStep" style="margin-bottom:15px;">
 											TIẾN HÀNH ĐẶT HÀNG
-									</html:link>
+								</html:link>
 							</div>
 						</div>
 					</div>

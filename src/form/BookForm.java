@@ -45,7 +45,7 @@ public class BookForm extends ActionForm {
 	private ArrayList<Author> listOfAuthors;
 	private ArrayList<Book> listOfRelatedBooks;
 	private ArrayList<Book> listOfBooksByCategory;
-	private ArrayList<Book> listOfBooksByFindKey;
+	private ArrayList<Book> listOfBooksLimitByAuthorNameOrBookName;
 	private ArrayList<Book> listOfBooksByAuthor;
 
 	private String[] multiSelectedAuthor = {};
@@ -72,6 +72,15 @@ public class BookForm extends ActionForm {
 	private int totalPages;
 	private String findKey = "";
 	private int isSearch = 0;
+	private int rdSearch = 2;
+
+	public int getRdSearch() {
+		return rdSearch;
+	}
+
+	public void setRdSearch(int rdSearch) {
+		this.rdSearch = rdSearch;
+	}
 
 	private Book book;
 
@@ -299,12 +308,12 @@ public class BookForm extends ActionForm {
 		this.listOfBooksByCategory = listOfBooksByCategory;
 	}
 
-	public ArrayList<Book> getListOfBooksByFindKey() {
-		return listOfBooksByFindKey;
+	public ArrayList<Book> getListOfBooksLimitByAuthorNameOrBookName() {
+		return listOfBooksLimitByAuthorNameOrBookName;
 	}
 
-	public void setListOfBooksByFindKey(ArrayList<Book> listOfBooksByFindKey) {
-		this.listOfBooksByFindKey = listOfBooksByFindKey;
+	public void setListOfBooksLimitByAuthorNameOrBookName(ArrayList<Book> listOfBooksLimitByAuthorNameOrBookName) {
+		this.listOfBooksLimitByAuthorNameOrBookName = listOfBooksLimitByAuthorNameOrBookName;
 	}
 
 	public ArrayList<Book> getListOfBooksByAuthor() {

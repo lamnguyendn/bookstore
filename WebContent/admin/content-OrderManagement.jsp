@@ -75,10 +75,10 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Xác nhận đơn hàng</h4>
+				<h4 class="modal-title" id="myModalLabel">Xác nhận/Hủy xác nhận đơn hàng</h4>
 			</div>
 			<div class="modal-body">
-				<p>Bạn có muốn xác nhận đơn hàng này không ?</p>
+				<p>Bạn có muốn xác nhận/Hủy xác nhận đơn hàng này không ?</p>
 				<p class="debug-url"></p>
 			</div>
 			<div class="modal-footer">

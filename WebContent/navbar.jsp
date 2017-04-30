@@ -83,9 +83,21 @@ label.error::after {
 	left: -13px;
 	top: 1px;
 }
-@media screen and (min-width: 768px) {
-	#modalRegistration .modal-dialog  {width:800px;}
 
+@media screen and (min-width: 768px) {
+	#modalRegistration .modal-dialog {
+		width: 800px;
+	}
+}
+
+.search-adv {
+	display: none;
+	padding: 5px;
+}
+
+#header {
+	position: relative;
+	/* z-index: 101; */
 }
 </style>
 <nav class="navbar navbar-inverse navbar-fixed-top" id="header"
@@ -101,22 +113,12 @@ label.error::after {
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-				<c:if test="${logged}">
-					<c:if test="${admin}">
-						<li class="dropdown"><a href="/BookStore/bookManagement.do">Quản
-								lý</a> <%-- <ul class="dropdown-menu">
-								<li><html:link action="/orderManagement">Đơn hàng</html:link>
-								</li>
-								<li><html:link action="/danh-sach">Tài
-										Khoản</html:link></li>
-								<li><html:link action="/bookManagement">Sách</html:link></li>
-								<li><html:link action="/showlistkm">Khuyến
-								Mãi</html:link></li>
-								<li><html:link action="/thongke">Thống
-										Kê</html:link></li>
-							</ul> --%></li>
-					</c:if>
+				<%-- <c:if test="${sessionScope.logged eq 'true'}"> --%>
+				<c:if test="${sessionScope.userName.role eq 'ROLE_ADMIN'}">
+					<li class="dropdown"><a href="/BookStore/bookManagement.do">Quản
+							lý</a>
 				</c:if>
+				<%-- </c:if> --%>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Danh mục<span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -129,22 +131,48 @@ label.error::after {
 						</c:forEach>
 					</ul></li>
 			</ul>
-			<ul class="nav navbar-nav">
-				<div class="form-search">
-					<form id="search_form" action="/BookStore/findBook.do"
-						method="post">
+			<html:form styleId="search_form" action="/findBook" method="post">
+				<ul class="nav navbar-nav">
+					<li class="form-search" style="width: 450px;">
 						<div class="search-wrap">
 							<input type="text" name="findKey" autocomplete="off" value=""
-								placeholder="Tìm sách theo tên tác giả hoặc tên sách mong muốn ...">
+								placeholder="Tìm tác giả hoặc sách mong muốn ...">
 							<button type="submit">
 								<span>Tìm kiếm</span>
 							</button>
 						</div>
-					</form>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav visible-lg-block visible-md-block">
+					<span class="glyphicon glyphicon-plus-sign dropdown-toggle"
+						style="top: 15px; margin-left: 35px; color: #fff;"
+						data-toggle="modal" data-target="#modalSearch"></span>
+				</ul>
+				<!-- Modal -->
+				<div id="modalSearch" class="modal fade" role="dialog">
+					<div class="modal-dialog" style="width: 30%;">
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Tùy chọn tìm kiếm</h4>
+							</div>
+							<div class="modal-body">
+								<ul>
+									<li class="radio"><label><html:radio
+												property="rdSearch" value="0">Tác giả</html:radio></label></li>
+									<li class="radio"><label><html:radio
+												property="rdSearch" value="1">Sách</html:radio></label></li>
+									<li class="radio"><label><html:radio
+												property="rdSearch" value="2">Tất cả</html:radio></label></li>
+								</ul>
+							</div>
+						</div>
+					</div>
 				</div>
-			</ul>
+			</html:form>
 			<ul class="nav navbar-nav navbar-right">
-				<c:if test="${!logged}">
+				<c:if test="${empty sessionScope.userName}">
 					<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog"
 						style="background: rgba(43, 46, 56, 0.9);"
 						aria-labelledby="myModalLabel" aria-hidden="true">
@@ -213,7 +241,7 @@ label.error::after {
 				<li><html:link action="/showCart">
 						<span class="glyphicon glyphicon-shopping-cart"></span> Giỏ Hàng
 					</html:link></li>
-				<c:if test="${logged}">
+				<c:if test="${not empty sessionScope.userName}">
 					<div class="modal fade" id="confirm-logout" tabindex="-1"
 						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
@@ -245,6 +273,28 @@ label.error::after {
 	</div>
 </nav>
 <script type="text/javascript">
+	$(document).ready(function() {
+		$("#expand").click(function() {
+			$(this).css({
+				'display' : 'none'
+			});
+			$(this).parent().find("#hide-adv").css({
+				'display' : 'inline-block'
+			});
+			$(".search-adv").show("fast");
+		});
+
+		$("#hide-adv").click(function() {
+			$(this).css({
+				'display' : 'none'
+			});
+			$(this).parent().find("#expand").css({
+				'display' : 'inline-block'
+			});
+			$(".search-adv").hide("fast");
+		});
+	});
+
 	function displayModalLogin() {
 		$('#modalLogin').modal('show');
 	}

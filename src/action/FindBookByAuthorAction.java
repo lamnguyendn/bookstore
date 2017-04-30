@@ -33,7 +33,7 @@ public class FindBookByAuthorAction extends Action {
 		BookForm bookForm = (BookForm) form;
 		BookBO bookBO = new BookBO();
 		String authorNum = bookForm.getAuthorNum();
-		bookForm.setListOfBooksByAuthor(bookBO.getListOfBookByAuthor(authorNum));
+		bookForm.setListOfBooksByAuthor(bookBO.getListOfBooksByAuthor(authorNum));
 		bookForm.setAuthorName(authorBO.findAuthorByAuthorNum(authorNum).getAuthorName());
 		return mapping.findForward("view");
 	}

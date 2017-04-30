@@ -68,11 +68,12 @@ public class ShowCartAction extends Action {
 				actionErrors.add("promotionCodeError", new ActionMessage("error.promotionCodeErrorNotExists"));
 			}
 		}
+		cartForm.setAmountTotal(myCart.getAmountTotal());
 		if (myCart.getListOfPromotionCodes().size() == 0) {
-			cartForm.setAmountTotal(myCart.getAmountTotal());
+			cartForm.setAmountTotalAfterUsingPromotionCode(myCart.getAmountTotal());
 		} else {
 			myCart.getAmountTotalUsingPromotionCode();
-			cartForm.setAmountTotal(myCart.getAmountTotalAfterUsingPromotionCode());
+			cartForm.setAmountTotalAfterUsingPromotionCode(myCart.getAmountTotalAfterUsingPromotionCode());
 		}
 		cartForm.setCart(myCart);
 		saveErrors(request, actionErrors);

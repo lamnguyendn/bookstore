@@ -34,7 +34,7 @@ public class ViewDetailBookAction extends Action {
 		bookForm.setBook(bookBO.findBookByIsbn(isbn));
 		bookForm.setListOfRelatedBooks(bookBO.getListOfRelatedBooks(isbn));
 		request.setAttribute("listOfCategories", categoryBO.getListOfCategories());
-		request.setAttribute("listOfComments", commentBO.getListOfComments(isbn));
+		request.setAttribute("listOfComments", commentBO.getListOfCommentsByIsbn(isbn));
 		if (null != account) {
 			request.setAttribute("logged", true);
 			String userName = account.getUserName();

@@ -44,8 +44,8 @@ public class BookBO {
 		return bookDAO.countRowsByFindKey(findKey);
 	}
 
-	public ArrayList<Book> getListOfBooksLimitByFindKey(int first, int last, String findKey) {
-		return bookDAO.getListOfBooksLimitByFindKey(first, last, findKey);
+	public ArrayList<Book> getListOfBooksLimitByAuthorNameOrBookName(int first, int last, String findKey) {
+		return bookDAO.getListOfBooksLimitByAuthorNameOrBookName(first, last, findKey);
 	}
 
 	public ArrayList<Book> getListOfRelatedBooks(String isbn) {
@@ -56,8 +56,8 @@ public class BookBO {
 		return bookDAO.notExistsIsbn(isbn);
 	}
 
-	public ArrayList<Book> getListOfBookByAuthor(String authorNum) {
-		return bookDAO.getListOfBookByAuthor(authorNum);
+	public ArrayList<Book> getListOfBooksByAuthor(String authorNum) {
+		return bookDAO.getListOfBooksByAuthor(authorNum);
 	}
 
 	public ArrayList<Book> getListSachDX(String idTacGia) {
@@ -98,6 +98,14 @@ public class BookBO {
 
 	public ArrayList<Book> getAllOfBooks() {
 		return bookDAO.getAllOfBooks();
+	}
+
+	public ArrayList<Book> getListOfBooksLimitByAuthor(int first, int last, String findKey) {
+		return bookDAO.getListOfBooksLimitByAuthor(first, last, findKey);
+	}
+
+	public ArrayList<Book> getListOfBooksLimitByFindKey(int first, int last, String findKey) {
+		return bookDAO.getListOfBooksLimitByFindKey(first, last, findKey);
 	}
 
 }

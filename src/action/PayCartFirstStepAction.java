@@ -9,6 +9,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import common.CartProcess;
+import common.StringProcess;
 import form.CustomerForm;
 import model.beans.Account;
 import model.beans.CartInfo;
@@ -41,12 +42,15 @@ public class PayCartFirstStepAction extends Action {
 			if (cartInfo.isOutOfStock()) {
 				return mapping.findForward("showCart");
 			}
-
 			// redirect form customer's information
 			CustomerForm customerForm = (CustomerForm) form;
 			String edit = customerForm.getEdit();
 			CustomerForm customerInfo = cartInfo.getCustomerInfo();
 			if (customerInfo == null) {
+				customerForm.setAddress(StringProcess.getVaildString(account.getDiaChi()));
+				customerForm.setEmail(StringProcess.getVaildString(account.getEmail()));
+				customerForm.setName(StringProcess.getVaildString(account.getTen()));
+				customerForm.setPhone(StringProcess.getVaildString(account.getSoDienThoai()));
 				return mapping.findForward("customer");
 			}
 			if ("1".equalsIgnoreCase(edit)) {

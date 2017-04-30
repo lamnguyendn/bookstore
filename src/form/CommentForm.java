@@ -11,12 +11,21 @@ import org.apache.struts.action.ActionMapping;
 import model.beans.Comment;
 
 public class CommentForm extends ActionForm {
+	private int ma_BL;
 	private String noiDung;
 	private String ngayBinhLuan;
 	private String isbn;
 	private int pheDuyet;
 	private String userName;
 	private List<Comment> listOfComments;
+
+	public int getMa_BL() {
+		return ma_BL;
+	}
+
+	public void setMa_BL(int ma_BL) {
+		this.ma_BL = ma_BL;
+	}
 
 	public String getNoiDung() {
 		return noiDung;

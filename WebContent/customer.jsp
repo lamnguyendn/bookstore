@@ -68,7 +68,7 @@
 					</div>
 					<div class="form-group">
 						<html:submit property="submit" value="Xác nhận"
-							styleClass="btn btn-info glyphicon glyphicon-plus-sign">
+							styleClass="btn btn-info">
 						</html:submit>
 						<html:reset styleClass="btn btn-default">Nhập lại</html:reset>
 						<button type="button" class="btn btn-default" onclick="goBack()">

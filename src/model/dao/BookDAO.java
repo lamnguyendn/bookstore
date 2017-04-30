@@ -316,7 +316,7 @@ public class BookDAO {
 		return count;
 	}
 
-	public ArrayList<Book> getListOfBooksLimitByFindKey(int first, int last, String findKey) {
+	public ArrayList<Book> getListOfBooksLimitByAuthorNameOrBookName(int first, int last, String findKey) {
 		Connection con = DataAccess.connect();
 		ResultSet rs = null;
 		Statement stm = null;
@@ -476,7 +476,7 @@ public class BookDAO {
 		return false;
 	}
 
-	public ArrayList<Book> getListOfBookByAuthor(String authorNum) {
+	public ArrayList<Book> getListOfBooksByAuthor(String authorNum) {
 		ArrayList<Book> arr = new ArrayList<>();
 		String sql = "SELECT * FROM sach" + " WHERE ma_tg = '" + authorNum + "'";
 		Connection con = DataAccess.connect();
@@ -924,6 +924,88 @@ public class BookDAO {
 				book.setAuthorName(rs.getString("ten_tg"));
 				book.setCategoryName(rs.getString("ten_tl"));
 				book.setPublisherName(rs.getString("ten_nxb"));
+				arr.add(book);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+				rs.close();
+				stm.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return arr;
+	}
+
+	public ArrayList<Book> getListOfBooksLimitByAuthor(int first, int last, String findKey) {
+		ArrayList<Book> arr = new ArrayList<>();
+		String sql = "SELECT b.*, tl.ten_tl, nxb.ten_nxb, tg.ten_tg" + " FROM sach b"
+				+ " INNER JOIN theloai tl ON b.ma_tl = tl.ma_tl" + " INNER JOIN nhaxuatban nxb ON nxb.ma_nxb = b.ma_nxb"
+				+ " INNER JOIN tacgia tg ON b.ma_tg = tg.ma_tg AND (tg.ten_tg LIKE N'%" + findKey + "%') " + " limit "
+				+ first + " , " + last + ";";
+		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
+		try {
+			stm = con.createStatement();
+			rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				Book book = new Book();
+				book.setIsbn(rs.getString("isbn"));
+				book.setName(rs.getString("tensach"));
+				book.setPrice(rs.getFloat("dongia"));
+				book.setQuantity(rs.getInt("soluong"));
+				book.setPublishDate(rs.getDate("ngayxuatban"));
+				book.setImage_1(rs.getBytes("hinhanh_1"));
+				book.setDescription(rs.getString("mota"));
+				book.setAuthorNum(rs.getString("ma_tg"));
+				book.setCategoryNum(rs.getString("ma_tl"));
+				book.setPublisherNum(rs.getString("ma_nxb"));
+				arr.add(book);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+				rs.close();
+				stm.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return arr;
+	}
+
+	public ArrayList<Book> getListOfBooksLimitByFindKey(int first, int last, String findKey) {
+		ArrayList<Book> arr = new ArrayList<>();
+		String sql = "SELECT b.*, tl.ten_tl, nxb.ten_nxb, tg.ten_tg" + " FROM sach b"
+				+ " INNER JOIN theloai tl ON b.ma_tl = tl.ma_tl" + " INNER JOIN nhaxuatban nxb ON nxb.ma_nxb = b.ma_nxb"
+				+ " INNER JOIN tacgia tg ON b.ma_tg = tg.ma_tg AND (b.tensach LIKE N'%" + findKey + "%') " + " limit "
+				+ first + " , " + last + ";";
+		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
+		try {
+			stm = con.createStatement();
+			rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				Book book = new Book();
+				book.setIsbn(rs.getString("isbn"));
+				book.setName(rs.getString("tensach"));
+				book.setPrice(rs.getFloat("dongia"));
+				book.setQuantity(rs.getInt("soluong"));
+				book.setPublishDate(rs.getDate("ngayxuatban"));
+				book.setImage_1(rs.getBytes("hinhanh_1"));
+				book.setDescription(rs.getString("mota"));
+				book.setAuthorNum(rs.getString("ma_tg"));
+				book.setCategoryNum(rs.getString("ma_tl"));
+				book.setPublisherNum(rs.getString("ma_nxb"));
 				arr.add(book);
 			}
 		} catch (SQLException e) {

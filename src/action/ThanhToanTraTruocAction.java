@@ -4,23 +4,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
 
 import common.CartProcess;
+import common.PayPal;
+import common.StringProcess;
 import model.beans.Account;
 import model.beans.CartInfo;
 import model.bo.CategoryBO;
 import model.bo.OrderBO;
 
-/**
- * Thanh toán đơn hàng - bước xác nhận đơn hàng
- * 
- * @author LamNX
- *
- */
-public class PayCartFourthStepAction extends Action {
+public class ThanhToanTraTruocAction extends Action {
 	OrderBO orderBO = new OrderBO();
 	CategoryBO categoryBO = new CategoryBO();
 
@@ -34,12 +32,9 @@ public class PayCartFourthStepAction extends Action {
 		if (null != account) {
 			request.setAttribute("logged", true);
 			CartInfo cartInfo = CartProcess.getCartInSession(request);
-			// Cart have no products.
 			if (cartInfo.isEmpty()) {
-				// Redirect to shoppingCart page.
 				return mapping.findForward("showCart");
 			} else if (!cartInfo.isValidCustomer()) {
-				// Enter customer info.
 				return mapping.findForward("payCartFirstStep");
 			}
 			CartProcess.checkQuantityOutOfStock(cartInfo);
@@ -47,15 +42,28 @@ public class PayCartFourthStepAction extends Action {
 			if (cartInfo.isOutOfStock()) {
 				return mapping.findForward("showCart");
 			}
-			// xu ly thanh toan tra sau
+			// xu ly thanh toan tra truoc
 			try {
-				orderBO.saveOrderTraSau(cartInfo, request);
+				double total = 0;
+				if (cartInfo.getListOfPromotionCodes().size() == 0) {
+					total = cartInfo.getAmountTotal();
+				} else {
+					total = cartInfo.getAmountTotalAfterUsingPromotionCode();
+				}
+				String result = PayPal.payPal(account.getUserName(), total);
+				if (result.contains("The balance is not enough to make a transaction")) {
+					request.getSession().setAttribute("balanceNotEnough", "true");
+					return mapping.findForward("payCartThirdStep");
+				} else if (result.contains("does not exists")) {
+					request.getSession().setAttribute("notExists", "true");
+					return mapping.findForward("payCartThirdStep");
+				} else if (result.contains("Successfully transacted")) {
+					orderBO.saveOrderTraTruoc(cartInfo, request);
+				}
 			} catch (Exception e) {
-				// Need: Propagation.NEVER?
+				e.printStackTrace();
 				return mapping.findForward("payCartThirdStep");
 			}
-
-			// Redirect to successful page.
 			return mapping.findForward("payCartFinalStep");
 		}
 		return mapping.findForward("login");
