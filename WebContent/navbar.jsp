@@ -100,6 +100,11 @@ label.error::after {
 	/* z-index: 101; */
 }
 </style>
+<script>
+	$(document).ready(function() {
+		$("#findKey").attr("placeholder", "Tìm tác giả hoặc sách mong muốn ...");
+	});
+</script>
 <nav class="navbar navbar-inverse navbar-fixed-top" id="header"
 	style="background: #189eff; padding-top: 10px;">
 	<div class="container-fluid">
@@ -131,12 +136,15 @@ label.error::after {
 						</c:forEach>
 					</ul></li>
 			</ul>
+			<%-- <bean:define id="findKey" name="bookForm" property="findKey"/> --%>
 			<html:form styleId="search_form" action="/findBook" method="post">
 				<ul class="nav navbar-nav">
 					<li class="form-search" style="width: 450px;">
 						<div class="search-wrap">
-							<input type="text" name="findKey" autocomplete="off" value=""
-								placeholder="Tìm tác giả hoặc sách mong muốn ...">
+							<%-- <input type="text" name="findKey" autocomplete="off" value="${findKey}"
+								placeholder="Tìm tác giả hoặc sách mong muốn ..."> --%>
+							<html:text property="findKey" styleId="findKey"/>
+
 							<button type="submit">
 								<span>Tìm kiếm</span>
 							</button>
@@ -347,7 +355,8 @@ label.error::after {
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<html:form action="/dang-ky" method="post"
-							styleClass="form-horizontal form-label-left" styleId="myForm">
+							styleClass="form-horizontal form-label-left"
+							styleId="myFormRegistration">
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
 									tài khoản <span class="required">*</span>
@@ -482,7 +491,7 @@ label.error::after {
 	$(document)
 			.ready(
 					function() {
-						$('#myForm')
+						$('#myFormRegistration')
 								.validate(
 										{
 											errorPlacement : function(error,

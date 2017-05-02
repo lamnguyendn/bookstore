@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
+import common.PasswordEncoder;
 import form.AccountForm;
 import model.beans.Account;
 import model.bo.AccountBO;
@@ -67,7 +68,7 @@ public class SuaAccountAction extends Action {
 					}
 				}
 				if ("Sửa".equals(accountForm.getSubmit())) {
-					String passWord = accountForm.getPassWord();
+					String passWord = PasswordEncoder.createHash(accountForm.getPassWord());
 					String ten = accountForm.getTen();
 					String soDienThoai = accountForm.getSoDienThoai();
 					String diaChi = accountForm.getDiaChi();

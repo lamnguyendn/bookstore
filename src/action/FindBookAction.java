@@ -29,6 +29,7 @@ public class FindBookAction extends Action {
 	CategoryBO categoryBO = new CategoryBO();
 	ArrayList<Book> result = new ArrayList<>();
 	AuthorBO authorBO = new AuthorBO();
+	int rdSearch = 0;
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -51,6 +52,7 @@ public class FindBookAction extends Action {
 		} else {
 			pages = 1;
 		}
+		rdSearch = bookForm.getRdSearch();
 		String findKey = bookForm.getFindKey();
 		if (null != findKey && !"".equalsIgnoreCase(findKey) && findKey.length() != 0) {
 			byte[] utf8 = findKey.getBytes(StandardCharsets.UTF_8);
@@ -90,9 +92,11 @@ public class FindBookAction extends Action {
 		int total = 0;
 		first = 0;
 		last = 8;
-		if ((null == findKey || findKey.length() == 0)) {
-			total = bookBO.countRows();
-		} else if (null != findKey || 0 != findKey.length()) {
+		if (rdSearch == 0) {
+			total = 0;
+		} else if (rdSearch == 1) {
+			total = bookBO.countRowsByFindKeyOnlyBook(findKey);
+		} else {
 			total = bookBO.countRowsByFindKey(findKey);
 		}
 
@@ -103,7 +107,9 @@ public class FindBookAction extends Action {
 			first = (pages - 1) * 8;
 			last = 8;
 		}
-
+		if (total <= 8) {
+			return 1;
+		}
 		int totalPages = 0, num = 0;
 
 		if ((total / 8) % 2 != 0) {

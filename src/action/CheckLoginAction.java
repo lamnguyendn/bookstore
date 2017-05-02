@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
+import common.PasswordEncoder;
 import common.StringProcess;
 import form.LoginForm;
 import model.beans.Account;
@@ -31,7 +32,7 @@ public class CheckLoginAction extends Action {
 
 		LoginForm loginForm = (LoginForm) form;
 		String userName = loginForm.getUserName();
-		String password = loginForm.getPassword();
+		String password = PasswordEncoder.createHash(loginForm.getPassword());
 		AccountBO accountBO = new AccountBO();
 		if ("Đăng nhập".equals(loginForm.getBtnSubmit())) {
 			ActionErrors actionErrors = new ActionErrors();

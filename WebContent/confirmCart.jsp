@@ -40,9 +40,9 @@
 			$('#balanceNotEnough').modal('show');
 		}
 	</script>
-	<!-- Modal Thông báo tài khoản chưa đăng ký -->
+	<!-- Modal Thông báo tài khoản đăng nhập không thành công -->
 	<div id="notExists" class="modal fade" role="dialog">
-		<div class="modal-dialog" style="width:40%;">
+		<div class="modal-dialog" style="width: 40%;">
 			<!-- Modal content-->
 			<div class="modal-content"
 				style="color: #E9EDEF; background-color: rgba(231, 76, 60, 0.88); border-color: rgba(231, 76, 60, 0.88);">
@@ -54,15 +54,14 @@
 					</h3>
 				</div>
 				<div class="modal-body">
-					<p>Tài khoản chưa được đăng ký ở trang thanh toán trực tuyến!</p>
-					<p>Vui lòng sử dụng hình thức thanh toán khác!</p>
+					<p>Đăng nhập không thành công!</p>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Modal Thông báo tài khoản không đủ tiền để thanh toán -->
 	<div id="balanceNotEnough" class="modal fade" role="dialog">
-		<div class="modal-dialog"style="width:40%;">
+		<div class="modal-dialog" style="width: 40%;">
 			<!-- Modal content-->
 			<div class="modal-content"
 				style="color: #E9EDEF; background-color: rgba(231, 76, 60, 0.88); border-color: rgba(231, 76, 60, 0.88);">
@@ -81,7 +80,48 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- Modal Đăng nhập để thanh toán -->
+	<div id="myModalLoginToPay" class="modal fade" role="dialog">
+		<html:form action="/thanhToanTraTruoc" method="post"
+			styleId="loginPayForm">
+			<div class="modal-dialog">
+				<div class="row">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">Thanh toán trực
+								tuyến</h4>
+						</div>
+						<div class="modal-body">
+							<div class="row form-group">
+								<label class="col-md-3">Tên tài khoản</label>
+								<div class="col-md-8">
+									<html:text property="userName" styleClass="form-control"
+										styleId="userName" />
+								</div>
+							</div>
+							<div class="row form-group">
+								<label class="col-md-3">Mật khẩu</label>
+								<div class="col-md-8">
+									<html:password property="password" styleClass="form-control"
+										styleId="password" />
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-8 col-md-offset-3 remodal-bg">
+									<html:submit styleClass="btn btn-primary" styleId="submitLogin"
+										property="btnSubmit" value="Thanh toán" />
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Đóng</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</html:form>
+	</div>
 	<div id="wrapper">
 		<%@include file="navbar.jsp"%>
 		<fmt:setLocale value="vi-VN" />
@@ -117,10 +157,13 @@
 							style="margin-top: 10px;">
 							<html:submit value="Trả sau" styleClass="btn btn-warning" />
 						</html:form>
-						<html:form method="POST" action="/thanhToanTraTruoc"
+						<%-- <html:form method="POST" action="/thanhToanTraTruoc"
 							style="margin-top: 10px;">
 							<html:submit value="Trả trước" styleClass="btn btn-success" />
-						</html:form>
+						</html:form> --%>
+						<button type="button" class="btn btn-success" data-toggle="modal"
+							style="margin-top: 10px;" data-target="#myModalLoginToPay">Trả
+							trước</button>
 					</div>
 				</div>
 				<div class="row" style="margin-top: 50px;">

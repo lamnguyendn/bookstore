@@ -70,7 +70,7 @@ public class UpdateBookAction extends Action {
 					if (StringProcess.notValid(bookForm.getName())) {
 						actionErrors.add("nameError", new ActionMessage("error.nameError"));
 					} else if (StringProcess.nameDoesNotMatchFormat(bookForm.getName())) {
-						actionErrors.add("nameError", new ActionMessage("<br>" + "error.nameDoesNotMatchFormat"));
+						actionErrors.add("nameError", new ActionMessage("error.nameDoesNotMatchFormat"));
 					}
 					if (StringProcess.notValid(bookForm.getCategoryNum())) {
 						actionErrors.add("categoryError", new ActionMessage("error.categoryError"));
@@ -86,7 +86,7 @@ public class UpdateBookAction extends Action {
 					} else if (StringProcess.notValidNumber(bookForm.getQuantity())) {
 						actionErrors.add("quantityError", new ActionMessage("error.quantityDoesNotMatchFormat"));
 					} else if (StringProcess.quantityGreaterThanZero(bookForm.getQuantity())) {
-						actionErrors.add("quantityError", new ActionMessage("error.quantityDoesNotLeftThanZero"));
+						actionErrors.add("quantityError", new ActionMessage("error.quantityDoesNotLessThanZero"));
 					} else if (StringProcess.quantityLessThanOneThousand(bookForm.getQuantity())) {
 						actionErrors.add("quantityError", new ActionMessage("error.quantityLessThanOneThousand"));
 					}
@@ -97,21 +97,22 @@ public class UpdateBookAction extends Action {
 					}
 					if (StringProcess.notValid(bookForm.getPrice())) {
 						actionErrors.add("priceError", new ActionMessage("error.priceError"));
-					} else if (StringProcess.notValidNumber(bookForm.getPrice())) {
+					} else if (StringProcess.notValidPrice(bookForm.getPrice())) {
 						actionErrors.add("priceError", new ActionMessage("error.priceDoesNotMatchFormat"));
 					} else if (StringProcess.priceGreaterThanZero(bookForm.getPrice())) {
-						actionErrors.add("priceError", new ActionMessage("error.priceDoesNotLeftThanZero"));
+						actionErrors.add("priceError", new ActionMessage("error.priceDoesNotLessThanZero"));
 					} else if (StringProcess.priceLessThanTenMillion(bookForm.getPrice())) {
 						actionErrors.add("priceError", new ActionMessage("error.priceDoesNotLessThanTenMillion"));
 					}
-					if (bookForm.getImage_1().getFileName().length() != 0) {
-						if (StringProcess.notValid(bookForm.getImage_1().getFileName())) {
-							actionErrors.add("image_1Error", new ActionMessage("error.image_1Error"));
-						} else if (StringProcess.notValidImage(bookForm.getImage_1())) {
+					if (StringProcess.notValid(bookForm.getImage_1().getFileName()) && null == book.getImage_1()) {
+						actionErrors.add("image_1Error", new ActionMessage("error.image_1Error"));
+					} else if(bookForm.getImage_1().getFileName().length() > 0){
+						if (StringProcess.notValidImage(bookForm.getImage_1())) {
 							actionErrors.add("image_1Error", new ActionMessage("error.imageDoesNotMatchFormat"));
 						} else if (StringProcess.fileSizeNotValid(bookForm.getImage_1())) {
 							actionErrors.add("image_1Error", new ActionMessage("error.fileSizeNotValid"));
 						}
+						System.out.println("update image 4");
 					}
 					if (StringProcess.notValid(bookForm.getDescription())) {
 						actionErrors.add("descriptionError", new ActionMessage("error.descriptionError"));

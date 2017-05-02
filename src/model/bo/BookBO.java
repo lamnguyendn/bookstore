@@ -108,4 +108,8 @@ public class BookBO {
 		return bookDAO.getListOfBooksLimitByFindKey(first, last, findKey);
 	}
 
+	public int countRowsByFindKeyOnlyBook(String findKey) {
+		return bookDAO.countRowsByFindKeyOnlyBook(findKey);
+	}
+
 }

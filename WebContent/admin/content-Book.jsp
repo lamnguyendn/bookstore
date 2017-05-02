@@ -43,7 +43,7 @@ input[type="file"] {
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mã
 									sách <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<c:if test="${submitName eq 'Sửa'}">
 										<html:text property="isbn"
 											styleClass="form-control col-md-7 col-xs-12" readonly="true"
@@ -71,7 +71,7 @@ input[type="file"] {
 								<label class="control-label col-md-3 col-sm-3 col-xs-12"
 									for="name">Tên sách <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:text property="name"
 										styleClass="form-control col-md-7 col-xs-12" styleId="name" />
 								</div>
@@ -88,7 +88,7 @@ input[type="file"] {
 								<label class="control-label col-md-3 col-sm-3 col-xs-12"
 									for="email">Danh mục <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<!-- <input type="email" id="email2" name="confirm_email"
 										data-validate-linked="email" required="required"
 										class="form-control col-md-7 col-xs-12"> -->
@@ -113,7 +113,7 @@ input[type="file"] {
 								<label class="control-label col-md-3 col-sm-3 col-xs-12"
 									for="authorNum">Tác giả <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:select property="authorNum"
 										styleClass="form-control  col-md-7 col-xs-12"
 										styleId="authorNum">
@@ -135,7 +135,7 @@ input[type="file"] {
 								<label class="control-label col-md-3 col-sm-3 col-xs-12"
 									for="publisherNum">Nhà xuất bản <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:select property="publisherNum"
 										styleClass="form-control col-md-7 col-xs-12"
 										styleId="publisherNum">
@@ -158,7 +158,7 @@ input[type="file"] {
 								<label class="control-label col-md-3 col-sm-3 col-xs-12"
 									for="publishDate">Ngày xuất bản <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:text property="publishDate" styleId="publishDate"
 										styleClass="DatePicker form-control col-md-7 col-xs-12 "
 										readonly="true" onkeypress="return isNumberKey(event)" />
@@ -180,7 +180,7 @@ input[type="file"] {
 								<label for="password" class="control-label col-md-3">Mô
 									tả <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:textarea styleClass="form-control col-md-7 col-xs-12"
 										property="description" styleId="description" />
 								</div>
@@ -198,7 +198,7 @@ input[type="file"] {
 									class="control-label col-md-3 col-sm-3 col-xs-12"> Số
 									lượng <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:text property="quantity"
 										styleClass="form-control col-md-7 col-xs-12"
 										styleId="quantity" />
@@ -217,6 +217,10 @@ input[type="file"] {
 											test="${msg eq 'Vui lòng nhập kiểu số dương cho số lượng!' }">
 											<label class="error">${msg}</label>
 										</c:if>
+										<c:if
+											test="${msg eq 'Vui lòng nhập số lượng nhỏ hơn 1000!' }">
+											<label class="error">${msg}</label>
+										</c:if>
 									</html:messages>
 								</logic:messagesPresent>
 							</div>
@@ -224,7 +228,7 @@ input[type="file"] {
 								<label class="control-label col-md-3 col-sm-3 col-xs-12"
 									for="telephone">Đơn giá <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:text property="price"
 										styleClass="form-control col-md-7 col-xs-12" styleId="price" />
 								</div>
@@ -234,7 +238,14 @@ input[type="file"] {
 										<c:if test="${msg eq 'Vui lòng nhập đơn giá!' }">
 											<label class="error">${msg}</label>
 										</c:if>
-										<c:if test="${msg eq 'Mã sách đã tồn tại!' }">
+										<c:if
+											test="${msg eq 'Vui lòng nhập đơn giá đúng định dạng!' }">
+											<label class="error">${msg}</label>
+										</c:if>
+										<c:if test="${msg eq 'Vui lòng nhập đơn giá nhỏ hơn 10000000!' }">
+											<label class="error">${msg}</label>
+										</c:if>
+										<c:if test="${msg eq 'Vui lòng nhập kiểu số dương cho đơn giá!' }">
 											<label class="error">${msg}</label>
 										</c:if>
 									</html:messages>
@@ -244,7 +255,7 @@ input[type="file"] {
 								<label class="control-label col-md-3 col-sm-3 col-xs-12"
 									for="textarea">Hình ảnh <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:file property="image_1" accept="image/*"
 										styleId="image_1" onchange="previewFile1()" />
 									<html:img action="viewBookImage?isbn=${bookDetail.isbn}"
@@ -253,10 +264,13 @@ input[type="file"] {
 								<div id="image_11"></div>
 								<logic:messagesPresent>
 									<html:messages id="msg">
-										<c:if test="${msg eq 'Vui lòng nhập mã sách!' }">
+										<c:if test="${msg eq 'Vui lòng chọn ảnh!'}">
 											<label class="error">${msg}</label>
 										</c:if>
-										<c:if test="${msg eq 'Mã sách đã tồn tại!' }">
+										<c:if test="${msg eq 'Vui lòng chọn ảnh đúng định dạng!' }">
+											<label class="error">${msg}</label>
+										</c:if>
+										<c:if test="${msg eq 'Vui lòng chọn ảnh dưới 1MB!' }">
 											<label class="error">${msg}</label>
 										</c:if>
 									</html:messages>
@@ -268,13 +282,8 @@ input[type="file"] {
 									<html:submit property="submit" value="${submitName}"
 										styleClass="btn btn-success">
 									</html:submit>
-									<button type="button" class="btn btn-default"
-										onclick="goBack()">Quay lại</button>
-									<script>
-										function goBack() {
-											window.history.back();
-										}
-									</script>
+									<html:link styleClass="btn btn-default"
+										action="/bookManagement">Quay lại</html:link>
 								</div>
 							</div>
 						</html:form>
@@ -355,7 +364,7 @@ input[type="file"] {
 					min : 1,
 				},
 				image_1 : {
-					required : true,
+					/* required : true, */
 					accept : "image/*",
 					filesize : 1048576,
 				},
@@ -393,7 +402,7 @@ input[type="file"] {
 					min : 'Vui lòng nhập kiểu số dương cho đơn giá!',
 				},
 				image_1 : {
-					required : 'Vui lòng chọn ảnh!',
+					/* required : 'Vui lòng chọn ảnh!', */
 					accept : 'Vui lòng chọn ảnh đúng định dạng!',
 					filesize : 'Vui lòng chọn ảnh dưới 1MB!',
 				},

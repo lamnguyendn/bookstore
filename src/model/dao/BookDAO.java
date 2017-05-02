@@ -294,7 +294,8 @@ public class BookDAO {
 		int count = 0;
 
 		String sql = "SELECT count(isbn)" + " FROM sach b"
-				+ " INNER JOIN tacgia tg ON b.ma_tg = tg.ma_tg AND (b.isbn LIKE N'%" + findKey + "%'"
+				+ " INNER JOIN theloai tl ON b.ma_tl = tl.ma_tl" + " INNER JOIN nhaxuatban nxb ON nxb.ma_nxb = b.ma_nxb"
+				+ " INNER JOIN tacgia tg ON b.ma_tg = tg.ma_tg AND (b.isbn LIKE '%" + findKey + "%'"
 				+ " OR b.tensach LIKE N'%" + findKey + "%' OR tg.ten_tg LIKE N'%" + findKey + "%')";
 		try {
 			stm = con.createStatement();
@@ -1020,6 +1021,35 @@ public class BookDAO {
 			}
 		}
 		return arr;
+	}
+
+	public int countRowsByFindKeyOnlyBook(String findKey) {
+		String sql = "SELECT count(isbn) FROM sach b WHERE b.tensach LIKE N'%" + findKey + "%'";
+
+		Connection con = DataAccess.connect();
+		ResultSet rs = null;
+		Statement stm = null;
+
+		int count = 0;
+		try {
+			stm = con.createStatement();
+			rs = stm.executeQuery(sql);
+
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+				rs.close();
+				stm.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
 	}
 
 }

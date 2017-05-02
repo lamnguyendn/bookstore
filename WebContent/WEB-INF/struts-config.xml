@@ -19,13 +19,14 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<form-bean name="authorForm" type="form.AuthorForm" />
 		<form-bean name="publisherForm" type="form.PublisherForm" />
 		<form-bean name="commentForm" type="form.CommentForm" />
+		<form-bean name="paymentForm" type="form.PaymentForm" />
 	</form-beans>
 	<action-mappings>
 		<!-- Public -->
 		<action path="/checkLogin" name="loginForm" type="action.CheckLoginAction"
 			scope="request" input="/index.do">
-			<forward name="loginAdminSuccess" path="/bookManagement.do" />
-			<forward name="loginUserSuccess" path="/index.do" />
+			<forward name="loginAdminSuccess" path="/bookManagement.do" redirect="true"/>
+			<forward name="loginUserSuccess" path="/index.do" redirect="true"/>
 			<forward name="loginFailed" path="/index.do" />
 		</action>
 		<action path="/logout" type="action.LogoutAction" scope="request">
@@ -147,7 +148,7 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 				redirect="true" />
 			<forward name="login" path="/login.jsp" redirect="true" />
 		</action>
-		<action path="/thanhToanTraTruoc" name="cartForm" scope="request"
+		<action path="/thanhToanTraTruoc" name="paymentForm" scope="request"
 			type="action.ThanhToanTraTruocAction">
 			<forward name="showCart" path="/showCart.do" redirect="true" />
 			<forward name="payCartFirstStep" path="/payCartFirstStep.do"

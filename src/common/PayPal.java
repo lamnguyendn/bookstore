@@ -34,12 +34,16 @@ public class PayPal {
 		System.out.println(response2.body().string());
 	}
 
-	public static String payPal(String userName, double soTien) {
+	public static String payPal(String userName, String password, double soTien) {
 		OkHttpClient client = new OkHttpClient();
 
 		MediaType mediaType = MediaType.parse("application/json");
 		RequestBody body = RequestBody.create(mediaType,
-				"" + "{" + "\"userName\": \"" + userName + "\"," + "\"soDu\": " + soTien + "}");
+				"" + "{" 
+						+ "\"userName\": \"" + userName + "\","
+						+ "\"password\": \"" + password + "\"," 
+						+ "\"soDu\": " + soTien 
+					+ "}");
 		Response response = null;
 		Request request = new Request.Builder().url("http://localhost:8083/payment").put(body)
 				.addHeader("content-type", "application/json").addHeader("cache-control", "no-cache")

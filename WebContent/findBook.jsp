@@ -125,8 +125,6 @@ hr.style18:before {
 
 				<%-- find only Author --%>
 				<c:when test="${fn:length(listOfAuthors)>0}">
-					<link rel="stylesheet"
-						href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" />
 					<div class="container">
 						<c:forEach items="${listOfAuthors}" var="author">
 							<div class="well">
@@ -204,7 +202,8 @@ hr.style18:before {
 			<bean:define id="findKey" property="findKey" name="bookForm" />
 		</div>
 		<script type="text/javascript">
-			var categoryNum = '${categoryNum}';
+			var findKey = '${findKey}';
+			var rdSearch =$("#search_form input[type='radio']:checked").val();
 			$(function() {
 				window.pagObj = $('#pagination')
 						.twbsPagination({
@@ -225,11 +224,11 @@ hr.style18:before {
 												type : "POST",
 												contentType : "application/json; charset=utf-8",
 												url : "paginationFindBook.do?findKey="
-														+ categoryNum
-														+ "&page=" + page,
+														+ findKey
+														+ "&page=" + page
+														+ "&rdSearch=" + rdSearch,
 												timeout : 100000,
 												success : function(data) {
-													console.log(data);
 													display(data);
 												}
 											});

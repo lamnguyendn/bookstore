@@ -11,7 +11,6 @@ import common.DataAccess;
 import model.beans.Account;
 
 public class AccountDAO {
-	DataAccess da = new DataAccess();
 
 	public Account checkLogin(String userName, String password) {
 		Account account = new Account();
@@ -29,6 +28,9 @@ public class AccountDAO {
 				account.setUserName(rs.getString("username"));
 				account.setRole(rs.getString("role"));
 				account.setTen(rs.getString("ten"));
+				account.setDiaChi(rs.getString("diachi"));
+				account.setEmail(rs.getString("email"));
+				account.setSoDienThoai(rs.getString("sodienthoai"));
 				return account;
 			}
 		} catch (SQLException e) {
@@ -223,17 +225,24 @@ public class AccountDAO {
 	public void suaAccount(String userName, String passWord, String ten, String soDienThoai, String diaChi,
 			String email, String role) {
 		Connection con = DataAccess.connect();
-		String sql = String.format("UPDATE taikhoan "
-				+ " SET password = %s, ten = N'%s', sodienthoai ='%s', diachi = N'%s', email='%s', role='%s' "
-				+ " WHERE username = '%s'", passWord, ten, soDienThoai, diaChi, email, role, userName);
+		PreparedStatement pstm = null;
+		String sql = "UPDATE taikhoan SET password = ?, ten = ?, sodienthoai = ?, diachi = ?, email = ?, role = ? WHERE username = ?";
 		try {
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate(sql);
+			pstm = con.prepareStatement(sql);
+			pstm.setString(1, passWord);
+			pstm.setString(2, ten);
+			pstm.setString(3, soDienThoai);
+			pstm.setString(4, diaChi);
+			pstm.setString(5, email);
+			pstm.setString(6, role);
+			pstm.setString(7, userName);
+			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				con.close();
+				pstm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -242,16 +251,19 @@ public class AccountDAO {
 
 	public void xoaAccount(String userName) {
 		Connection con = DataAccess.connect();
-		String sql = String.format("DELETE FROM taikhoan WHERE username = '%s'", userName);
-		System.out.println(sql);
+		PreparedStatement pstm = null;
+		String sql = "DELETE FROM taikhoan WHERE username = ?";
+
 		try {
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate(sql);
+			pstm = con.prepareStatement(sql);
+			pstm.setString(1, userName);
+			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				con.close();
+				pstm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -260,12 +272,13 @@ public class AccountDAO {
 
 	public Account getThongTinAccount(String userName) {
 		Connection con = DataAccess.connect();
-		String sql = String.format("SELECT username, password, ten, sodienthoai, diachi, email, role "
-				+ " FROM taikhoan WHERE username = '%s'", userName);
+		PreparedStatement pstm = null;
+		String sql = "SELECT * FROM taikhoan WHERE username = ?";
 		ResultSet rs = null;
 		try {
-			Statement stmt = con.createStatement();
-			rs = stmt.executeQuery(sql);
+			pstm = con.prepareStatement(sql);
+			pstm.setString(1, userName);
+			rs = pstm.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -285,6 +298,7 @@ public class AccountDAO {
 		} finally {
 			try {
 				con.close();
+				pstm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

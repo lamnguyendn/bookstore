@@ -51,6 +51,12 @@ public class PayCartFirstStepAction extends Action {
 				customerForm.setEmail(StringProcess.getVaildString(account.getEmail()));
 				customerForm.setName(StringProcess.getVaildString(account.getTen()));
 				customerForm.setPhone(StringProcess.getVaildString(account.getSoDienThoai()));
+				
+				System.out.println(account.getDiaChi());
+				System.out.println(account.getEmail());
+				System.out.println(account.getTen());
+				System.out.println(account.getSoDienThoai());
+				
 				return mapping.findForward("customer");
 			}
 			if ("1".equalsIgnoreCase(edit)) {

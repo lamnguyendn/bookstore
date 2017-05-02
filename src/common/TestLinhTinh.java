@@ -13,7 +13,8 @@ public class TestLinhTinh {
 		TestLinhTinh t = new TestLinhTinh();
 		// System.out.println(t.convertDateSqlToDateUtil());
 		// t.getContextPath();
-		System.out.println("length = " + t.getLengthString());
+//		System.out.println("length = " + t.getLengthString());
+		System.out.println(PasswordEncoder.createHash("123"));
 
 	}
 

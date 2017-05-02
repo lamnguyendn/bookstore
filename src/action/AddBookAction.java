@@ -91,7 +91,7 @@ public class AddBookAction extends Action {
 					}
 					if (StringProcess.notValid(bookForm.getPrice())) {
 						actionErrors.add("priceError", new ActionMessage("error.priceError"));
-					} else if (StringProcess.notValidNumber(bookForm.getPrice())) {
+					} else if (StringProcess.notValidPrice(bookForm.getPrice())) {
 						actionErrors.add("priceError", new ActionMessage("error.priceDoesNotMatchFormat"));
 					} else if (StringProcess.priceGreaterThanZero(bookForm.getPrice())) {
 						actionErrors.add("priceError", new ActionMessage("error.priceDoesNotLessThanZero"));
