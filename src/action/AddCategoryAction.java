@@ -40,7 +40,7 @@ public class AddCategoryAction extends Action {
 			String categoryNum = categoryForm.getCategoryNum();
 			String categoryName = categoryForm.getCategoryName();
 			CategoryBO categoryBO = new CategoryBO();
-			categoryBO.addCategory(categoryNum, categoryName);
+			categoryBO.addCategory(categoryNum, categoryName, request);
 			return mapping.findForward("addsuccess");
 		} else {
 			return mapping.findForward("adderror");

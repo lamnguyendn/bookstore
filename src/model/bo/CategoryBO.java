@@ -2,6 +2,9 @@ package model.bo;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
+import common.ThanhToanException;
 import model.beans.Category;
 import model.dao.CategoryDAO;
 
@@ -16,8 +19,8 @@ public class CategoryBO {
 		return categoryDAO.findCategoryByCategoryNum(categoryNum);
 	}
 
-	public void editCategory(String categoryNum, String categoryName) {
-		categoryDAO.editCategory(categoryNum, categoryName);
+	public void editCategory(String categoryNum, String categoryName, HttpServletRequest request) throws ThanhToanException {
+		categoryDAO.editCategory(categoryNum, categoryName, request);
 
 	}
 
@@ -25,13 +28,13 @@ public class CategoryBO {
 		return categoryDAO.getInfoCategory(categoryNum);
 	}
 
-	public void addCategory(String categoryNum, String categoryName) {
-		categoryDAO.addCategory(categoryNum, categoryName);
+	public void addCategory(String categoryNum, String categoryName, HttpServletRequest request) throws ThanhToanException {
+		categoryDAO.addCategory(categoryNum, categoryName, request);
 
 	}
 
-	public void deleteCategory(String categoryNum) {
-		categoryDAO.deleteCategory(categoryNum);
+	public void deleteCategory(String categoryNum, HttpServletRequest request) throws ThanhToanException {
+		categoryDAO.deleteCategory(categoryNum, request);
 
 	}
 

@@ -40,7 +40,7 @@ public class AddPublisherAction extends Action {
 			String publisherAddress = publisherForm.getPublisherAddress();
 			String publisherPhoneNumber = publisherForm.getPublisherPhoneNumber();
 			PublisherBO publisherBO = new PublisherBO();
-			publisherBO.addPublisher(publisherNum, publisherName, publisherAddress, publisherPhoneNumber);
+			publisherBO.addPublisher(publisherNum, publisherName, publisherAddress, publisherPhoneNumber, request);
 			return mapping.findForward("addsuccess");
 		} else {
 			return mapping.findForward("adderror");

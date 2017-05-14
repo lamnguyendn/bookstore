@@ -41,7 +41,7 @@ public class SuaKhuyenMaiAction extends Action {
 					String tenKm = khuyenMaiForm.getTenKm();
 					float phanTramKm = khuyenMaiForm.getPhanTramKm();
 					int trangThai = khuyenMaiForm.getTrangThai();
-					khuyenMaiBO.suaKhuyenMai(maKm, tenKm, phanTramKm, trangThai);
+					khuyenMaiBO.suaKhuyenMai(maKm, tenKm, phanTramKm, trangThai, request);
 					return mapping.findForward("suaKMxong");
 				} else {
 					Promotion khuyenMai = khuyenMaiBO.getThongTinKhuyenMai(maKm);

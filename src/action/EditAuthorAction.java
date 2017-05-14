@@ -26,7 +26,7 @@ public class EditAuthorAction extends Action {
 		if ("Sửa".equals(authorForm.getSubmit())) {
 			String authorName = authorForm.getAuthorName();
 			String authorInformation = authorForm.getAuthorInformation();
-			authorBO.editAuthor(authorNum, authorName, authorInformation);
+			authorBO.editAuthor(authorNum, authorName, authorInformation, request);
 			return mapping.findForward("editsuccess");
 		} else {
 			Author author = authorBO.getInfoAuthor(authorNum);

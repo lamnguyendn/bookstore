@@ -26,7 +26,7 @@ public class DeleleCategoryAction extends Action {
 		CategoryForm categoryForm = (CategoryForm) form;
 		CategoryBO categoryBO = new CategoryBO();
 		String categoryNum = categoryForm.getCategoryNum();
-		categoryBO.deleteCategory(categoryNum);
+		categoryBO.deleteCategory(categoryNum, request);
 		return mapping.findForward("delete");
 	}
 }

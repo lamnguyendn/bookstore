@@ -52,7 +52,9 @@ public class CheckLoginAction extends Action {
 		if (null != account) {
 			request.getSession().setAttribute("logged", "true");
 			request.getSession().setAttribute("userName", account);
+			
 			request.getSession().setAttribute("ten", account.getTen());
+			
 			if ("ROLE_ADMIN".equalsIgnoreCase(account.getRole())) {
 				return mapping.findForward("loginAdminSuccess");
 			} else if ("ROLE_USER".equalsIgnoreCase(account.getRole())) {

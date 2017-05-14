@@ -216,6 +216,7 @@
 												email : {
 													required : true,
 													pattern : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+													maxlength : 100
 												}
 											},
 											messages : {
@@ -246,7 +247,8 @@
 												},
 												email : {
 													required : 'Vui lòng nhập email!',
-													pattern : 'Vui lòng nhập đúng định dạng email!'
+													pattern : 'Vui lòng nhập đúng định dạng email!',
+													maxlength : 'Vui lòng nhập email không quá 100 kí tự!'
 												}
 											}
 										});

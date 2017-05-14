@@ -113,23 +113,29 @@
 			rules : {
 				authorNum : {
 					required : true,
+					maxlength : 50
 				},
 				authorName : {
 					required : true,
+					maxlength : 200
 				},
 				authorInformation : {
 					required : true,
+					maxlength : 5000
 				}
 			},
 			messages : {
 				authorNum : {
 					required : 'Vui lòng nhập mã tác giả!',
+					maxlength : 'Mã tác giả không được vượt quá 50 kí tự!'
 				},
 				authorName : {
 					required : 'Vui lòng nhập tên tác giả!',
+					maxlength : 'Tên tác giả không được vượt quá 200 kí tự!'
 				},
 				authorInformation : {
 					required : 'Vui lòng nhập tiểu sử tác giả!',
+					maxlength : 'Tiểu sử tác giả không được vượt quá 5000 kí tự!'
 				}
 			}
 		});

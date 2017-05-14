@@ -79,7 +79,7 @@ public class ThemAccountAction extends Action {
 					String diaChi = accountForm.getDiaChi();
 					String email = accountForm.getEmail();
 					String quyen = accountForm.getQuyen();
-					accountBO.themAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen);
+					accountBO.themAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen, request);
 					return mapping.findForward("themAccXong");
 				} else {
 					return mapping.findForward("themAcc");

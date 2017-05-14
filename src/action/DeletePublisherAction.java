@@ -19,7 +19,7 @@ public class DeletePublisherAction extends Action {
 		PublisherForm publisherForm = (PublisherForm) form;
 		PublisherBO publisherBO = new PublisherBO();
 		String publisherNum = publisherForm.getPublisherNum();
-		publisherBO.deletePublisher(publisherNum);
+		publisherBO.deletePublisher(publisherNum, request);
 		return mapping.findForward("delete");
 	}
 

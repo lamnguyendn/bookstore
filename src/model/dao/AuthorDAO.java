@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import common.DataAccess;
+import common.ThanhToanException;
 import model.beans.Author;
 
 public class AuthorDAO {
@@ -49,7 +52,8 @@ public class AuthorDAO {
 		return arr;
 	}
 
-	public void addAuthor(String authorNum, String authorName, String authorInformation) {
+	public void addAuthor(String authorNum, String authorName, String authorInformation, HttpServletRequest request)
+			throws ThanhToanException {
 		Connection con = DataAccess.connect();
 
 		String sql = String.format("INSERT INTO tacgia(ma_tg,ten_tg,tieusu_tg) " + " VALUES ( '%s',N'%s',N'%s' )",
@@ -59,6 +63,7 @@ public class AuthorDAO {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ThanhToanException(request);
 		} finally {
 			try {
 				con.close();
@@ -122,12 +127,13 @@ public class AuthorDAO {
 		return a;
 	}
 
-	public void editAuthor(String authorNum, String authorName, String authorInformation) {
+	public void editAuthor(String authorNum, String authorName, String authorInformation, HttpServletRequest request)
+			throws ThanhToanException {
 		Connection con = DataAccess.connect();
 
 		String sql = "UPDATE tacgia " + " SET ten_tg = ?, tieusu_tg = ?" + " WHERE ma_tg = ? ";
 		try {
-//			Statement stmt = con.createStatement();
+			// Statement stmt = con.createStatement();
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setString(1, authorName);
 			pstm.setString(2, authorInformation);
@@ -135,6 +141,7 @@ public class AuthorDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ThanhToanException(request);
 		} finally {
 			try {
 				con.close();
@@ -144,7 +151,7 @@ public class AuthorDAO {
 		}
 	}
 
-	public void deleteAuthor(String authorNum) {
+	public void deleteAuthor(String authorNum, HttpServletRequest request) throws ThanhToanException {
 		Connection con = DataAccess.connect();
 
 		String sql = "DELETE  from tacgia where ma_tg = '" + authorNum + "'";
@@ -153,6 +160,7 @@ public class AuthorDAO {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ThanhToanException(request);
 		} finally {
 			try {
 				con.close();

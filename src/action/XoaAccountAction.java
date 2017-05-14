@@ -43,7 +43,7 @@ public class XoaAccountAction extends Action {
 				String userName = accountForm.getUserName();
 				if (userName.equals(accountSession.getUserName())) {
 				} else {
-					accountBO.xoaAccount(userName);
+					accountBO.xoaAccount(userName, request);
 				}
 				return mapping.findForward("xoaAccXong");
 			}

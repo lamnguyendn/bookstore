@@ -41,7 +41,7 @@ public class AddAuthorAction extends Action {
 			String authorName = authorForm.getAuthorName();
 			String authorInformation = authorForm.getAuthorInformation();
 			AuthorBO authorBO = new AuthorBO();
-			authorBO.addAuthor(authorNum, authorName, authorInformation);
+			authorBO.addAuthor(authorNum, authorName, authorInformation, request);
 			return mapping.findForward("addsuccess");
 		} else {
 			return mapping.findForward("adderror");

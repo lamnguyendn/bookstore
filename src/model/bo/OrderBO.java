@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import common.ThanhToanException;
 import model.beans.CartInfo;
 import model.beans.Order;
 import model.dao.OrderDAO;
@@ -11,10 +12,10 @@ import model.dao.OrderDAO;
 public class OrderBO {
 	OrderDAO orderDAO = new OrderDAO();
 
-	public void saveOrderTraTruoc(CartInfo cartInfo, HttpServletRequest request) {
+	public void saveOrderTraTruoc(CartInfo cartInfo, HttpServletRequest request) throws ThanhToanException {
 		orderDAO.saveOrderTraTruoc(cartInfo, request);
 	}
-	public void saveOrderTraSau(CartInfo cartInfo, HttpServletRequest request) {
+	public void saveOrderTraSau(CartInfo cartInfo, HttpServletRequest request) throws ThanhToanException {
 		orderDAO.saveOrderTraSau(cartInfo, request);
 	}
 
@@ -22,8 +23,8 @@ public class OrderBO {
 		return orderDAO.getStatusOrder(orderNum);
 	}
 
-	public void updateOrder(String orderNum, int status) {
-		orderDAO.updateOrder(orderNum, status);
+	public void updateOrder(String orderNum, int status, HttpServletRequest request) throws ThanhToanException {
+		orderDAO.updateOrder(orderNum, status, request);
 	}
 
 	public ArrayList<Order> getListOfOrders() {

@@ -5,6 +5,35 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+
+<script>
+		function displayModalNotCommit() {
+			$('#cannotCommit').modal('show');
+		}
+</script>
+
+<!-- Modal Thông báo thực hiện các thao tác commit không thành công -->
+<div id="cannotCommit" class="modal fade" role="dialog">
+	<div class="modal-dialog" style="width: 40%;">
+		<!-- Modal content-->
+		<div class="modal-content"
+			style="color: #E9EDEF; background-color: rgba(231, 76, 60, 0.88); border-color: rgba(231, 76, 60, 0.88);">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">
+					<span class="glyphicon glyphicon-exclamation-sign"></span> Thông
+					báo!
+				</h3>
+			</div>
+			<div class="modal-body">
+				<p>Đăng nhập không thành công!</p>
+				<p>Vui lòng thử lại...</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal thông báo đăng xuất -->
 <div class="modal fade" id="confirm-logout" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -56,6 +85,16 @@
 		</nav>
 	</div>
 </div>
+
+<c:if test="${sessionScope.cannotCommit eq 'true'}">
+	<script type="text/javascript">
+		displayModalBalanceNotEnough();
+	</script>
+	<%
+		session.removeAttribute("cannotCommit");
+	%>
+</c:if>
+
 <script>
 	$(document).ready(function() {
 		$("#cityclick").mouseover(function() {

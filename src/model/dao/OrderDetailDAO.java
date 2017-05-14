@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import common.DataAccess;
+import common.ThanhToanException;
 import model.beans.OrderDetail;
 
 public class OrderDetailDAO {
@@ -15,7 +18,7 @@ public class OrderDetailDAO {
 	PreparedStatement pstm;
 	ResultSet rs;
 
-	public void saveOrderDetail(OrderDetail detail) {
+	public void saveOrderDetail(OrderDetail detail, HttpServletRequest request) throws ThanhToanException {
 		String sql = "INSERT INTO chitietdonhang VALUES(?,?,?,?)";
 		Connection con = DataAccess.connect();
 		try {
@@ -28,6 +31,7 @@ public class OrderDetailDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ThanhToanException(request);
 		} finally {
 			try {
 				con.close();

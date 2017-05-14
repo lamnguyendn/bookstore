@@ -36,7 +36,7 @@ public class XoaKhuyenMaiAction extends Action {
 				KhuyenMaiForm khuyenMaiForm = (KhuyenMaiForm) form;
 				PromotionBO khuyenMaiBO = new PromotionBO();
 				String maKm = khuyenMaiForm.getMaKm();
-				khuyenMaiBO.xoaKhuyenMai(maKm);
+				khuyenMaiBO.xoaKhuyenMai(maKm, request);
 				return mapping.findForward("xoaKm");
 			}
 		}

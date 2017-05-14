@@ -50,7 +50,8 @@ public class ThanhToanTraTruocAction extends Action {
 				} else {
 					total = cartInfo.getAmountTotalAfterUsingPromotionCode();
 				}
-				String result = PayPal.payPal(paymentForm.getUserName(), paymentForm.getPassword(), total);
+				String result = PayPal.payPal(paymentForm.getUserName(), paymentForm.getPassword(), total, request);
+				System.out.println("result 2 : " + result);
 				if (result.contains("The balance is not enough to make a transaction")) {
 					request.getSession().setAttribute("balanceNotEnough", "true");
 					return mapping.findForward("payCartThirdStep");
@@ -59,12 +60,14 @@ public class ThanhToanTraTruocAction extends Action {
 					return mapping.findForward("payCartThirdStep");
 				} else if (result.contains("Successfully transacted")) {
 					orderBO.saveOrderTraTruoc(cartInfo, request);
-				} else {
-					// khong the ket noi den server
-					// tao them modal thong bao khong the ket noi
-					// request.getSession().setAttribute("can not connect to server", "true");
-					// return third step
-				}
+				} 
+//				else {
+//					// khong the ket noi den server
+//					// tao them modal thong bao khong the ket noi
+//					request.getSession().setAttribute("cannotConnectToServer", "true");
+//					return mapping.findForward("payCartThirdStep");
+//					// return third step
+//				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				return mapping.findForward("payCartThirdStep");

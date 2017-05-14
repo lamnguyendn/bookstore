@@ -334,6 +334,7 @@ input[type="file"] {
 			rules : {
 				isbn : {
 					required : true,
+					maxlength : 50
 				},
 				categoryNum : {
 					required : true,
@@ -346,12 +347,14 @@ input[type="file"] {
 				},
 				name : {
 					required : true,
+					maxlength : 200
 				},
 				publishDate : {
 					required : true,
 				},
 				description : {
 					required : true,
+					maxlength : 5000
 				},
 				quantity : {
 					required : true,
@@ -372,6 +375,7 @@ input[type="file"] {
 			messages : {
 				isbn : {
 					required : 'Vui lòng nhập mã sách!',
+					maxlength : 'Mã sách không được vượt quá 50 kí tự!'
 				},
 				categoryNum : {
 					required : 'Vui lòng chọn thể loại!',
@@ -384,12 +388,14 @@ input[type="file"] {
 				},
 				name : {
 					required : 'Vui lòng nhập tên sách!',
+					maxlength : 'Tên sách không được vượt quá 200 kí tự!'
 				},
 				publishDate : {
 					required : 'Vui lòng chọn ngày xuất bản!',
 				},
 				description : {
 					required : 'Vui lòng nhập mô tả!',
+					maxlength : 'Mô tả không được vượt quá 5000 kí tự!'
 				},
 				quantity : {
 					required : 'Vui lòng nhập số lượng!',

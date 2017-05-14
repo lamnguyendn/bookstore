@@ -7,12 +7,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import common.DataAccess;
+import common.ThanhToanException;
 import model.beans.Book;
 
 public class BookDAO {
 
-	public void addBook(Book book) {
+	public void addBook(Book book, HttpServletRequest request) throws ThanhToanException {
 		Connection con = DataAccess.connect();
 		PreparedStatement pstm = null;
 
@@ -34,6 +37,7 @@ public class BookDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ThanhToanException(request);
 		} finally {
 			try {
 				con.close();
@@ -44,7 +48,7 @@ public class BookDAO {
 		}
 	}
 
-	public void updateBook(Book book) {
+	public void updateBook(Book book, HttpServletRequest request) throws ThanhToanException {
 		Connection con = DataAccess.connect();
 		PreparedStatement pstm = null;
 
@@ -66,6 +70,7 @@ public class BookDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ThanhToanException(request);
 		} finally {
 			try {
 				con.close();
@@ -76,7 +81,7 @@ public class BookDAO {
 		}
 	}
 
-	public void deleteBook(String isbn) {
+	public void deleteBook(String isbn, HttpServletRequest request) throws ThanhToanException {
 		Connection con = DataAccess.connect();
 		PreparedStatement pstm = null;
 
@@ -87,6 +92,7 @@ public class BookDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ThanhToanException(request);
 		} finally {
 			try {
 				con.close();
@@ -293,8 +299,8 @@ public class BookDAO {
 
 		int count = 0;
 
-		String sql = "SELECT count(isbn)" + " FROM sach b"
-				+ " INNER JOIN theloai tl ON b.ma_tl = tl.ma_tl" + " INNER JOIN nhaxuatban nxb ON nxb.ma_nxb = b.ma_nxb"
+		String sql = "SELECT count(isbn)" + " FROM sach b" + " INNER JOIN theloai tl ON b.ma_tl = tl.ma_tl"
+				+ " INNER JOIN nhaxuatban nxb ON nxb.ma_nxb = b.ma_nxb"
 				+ " INNER JOIN tacgia tg ON b.ma_tg = tg.ma_tg AND (b.isbn LIKE '%" + findKey + "%'"
 				+ " OR b.tensach LIKE N'%" + findKey + "%' OR tg.ten_tg LIKE N'%" + findKey + "%')";
 		try {

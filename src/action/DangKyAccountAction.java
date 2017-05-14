@@ -70,7 +70,7 @@ public class DangKyAccountAction extends Action {
 			String diaChi = accountForm.getDiaChi();
 			String email = accountForm.getEmail();
 			String quyen = "ROLE_USER";
-			accountBO.themAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen);
+			accountBO.themAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen, request);
 			request.getSession().setAttribute("dkx", "#modalLogin");
 			return mapping.findForward("dkAccXong");
 		} else {

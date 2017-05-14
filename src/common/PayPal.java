@@ -2,6 +2,8 @@ package common;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -34,29 +36,28 @@ public class PayPal {
 		System.out.println(response2.body().string());
 	}
 
-	public static String payPal(String userName, String password, double soTien) {
+	public static String payPal(String userName, String password, double soTien, HttpServletRequest request1)
+			throws ThanhToanException {
 		OkHttpClient client = new OkHttpClient();
 
 		MediaType mediaType = MediaType.parse("application/json");
-		RequestBody body = RequestBody.create(mediaType,
-				"" + "{" 
-						+ "\"userName\": \"" + userName + "\","
-						+ "\"password\": \"" + password + "\"," 
-						+ "\"soDu\": " + soTien 
-					+ "}");
+		RequestBody body = RequestBody.create(mediaType, "" + "{" + "\"userName\": \"" + userName + "\","
+				+ "\"password\": \"" + password + "\"," + "\"soDu\": " + soTien + "}");
 		Response response = null;
 		Request request = new Request.Builder().url("http://localhost:8083/payment").put(body)
 				.addHeader("content-type", "application/json").addHeader("cache-control", "no-cache")
 				.addHeader("postman-token", "b187ad36-04f1-e1ea-f644-d72c0c880611").build();
+		String result = "";
 		try {
 			response = client.newCall(request).execute();
-			String result = response.body().string();
-			return result;
+			result = response.body().string();
 		} catch (IOException e) {
 			e.printStackTrace();
+			response.close();
+			throw new ThanhToanException(request1);
 		} finally {
 			response.close();
 		}
-		return null;
+		return result;
 	}
 }

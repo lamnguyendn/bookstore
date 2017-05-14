@@ -55,6 +55,7 @@
 				</div>
 				<div class="modal-body">
 					<p>Đăng nhập không thành công!</p>
+					<p>Vui lòng thử lại...</p>
 				</div>
 			</div>
 		</div>
@@ -80,6 +81,28 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Modal Thông báo không thể kết nối đến máy chủ -->
+	<div id="balanceNotEnough" class="modal fade" role="dialog">
+		<div class="modal-dialog" style="width: 40%;">
+			<!-- Modal content-->
+			<div class="modal-content"
+				style="color: #E9EDEF; background-color: rgba(231, 76, 60, 0.88); border-color: rgba(231, 76, 60, 0.88);">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="modal-title">
+						<span class="glyphicon glyphicon-exclamation-sign"></span> Thông
+						báo!
+					</h3>
+				</div>
+				<div class="modal-body">
+					<p>Không thể kết nối đến máy chủ thanh toán trực tuyến!</p>
+					<p>Vui lòng sử dụng hình thức thanh toán khác!</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<!-- Modal Đăng nhập để thanh toán -->
 	<div id="myModalLoginToPay" class="modal fade" role="dialog">
 		<html:form action="/thanhToanTraTruoc" method="post"
@@ -262,6 +285,14 @@
 		</script>
 		<%
 			session.removeAttribute("notExists");
+		%>
+	</c:if>
+	<c:if test="${sessionScope.cannotConnectToServer eq 'true'}">
+		<script type="text/javascript">
+			displayModalNotExists();
+		</script>
+		<%
+			session.removeAttribute("cannotConnectToServer");
 		%>
 	</c:if>
 </body>

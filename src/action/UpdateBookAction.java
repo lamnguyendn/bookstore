@@ -145,7 +145,7 @@ public class UpdateBookAction extends Action {
 
 					Book bookTemp = new Book(isbn, name, price, quantity, publishDate, image_1, description, authorNum,
 							categoryNum, publisherNum);
-					bookBO.updateBook(bookTemp);
+					bookBO.updateBook(bookTemp, request);
 					return mapping.findForward("updateBookSuccess");
 				} else {
 					bookForm.setName(book.getName());

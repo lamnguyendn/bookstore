@@ -2,26 +2,29 @@ package model.bo;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
+import common.ThanhToanException;
 import model.beans.Book;
 import model.dao.BookDAO;
 
 public class BookBO {
 	BookDAO bookDAO = new BookDAO();
 
-	public void addBook(Book book) {
-		bookDAO.addBook(book);
+	public void addBook(Book book, HttpServletRequest request) throws ThanhToanException {
+		bookDAO.addBook(book, request);
 	}
 
-	public void updateBook(Book book) {
-		bookDAO.updateBook(book);
+	public void updateBook(Book book, HttpServletRequest request) throws ThanhToanException {
+		bookDAO.updateBook(book, request);
 	}
 
 	public Book findBookByIsbn(String isbn) {
 		return bookDAO.findBookByIsbn(isbn);
 	}
 
-	public void deleteBook(String isbn) {
-		bookDAO.deleteBook(isbn);
+	public void deleteBook(String isbn, HttpServletRequest request) throws ThanhToanException {
+		bookDAO.deleteBook(isbn, request);
 	}
 
 	public ArrayList<Book> getListOfBooksLimit(int first, int last) {

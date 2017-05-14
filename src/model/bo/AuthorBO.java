@@ -2,6 +2,9 @@ package model.bo;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
+import common.ThanhToanException;
 import model.beans.Author;
 import model.dao.AuthorDAO;
 
@@ -12,8 +15,8 @@ public class AuthorBO {
 		return authorDAO.getListOfAuthors();
 	}
 
-	public void addAuthor(String authorNum, String authorName, String authorInformation) {
-		authorDAO.addAuthor(authorNum, authorName, authorInformation);
+	public void addAuthor(String authorNum, String authorName, String authorInformation, HttpServletRequest request) throws ThanhToanException {
+		authorDAO.addAuthor(authorNum, authorName, authorInformation, request);
 	}
 
 	public Author getInfoAuthor(String authorNum) {
@@ -21,13 +24,13 @@ public class AuthorBO {
 		return authorDAO.getInfoAuthor(authorNum);
 	}
 
-	public void editAuthor(String authorNum, String authorName, String authorInformation) {
-		authorDAO.editAuthor(authorNum, authorName, authorInformation);
+	public void editAuthor(String authorNum, String authorName, String authorInformation, HttpServletRequest request) throws ThanhToanException {
+		authorDAO.editAuthor(authorNum, authorName, authorInformation, request);
 
 	}
 
-	public void deleteAuthor(String authorNum) {
-		authorDAO.deleteAuthor(authorNum);
+	public void deleteAuthor(String authorNum, HttpServletRequest request) throws ThanhToanException {
+		authorDAO.deleteAuthor(authorNum, request);
 
 	}
 

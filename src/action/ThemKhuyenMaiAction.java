@@ -60,7 +60,7 @@ public class ThemKhuyenMaiAction extends Action {
 					float phanTramKm = khuyenMaiForm.getPhanTramKm();
 					int trangThai = khuyenMaiForm.getTrangThai();
 					PromotionBO khuyenMaiBO = new PromotionBO();
-					khuyenMaiBO.themKhuyenMai(maKm, tenKm, phanTramKm, trangThai);
+					khuyenMaiBO.themKhuyenMai(maKm, tenKm, phanTramKm, trangThai, request);
 					return mapping.findForward("themKMxong");
 				} else {
 					return mapping.findForward("themKMerror");

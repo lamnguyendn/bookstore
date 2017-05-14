@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import common.DataAccess;
+import common.ThanhToanException;
 import form.CustomerForm;
 import model.beans.Account;
 import model.beans.CartInfo;
@@ -29,7 +30,7 @@ public class OrderDAO {
 	OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
 	PromotionDAO promotionDAO = new PromotionDAO();
 
-	public void saveOrderTraSau(CartInfo cartInfo, HttpServletRequest request) {
+	public void saveOrderTraSau(CartInfo cartInfo, HttpServletRequest request) throws ThanhToanException {
 		Order order = new Order();
 		Account account = (Account) request.getSession().getAttribute("userName");
 
@@ -63,10 +64,11 @@ public class OrderDAO {
 			String isbn = line.getBook().getIsbn();
 			detail.setBookNum(isbn);
 
-			orderDetailDAO.saveOrderDetail(detail);
+			orderDetailDAO.saveOrderDetail(detail, request);
 		}
 	}
-	public void saveOrderTraTruoc(CartInfo cartInfo, HttpServletRequest request) {
+
+	public void saveOrderTraTruoc(CartInfo cartInfo, HttpServletRequest request) throws ThanhToanException {
 		Order order = new Order();
 		Account account = (Account) request.getSession().getAttribute("userName");
 
@@ -100,9 +102,10 @@ public class OrderDAO {
 			String isbn = line.getBook().getIsbn();
 			detail.setBookNum(isbn);
 
-			orderDetailDAO.saveOrderDetail(detail);
+			orderDetailDAO.saveOrderDetail(detail, request);
 		}
 	}
+
 	private void saveOrder(Order order) {
 		String sql = "INSERT INTO donhang VALUES(?,?,?,?,?,?,?,?,?)";
 		Connection con = DataAccess.connect();
@@ -156,7 +159,7 @@ public class OrderDAO {
 		return status;
 	}
 
-	public void updateOrder(String orderNum, int status) {
+	public void updateOrder(String orderNum, int status, HttpServletRequest request) throws ThanhToanException {
 		String sql = "UPDATE donhang SET trangthai = ? WHERE ma_dh = ?";
 		Connection con = DataAccess.connect();
 		try {
@@ -166,6 +169,7 @@ public class OrderDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ThanhToanException(request);
 		} finally {
 			try {
 				con.close();

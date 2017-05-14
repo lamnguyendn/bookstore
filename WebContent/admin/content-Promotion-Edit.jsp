@@ -31,7 +31,7 @@
 						<html:form action="/suaKM" method="post"
 							styleClass="form-horizontal form-label-left" styleId="myForm">
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mã
+								<label class="control-label col-md-2 col-sm-3 col-xs-12">Mã
 									khuyến mại <span class="required">*</span>
 								</label>
 								<div class="col-md-5 col-sm-6 col-xs-12">
@@ -55,7 +55,7 @@
 								</logic:messagesPresent>
 							</div>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
+								<label class="control-label col-md-2 col-sm-3 col-xs-12">Tên
 									khuyến mại <span class="required">*</span>
 								</label>
 								<div class="col-md-5 col-sm-6 col-xs-12">
@@ -72,7 +72,7 @@
 								</logic:messagesPresent>
 							</div>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Phần
+								<label class="control-label col-md-2 col-sm-3 col-xs-12">Phần
 									trăm khuyến mại <span class="required">*</span>
 								</label>
 								<div class="col-md-5 col-sm-6 col-xs-12">
@@ -82,7 +82,7 @@
 								<div id="phanTramKm1"></div>
 							</div>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Trạng
+								<label class="control-label col-md-2 col-sm-3 col-xs-12">Trạng
 									Thái <span class="required">*</span>
 								</label>
 								<div class="col-md-5 col-sm-6 col-xs-12">
@@ -99,7 +99,7 @@
 								<div class="col-md-6 col-md-offset-3">
 									<html:submit styleClass="btn btn-success" property="submit"
 										value="Sửa"></html:submit>
-									<html:link action="/showlistauthor"
+									<html:link action="/showlistkm"
 										styleClass="btn btn-default">Quay lại</html:link>
 								</div>
 							</div>
@@ -128,26 +128,32 @@
 			rules : {
 				maKm : {
 					required : true,
-					pattern : /[A-Za-z0-9]+/
+					pattern : /[A-Za-z0-9]+/,
+					maxlength : 50
 				},
 				tenKm : {
 					required : true,
+					maxlength : 100
 				},
 				phanTramKm : {
 					required : true,
-					min : 10
+					min : 10,
+					max : 50
 				}
 			},
 			messages : {
 				maKm : {
 					required : 'Vui lòng nhập mã khuyến mãi!',
 					pattern : 'Mã khuyến mãi không được chứa kí tự đặc biệt!',
+					maxlength : 'Mã khuyến mãi không được vượt quá 50 kí tự!'
 				},
 				tenKm : {
 					required : 'Vui lòng nhập tên khuyến mãi!',
+					maxlength : 'Tên khuyến mãi không được vượt quá 100 kí tự!'
 				},
 				phanTramKm : {
-					min : 'Vui lòng nhập phần trăm khuyến mãi!',
+					min : 'Vui lòng nhập phần trăm khuyến mãi lớn hơn 10%!',
+					max : 'Vui lòng nhập phần trăm khuyến mãi nhỏ hơn 50%!',
 					required : 'Vui lòng nhập phần trăm khuyến mãi!',
 				}
 			}

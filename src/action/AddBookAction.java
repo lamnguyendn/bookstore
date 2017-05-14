@@ -128,7 +128,7 @@ public class AddBookAction extends Action {
 
 					Book book = new Book(isbn, name, price, quantity, publishDate, image_1, description, authorNum,
 							categoryNum, publisherNum);
-					bookBO.addBook(book);
+					bookBO.addBook(book, request);
 
 					return mapping.findForward("addBookSuccess");
 				} else {

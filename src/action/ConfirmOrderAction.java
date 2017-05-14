@@ -51,7 +51,7 @@ public class ConfirmOrderAction extends Action {
 							+ "data-href=\"return setDelivery('" + orderNum + "')\">"
 							+ "<i class=\"glyphicon glyphicon-remove\"></i>" + "</a>";
 				}
-				orderBO.updateOrder(orderNum, status);
+				orderBO.updateOrder(orderNum, status, request);
 				response.getWriter().println(result);
 			}
 		}

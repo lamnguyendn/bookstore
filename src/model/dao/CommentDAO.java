@@ -7,8 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import common.DataAccess;
 import common.StringProcess;
+import common.ThanhToanException;
 import model.beans.Comment;
 
 public class CommentDAO {
@@ -87,21 +90,21 @@ public class CommentDAO {
 		return arr;
 	}
 
-	public void insertComment(Comment comment) {
+	public void insertComment(Comment comment, HttpServletRequest request) throws ThanhToanException {
 		Connection con = DataAccess.connect();
 		PreparedStatement pstm = null;
 
-		String sql = "INSERT INTO binhluan(noidung,ngaybinhluan,isbn,username,pheduyet) " + " VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO binhluan(noidung,ngaybinhluan,isbn,username) " + " VALUES(?,?,?,?)";
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, comment.getNoiDung());
 			pstm.setDate(2, new java.sql.Date(new java.util.Date().getTime()));
 			pstm.setString(3, comment.getIsbn());
 			pstm.setString(4, comment.getUserName());
-			pstm.setInt(5, 0);
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ThanhToanException(request);
 		} finally {
 			try {
 				con.close();
@@ -118,7 +121,7 @@ public class CommentDAO {
 		return cm;
 	}
 
-	public void deleteComment(int ma_BL) {
+	public void deleteComment(int ma_BL, HttpServletRequest request) throws ThanhToanException {
 		String sql = "DELETE FROM binhluan WHERE ma_BL = ? ";
 		PreparedStatement pstm = null;
 		Connection con = DataAccess.connect();
@@ -128,6 +131,7 @@ public class CommentDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ThanhToanException(request);
 		} finally {
 			try {
 				con.close();

@@ -34,7 +34,7 @@ public class DeleteBookAction extends Action {
 				BookBO bookBO = new BookBO();
 				BookForm bookForm = (BookForm) form;
 				String isbn = bookForm.getIsbn();
-				bookBO.deleteBook(isbn);
+				bookBO.deleteBook(isbn, request);
 				return mapping.findForward("deleteBook");
 			}
 		}

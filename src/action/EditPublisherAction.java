@@ -27,7 +27,7 @@ public class EditPublisherAction extends Action {
 			String publisherName = publisherForm.getPublisherName();
 			String publisherAddress = publisherForm.getPublisherAddress();
 			String publisherPhoneNumber = publisherForm.getPublisherPhoneNumber();
-			publisherBO.editPublisher(publisherNum, publisherName, publisherAddress, publisherPhoneNumber);
+			publisherBO.editPublisher(publisherNum, publisherName, publisherAddress, publisherPhoneNumber, request);
 			return mapping.findForward("editsuccess");
 		} else {
 			Publisher publisher = publisherBO.getInfoPublisher(publisherNum);

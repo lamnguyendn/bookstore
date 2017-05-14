@@ -32,7 +32,7 @@ public class DeleteCommentAction extends Action {
 		// return mapping.findForward("list");
 		// }
 		// }
-		commentBO.deleteComment(ma_BL);
+		commentBO.deleteComment(ma_BL, request);
 		System.out.println("done");
 
 		return null;

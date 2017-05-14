@@ -19,7 +19,7 @@ public class DeleteAuthorAction extends Action {
 		AuthorForm authorForm = (AuthorForm) form;
 		AuthorBO authorBO = new AuthorBO();
 		String authorNum = authorForm.getAuthorNum();
-		authorBO.deleteAuthor(authorNum);
+		authorBO.deleteAuthor(authorNum, request);
 		return mapping.findForward("delete");
 	}
 

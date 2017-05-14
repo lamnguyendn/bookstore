@@ -74,7 +74,7 @@ public class SuaAccountAction extends Action {
 					String diaChi = accountForm.getDiaChi();
 					String email = accountForm.getEmail();
 					String quyen = accountForm.getQuyen();
-					accountBO.suaAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen);
+					accountBO.suaAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen, request);
 					return mapping.findForward("suaAccXong");
 				} else {
 					Account account = accountBO.getThongTinAccount(userName);

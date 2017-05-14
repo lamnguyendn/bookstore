@@ -25,7 +25,7 @@ public class EditCategoryAction extends Action {
 
 		if ("Sửa".equals(categoryForm.getSubmit())) {
 			String categoryName = categoryForm.getCategoryName();
-			categoryBO.editCategory(categoryNum, categoryName);
+			categoryBO.editCategory(categoryNum, categoryName, request);
 			return mapping.findForward("editsuccess");
 		} else {
 			Category category = categoryBO.getInfoCategory(categoryNum);

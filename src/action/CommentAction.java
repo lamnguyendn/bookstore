@@ -36,7 +36,7 @@ public class CommentAction extends Action {
 			comment.setNoiDung(noiDung);
 			comment.setIsbn(isbn);
 			comment.setUserName(account.getUserName());
-			commentBO.insertComment(comment);
+			commentBO.insertComment(comment, request);
 		} else {
 			ActionErrors actionErrors = new ActionErrors();
 			actionErrors.add("chuaDangNhap", new ActionMessage("error.chuaDangNhap"));

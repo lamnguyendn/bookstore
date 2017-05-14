@@ -96,17 +96,21 @@
 			rules : {
 				categoryNum : {
 					required : true,
+					maxlength : 50
 				},
 				categoryName : {
 					required : true,
+					maxlength : 200
 				}
 			},
 			messages : {
 				categoryNum : {
 					required : 'Vui lòng nhập mã danh mục!',
+					maxlength : 'Mã danh mục không được vượt quá 50 kí tự!'
 				},
 				categoryName : {
 					required : 'Vui lòng nhập tên danh mục!',
+					maxlength : 'Tên danh mục không được vượt quá 200 kí tự!'
 				}
 			}
 		});

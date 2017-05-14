@@ -2,6 +2,9 @@ package model.bo;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
+import common.ThanhToanException;
 import model.beans.Account;
 import model.dao.AccountDAO;
 
@@ -17,8 +20,8 @@ public class AccountBO {
 	}
 
 	public void themAccount(String userName, String passWord, String ten, String soDienThoai, String diaChi,
-			String email, String quyen) {
-		accountDAO.themAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen);
+			String email, String quyen, HttpServletRequest request) throws ThanhToanException {
+		accountDAO.themAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen, request);
 	}
 
 	public boolean checkPhone(String phone) {
@@ -38,12 +41,12 @@ public class AccountBO {
 	}
 
 	public void suaAccount(String userName, String passWord, String ten, String soDienThoai, String diaChi,
-			String email, String quyen) {
-		accountDAO.suaAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen);
+			String email, String quyen, HttpServletRequest request) throws ThanhToanException {
+		accountDAO.suaAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen, request);
 	}
 
-	public void xoaAccount(String userName) {
-		accountDAO.xoaAccount(userName);
+	public void xoaAccount(String userName, HttpServletRequest request) throws ThanhToanException {
+		accountDAO.xoaAccount(userName, request);
 	}
 
 	public Account getThongTinAccount(String userName) {

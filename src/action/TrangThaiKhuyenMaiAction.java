@@ -39,7 +39,7 @@ public class TrangThaiKhuyenMaiAction extends Action {
 			result = "<a href=\"javascript:void(0)\" onclick=\"return setDelivery('" + maKm + "')\">"
 					+ "<i class=\"glyphicon glyphicon-remove\"></i>" + "</a>";
 		}
-		khuyenMaiBO.suaTrangThaiKm(maKm, trangThai);
+		khuyenMaiBO.suaTrangThaiKm(maKm, trangThai, request);
 		response.getWriter().println(result);
 		return null;
 
