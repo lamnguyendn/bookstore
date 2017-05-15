@@ -113,7 +113,8 @@
 			rules : {
 				authorNum : {
 					required : true,
-					maxlength : 50
+					maxlength : 50,
+					pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/
 				},
 				authorName : {
 					required : true,
@@ -130,6 +131,7 @@
 					maxlength : 'Mã tác giả không được vượt quá 50 kí tự!'
 				},
 				authorName : {
+					pattern : 'Không được chứa kí tự đặc biệt!',		
 					required : 'Vui lòng nhập tên tác giả!',
 					maxlength : 'Tên tác giả không được vượt quá 200 kí tự!'
 				},

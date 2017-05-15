@@ -64,10 +64,13 @@
 												rules : {
 													name : {
 														required : true,
+														maxlength : 50,
+														pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/
 													},
 													email : {
 														required : true,
 														pattern : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+														maxlength : 100
 													},
 													phone : {
 														required : true,
@@ -75,22 +78,26 @@
 													},
 													address : {
 														required : true,
+														maxlength : 100
 													}
 												},
 												messages : {
 													name : {
-														required : "Vui lòng nhập họ tên!"
+														required : "Vui lòng nhập họ tên!",
+														maxlength : 'Họ tên không được vượt quá 50 kí tự!'
 													},
 													email : {
 														required : "Vui lòng nhập email!",
-														pattern : "Nhập email sai định dạng!"
+														pattern : "Nhập email sai định dạng!",
+														maxlength : 'Vui lòng nhập email không quá 100 kí tự!'
 													},
 													phone : {
 														required : "Vui lòng nhập số điện thoại!",
 														pattern : "Số điện thoại sai định dạng!"
 													},
 													address : {
-														required : "Vui lòng nhập địa chỉ!"
+														required : "Vui lòng nhập địa chỉ!",
+														maxlength : 'Địa chỉ không được vượt quá 100 kí tự!'
 													}
 												}
 											});

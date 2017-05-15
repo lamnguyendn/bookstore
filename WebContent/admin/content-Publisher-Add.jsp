@@ -117,12 +117,17 @@
 			rules : {
 				publisherNum : {
 					required : true,
+					pattern : /^[a-zA-Z0-9]+$/,
+					maxlength : 50
 				},
 				publisherName : {
 					required : true,
+					pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/,
+					maxlength : 100
 				},
 				publisherAddress : {
 					required : true,
+					maxlength : 200
 				},
 				publisherPhoneNumber : {
 					required : true,
@@ -133,12 +138,17 @@
 			messages : {
 				publisherNum : {
 					required : 'Vui lòng nhập mã nhà xuất bản!',
+					pattern : 'Không được chứa kí tự đặc biệt!',
+					maxlength : 'Không được vượt quá 50 kí tự!'
 				},
 				publisherName : {
 					required : 'Vui lòng nhập tên nhà xuất bản!',
+					pattern : 'Tên NXB không được chứa kí tự đặc biệt!',
+					maxlength : 'Tên NXB Không được vượt quá 100 kí tự!'
 				},
 				publisherAddress : {
 					required : 'Vui lòng nhập địa chỉ nhà xuất bản!',
+					maxlength : 'Không được vượt quá 200 kí tự!'
 				},
 				publisherPhoneNumber : {
 					required : 'Vui lòng nhập số điện thoại nhà xuất bản!',

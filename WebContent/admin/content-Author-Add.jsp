@@ -112,11 +112,13 @@
 			},
 			rules : {
 				authorNum : {
+					pattern : /^[a-zA-Z0-9]+$/,
 					required : true,
 					maxlength : 50
 				},
 				authorName : {
 					required : true,
+					pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/,
 					maxlength : 200
 				},
 				authorInformation : {
@@ -126,10 +128,12 @@
 			},
 			messages : {
 				authorNum : {
+					pattern : 'Không được chứa kí tự đặc biệt!',
 					required : 'Vui lòng nhập mã tác giả!',
 					maxlength : 'Mã tác giả không được vượt quá 50 kí tự!'
 				},
 				authorName : {
+					pattern : 'Không được chứa kí tự đặc biệt!',					
 					required : 'Vui lòng nhập tên tác giả!',
 					maxlength : 'Tên tác giả không được vượt quá 200 kí tự!'
 				},

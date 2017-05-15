@@ -128,17 +128,18 @@
 			rules : {
 				maKm : {
 					required : true,
-					pattern : /[A-Za-z0-9]+/,
+					pattern : /^[a-zA-Z0-9]+$/,
 					maxlength : 50
 				},
 				tenKm : {
 					required : true,
+					pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/,
 					maxlength : 100
 				},
 				phanTramKm : {
 					required : true,
-					min : 10,
-					max : 50
+					pattern : /[0-9]+/,
+					min : 10
 				}
 			},
 			messages : {
@@ -149,11 +150,12 @@
 				},
 				tenKm : {
 					required : 'Vui lòng nhập tên khuyến mãi!',
+					pattern : 'Không được chứa kí tự đặc biệt!',
 					maxlength : 'Tên khuyến mãi không được vượt quá 100 kí tự!'
 				},
 				phanTramKm : {
-					min : 'Vui lòng nhập phần trăm khuyến mãi lớn hơn 10%!',
-					max : 'Vui lòng nhập phần trăm khuyến mãi nhỏ hơn 50%!',
+					min : 'Phần trăm khuyến mãi phải lớn hơn 10!',
+					pattern : 'Vui lòng nhập chữ số!',
 					required : 'Vui lòng nhập phần trăm khuyến mãi!',
 				}
 			}

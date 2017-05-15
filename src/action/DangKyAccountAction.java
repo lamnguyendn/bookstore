@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
+import common.PasswordEncoder;
 import common.StringProcess;
 import form.AccountForm;
 import model.bo.AccountBO;
@@ -64,13 +65,13 @@ public class DangKyAccountAction extends Action {
 		}
 		if ("Đăng ký".equals(accountForm.getSubmit())) {
 			String userName = accountForm.getUserName();
-			String passWord = accountForm.getPassWord();
+			String password = PasswordEncoder.createHash(accountForm.getPassWord());
 			String ten = accountForm.getTen();
 			String soDienThoai = accountForm.getSoDienThoai();
 			String diaChi = accountForm.getDiaChi();
 			String email = accountForm.getEmail();
 			String quyen = "ROLE_USER";
-			accountBO.themAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen, request);
+			accountBO.themAccount(userName, password, ten, soDienThoai, diaChi, email, quyen, request);
 			request.getSession().setAttribute("dkx", "#modalLogin");
 			return mapping.findForward("dkAccXong");
 		} else {

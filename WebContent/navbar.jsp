@@ -520,11 +520,14 @@ label.error::after {
 											rules : {
 												userName : {
 													required : true,
-													maxlength : 20
+													pattern : /^[a-zA-Z0-9]+$/,
+													maxlength : 50,
+													minlength : 6
 												},
 												passWord : {
 													required : true,
-													maxlength : 20
+													maxlength : 100,
+													minlength : 8
 												},
 												passWord1 : {
 													required : true,
@@ -533,7 +536,7 @@ label.error::after {
 												ten : {
 													required : true,
 													maxlength : 50,
-													pattern : /[a-zA-Z\s]+/
+													pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/
 												},
 												soDienThoai : {
 													required : true,
@@ -551,11 +554,14 @@ label.error::after {
 											messages : {
 												userName : {
 													required : 'Vui lòng nhập tên tài khoản!',
-													maxlength : 'Tên tài khoản không được vượt quá 20 kí tự!'
+													maxlength : 'Tên tài khoản không được vượt quá 50 kí tự!',
+													pattern : 'Không được chứa kí tự đặc biệt!',
+													minlength : 'Tên tài khoản phải nhiều hơn 6 kí tự!'
 												},
 												passWord : {
 													required : 'Vui lòng nhập mật khẩu!',
-													maxlength : 'Mật khẩu không được vượt quá 20 kí tự!'
+													maxlength : 'Mật khẩu không được vượt quá 100 kí tự!',
+													minlength : 'Mật khẩu phải chứa ít nhất 8 kí tự!'
 												},
 												passWord1 : {
 													required : 'Vui lòng nhập xác nhận mật khẩu!',
@@ -564,7 +570,7 @@ label.error::after {
 												ten : {
 													required : 'Vui lòng nhập họ tên!',
 													maxlength : 'Họ tên không được vượt quá 50 kí tự!',
-													pattern : 'Họ tên không được chứa kí tự đặc biệt',
+													pattern : 'Không được chứa kí tự đặc biệt hoặc số!',
 												},
 												soDienThoai : {
 													required : 'Vui lòng nhập số điện thoại!',

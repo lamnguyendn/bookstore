@@ -334,7 +334,8 @@ input[type="file"] {
 			rules : {
 				isbn : {
 					required : true,
-					maxlength : 50
+					maxlength : 50,
+					pattern : /^[a-zA-Z0-9]+$/
 				},
 				categoryNum : {
 					required : true,
@@ -346,6 +347,7 @@ input[type="file"] {
 					required : true,
 				},
 				name : {
+					pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/,					
 					required : true,
 					maxlength : 200
 				},
@@ -374,6 +376,7 @@ input[type="file"] {
 			},
 			messages : {
 				isbn : {
+					pattern : 'Không được chứa kí tự đặc biệt!',
 					required : 'Vui lòng nhập mã sách!',
 					maxlength : 'Mã sách không được vượt quá 50 kí tự!'
 				},
@@ -387,6 +390,7 @@ input[type="file"] {
 					required : 'Vui lòng chọn nhà xuất bản!',
 				},
 				name : {
+					pattern : 'Không được chứa kí tự đặc biệt!',
 					required : 'Vui lòng nhập tên sách!',
 					maxlength : 'Tên sách không được vượt quá 200 kí tự!'
 				},

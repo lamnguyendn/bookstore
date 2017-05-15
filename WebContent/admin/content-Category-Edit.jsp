@@ -96,20 +96,24 @@
 			rules : {
 				categoryNum : {
 					required : true,
+					pattern : /^[a-zA-Z0-9]+$/,
 					maxlength : 50
 				},
 				categoryName : {
 					required : true,
+					pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/,
 					maxlength : 200
 				}
 			},
 			messages : {
 				categoryNum : {
 					required : 'Vui lòng nhập mã danh mục!',
+					pattern : 'Không được chứa kí tự đặc biệt!',
 					maxlength : 'Mã danh mục không được vượt quá 50 kí tự!'
 				},
 				categoryName : {
 					required : 'Vui lòng nhập tên danh mục!',
+					pattern : 'Không được chứa kí tự đặc biệt!',
 					maxlength : 'Tên danh mục không được vượt quá 200 kí tự!'
 				}
 			}
