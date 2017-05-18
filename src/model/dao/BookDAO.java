@@ -410,7 +410,7 @@ public class BookDAO {
 		Statement stm = null;
 
 		String sql = "SELECT s.* FROM sach s WHERE s.ma_tl "
-					+ "	IN ( SELECT tl.ma_tl FROM sach s INNER JOIN theloai tl ON tl.ma_tl = s.ma_tl AND isbn = '304497' ) "
+					+ "	IN ( SELECT tl.ma_tl FROM sach s INNER JOIN theloai tl ON tl.ma_tl = s.ma_tl AND isbn = '"+isbn+"' ) "
 				+ " AND s.isbn <> '"+isbn+"' ORDER BY isbn LIMIT 4";
 		Connection con = DataAccess.connect();
 		try {
