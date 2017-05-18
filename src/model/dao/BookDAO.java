@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -1058,5 +1059,43 @@ public class BookDAO {
 		}
 		return count;
 	}
+//	Start Edit by DatTQ
 
+	CallableStatement callstmt;
+	ResultSet rs = null;
+/**
+ * get List các ebook mà username đã mua.
+ * @param username 
+ * @return listBooksName
+ */
+	public ArrayList<Book> getListEbookByUserName(String userName) {
+		Connection con = DataAccess.connect();
+		ArrayList<Book> listBooksName = new ArrayList<>();
+		Book book;
+		try {
+			callstmt = con.prepareCall("{call sp_getEbookNameByUser(?)}");
+			callstmt.setString(1, userName);
+			rs = callstmt.executeQuery();
+			
+			while (rs.next()) {
+				book = new Book();
+				book.setName(rs.getString("tensach"));
+				book.setIsbn(rs.getString("isbn"));
+				book.setImage_1(rs.getBytes("hinhanh_1"));
+				book.setPagesNum(rs.getInt("pagesNum"));
+
+				listBooksName.add(book);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return listBooksName;
+	}
+//  End Edit by DatTQ
 }

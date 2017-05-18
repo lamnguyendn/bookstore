@@ -114,5 +114,38 @@ public class BookBO {
 	public int countRowsByFindKeyOnlyBook(String findKey) {
 		return bookDAO.countRowsByFindKeyOnlyBook(findKey);
 	}
-
+//	Start Edit by DatTQ
+	/**
+	 * Get List Ebook
+	 * @param userName
+	 * @return
+	 */
+	public ArrayList<Book> getListEbookByUserName(String userName) {
+		BookDAO bookDAO = new BookDAO();
+		return bookDAO.getListEbookByUserName(userName);
+	}
+	
+	/**
+	 * Get List Pages
+	 * @param isbn
+	 * @param pagesNum
+	 * @return  ArrayList<String> arrPage
+	 */
+	public ArrayList<String> getListPages(String isbn, int pagesNum)  {
+		ArrayList<String> arrPage = new ArrayList<>();
+		
+			for (int i = 1; i <=pagesNum; i++) {
+				
+				String path = "image/" + isbn +"/" + i + ".png";
+				if ("".equals(path)) {
+					System.out.println("null");
+				} else {
+					System.out.println(path);
+					arrPage.add(path);
+				}
+			}
+		
+		return arrPage;
+	}
+//	End Edit by DatTQ
 }

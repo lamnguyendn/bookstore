@@ -101,9 +101,11 @@ label.error::after {
 }
 </style>
 <script>
-	$(document).ready(function() {
-		$("#findKey").attr("placeholder", "Tìm tác giả hoặc sách mong muốn ...");
-	});
+	$(document).ready(
+			function() {
+				$("#findKey").attr("placeholder",
+						"Tìm tác giả hoặc sách mong muốn ...");
+			});
 </script>
 <nav class="navbar navbar-inverse navbar-fixed-top" id="header"
 	style="background: #189eff; padding-top: 10px;">
@@ -143,7 +145,7 @@ label.error::after {
 						<div class="search-wrap">
 							<%-- <input type="text" name="findKey" autocomplete="off" value="${findKey}"
 								placeholder="Tìm tác giả hoặc sách mong muốn ..."> --%>
-							<html:text property="findKey" styleId="findKey"/>
+							<html:text property="findKey" styleId="findKey" />
 
 							<button type="submit">
 								<span>Tìm kiếm</span>
@@ -179,6 +181,26 @@ label.error::after {
 					</div>
 				</div>
 			</html:form>
+			<div class="modal fade" id="confirm-logout" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Xác nhận đăng xuất</h4>
+			</div>
+			<div class="modal-body">
+				<p>Bạn có muôn đăng xuất không ?</p>
+				<p class="debug-url"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+				<a class="btn btn-danger btn-ok">Có</a>
+			</div>
+		</div>
+	</div>
+</div>
 			<ul class="nav navbar-nav navbar-right">
 				<c:if test="${empty sessionScope.userName}">
 					<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog"
@@ -246,36 +268,40 @@ label.error::after {
 							Đăng nhập
 					</a></li>
 				</c:if>
+				<li>
+				<c:if test="${not empty sessionScope.userName}">
+					<div class="top_nav">
+						<div class="nav_menu">
+							<ul
+								class="nav navbar-nav navbar-right visible-sm-block visible-md-inline visible-lg-inline">
+								<li id="wrapper"><a href="javascript:;" id="cityclick"
+									class="user-profile dropdown-toggle" data-toggle="dropdown"
+									aria-expanded="false"> <span 
+										style="display: inline-block; font-family: FontAwesome; font-style: normal; font-weight: normal;">
+											<span class="glyphicon glyphicon-user"></span>&nbsp;<c:out value="${sessionScope.userName.userName}"></c:out>
+									</span>
+								</a>
+									<ul class="dropdown-menu dropdown-usermenu pull-right"
+										id="citydrop">
+										<li><a href="javascript:;"> Profile</a></li>
+										<!-- Start Edit by DatTQ  -->
+										<li><!-- <a data-href="/BookStore/listEbook.do" ><span
+												class="fa fa-sign-out pull-right"></span> -->  <!-- </a> -->
+										<html:link action="/listEbook">Sách của tôi	</html:link>		
+										</li>
+										<!-- End Edit by DatTQ  -->
+										<li><a data-href="/BookStore/logout.do"
+											data-toggle="modal" data-target="#confirm-logout"><span
+												class="fa fa-sign-out pull-right"></span> Đăng xuất </a></li>
+									</ul></li>
+							</ul>
+						</div>
+					</div>
+				</c:if>
+				</li>
 				<li><html:link action="/showCart">
 						<span class="glyphicon glyphicon-shopping-cart"></span> Giỏ Hàng
 					</html:link></li>
-				<c:if test="${not empty sessionScope.userName}">
-					<div class="modal fade" id="confirm-logout" tabindex="-1"
-						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">Xác nhận đăng
-										xuất</h4>
-								</div>
-								<div class="modal-body">
-									<p>Bạn có muôn đăng xuất không ?</p>
-									<p class="debug-url"></p>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">Không</button>
-									<a class="btn btn-danger btn-ok">Có</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<li><a data-href="/BookStore/logout.do" data-toggle="modal"
-						data-target="#confirm-logout"><span
-							class="glyphicon glyphicon-log-out"></span> Đăng xuất </a></li>
-				</c:if>
 			</ul>
 		</div>
 	</div>
@@ -520,14 +546,11 @@ label.error::after {
 											rules : {
 												userName : {
 													required : true,
-													pattern : /^[a-zA-Z0-9]+$/,
-													maxlength : 50,
-													minlength : 6
+													maxlength : 20
 												},
 												passWord : {
 													required : true,
-													maxlength : 100,
-													minlength : 8
+													maxlength : 20
 												},
 												passWord1 : {
 													required : true,
@@ -536,7 +559,7 @@ label.error::after {
 												ten : {
 													required : true,
 													maxlength : 50,
-													pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/
+													pattern : /[a-zA-Z\s]+/
 												},
 												soDienThoai : {
 													required : true,
@@ -554,14 +577,11 @@ label.error::after {
 											messages : {
 												userName : {
 													required : 'Vui lòng nhập tên tài khoản!',
-													maxlength : 'Tên tài khoản không được vượt quá 50 kí tự!',
-													pattern : 'Không được chứa kí tự đặc biệt!',
-													minlength : 'Tên tài khoản phải nhiều hơn 6 kí tự!'
+													maxlength : 'Tên tài khoản không được vượt quá 20 kí tự!'
 												},
 												passWord : {
 													required : 'Vui lòng nhập mật khẩu!',
-													maxlength : 'Mật khẩu không được vượt quá 100 kí tự!',
-													minlength : 'Mật khẩu phải chứa ít nhất 8 kí tự!'
+													maxlength : 'Mật khẩu không được vượt quá 20 kí tự!'
 												},
 												passWord1 : {
 													required : 'Vui lòng nhập xác nhận mật khẩu!',
@@ -570,7 +590,7 @@ label.error::after {
 												ten : {
 													required : 'Vui lòng nhập họ tên!',
 													maxlength : 'Họ tên không được vượt quá 50 kí tự!',
-													pattern : 'Không được chứa kí tự đặc biệt hoặc số!',
+													pattern : 'Họ tên không được chứa kí tự đặc biệt',
 												},
 												soDienThoai : {
 													required : 'Vui lòng nhập số điện thoại!',

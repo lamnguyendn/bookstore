@@ -332,5 +332,47 @@ public class BookForm extends ActionForm {
 			e.printStackTrace();
 		}
 	}
+//	Start Edit by DatTQ
+	private int pagesNum;
+	ArrayList<String> listPages;
+	ArrayList<String> listLargePages;
+	
+	public ArrayList<String> getListLargePages() {
+		return listLargePages;
+	}
+
+	public void setListLargePages(ArrayList<String> listLargePages) {
+		this.listLargePages = listLargePages;
+	}
+
+	private ArrayList<Book> listEbook;
+
+	public ArrayList<String> getListPages() {
+		return listPages;
+	}
+
+	public void setListPages(ArrayList<String> listPages) {
+		this.listPages = listPages;
+	}
+
+
+
+	public int getPagesNum() {
+		return pagesNum;
+	}
+
+	public void setPagesNum(int pagesNum) {
+		this.pagesNum = pagesNum;
+	}
+
+
+	public ArrayList<Book> getListEbook() {
+		return listEbook;
+	}
+
+	public void setListEbook(ArrayList<Book> listEbook) {
+		this.listEbook = listEbook;
+	}
+//	End Edit by DatTQ
 
 }
