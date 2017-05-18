@@ -22,8 +22,25 @@
 <link href="css/carousel.css" rel="stylesheet">
 <!-- Style CSS/JS -->
 <link rel="stylesheet" href="css/style1.css">
-<script src="js/scrollBar.js"></script>
+<!-- <script src="js/scrollBar.js"></script> -->
 
+<script>
+$(function() {
+    var offset = $("#sidebar").offset();
+    var topPadding = 25;
+    $(window).scroll(function() {
+        if ($(window).scrollTop() >= offset.top) {
+            $("#sidebar").stop().animate({
+                marginTop: $(window).scrollTop() - offset.top + topPadding
+            });
+        } else {
+            $("#sidebar").stop().animate({
+                marginTop: 0
+            });
+        }
+    });
+});
+</script>
 <style type="text/css">
 hr.style18 {
 	height: 30px;

@@ -26,7 +26,7 @@
 </head>
 <body>
 	<div id="wrapper">
-		<%@include file="navbar.jsp"%>
+		<%-- <%@include file="navbar.jsp"%> --%>
 		<fmt:setLocale value="vi-VN" />
 		<div id="content">
 			<div class="container">

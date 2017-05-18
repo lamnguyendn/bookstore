@@ -347,7 +347,7 @@ input[type="file"] {
 					required : true,
 				},
 				name : {
-					pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/,					
+					pattern : /^[áàãảạÁÀÃẢẠâấầẫẩậÂẤẦẪẨẬăắằẵẳặĂẮÀẴẲẶđĐêếềễểệÊẾỀỄỂỆóòõỏọÓÒÕỎỌôốồỗổộÔỐỒỖỔỘơớờỡởợƠỚƠỠỞỢúùũủụÚÙŨỦỤưứừữửựƯỨỪỮỬỰa-zA-Z0-9\s()]+$/,					
 					required : true,
 					maxlength : 200
 				},
@@ -403,7 +403,7 @@ input[type="file"] {
 				},
 				quantity : {
 					required : 'Vui lòng nhập số lượng!',
-					pattern : 'Nhập số lượng sai định dạng!',
+					pattern : 'Vui lòng nhập số lượng đúng định dạng!',
 					min : 'Vui lòng nhập kiểu số dương cho số lượng!',
 				},
 				price : {

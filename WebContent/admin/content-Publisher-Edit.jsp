@@ -34,7 +34,7 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mã
 									nhà xuất bản <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:text property="publisherNum" styleId="publisherNum"
 										styleClass="form-control col-md-7 col-xs-12" readonly="true" />
 								</div>
@@ -54,7 +54,7 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
 									nhà xuất bản <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:text property="publisherName" styleId="publisherName"
 										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
@@ -64,7 +64,7 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Địa
 									chỉ <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:text property="publisherAddress"
 										styleClass="form-control col-md-7 col-xs-12" />
 								</div>
@@ -74,7 +74,7 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Số
 									điện thoại <span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<html:text property="publisherPhoneNumber"
 										styleId="publisherPhoneNumber"
 										styleClass="form-control col-md-7 col-xs-12" />
@@ -122,7 +122,7 @@
 				},
 				publisherName : {
 					required : true,
-					pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/,
+					pattern : /^[áàãảạÁÀÃẢẠâấầẫẩậÂẤẦẪẨẬăắằẵẳặĂẮÀẴẲẶđĐêếềễểệÊẾỀỄỂỆóòõỏọÓÒÕỎỌôốồỗổộÔỐỒỖỔỘơớờỡởợƠỚƠỠỞỢúùũủụÚÙŨỦỤưứừữửựƯỨỪỮỬỰa-zA-Z\s]+$/
 					maxlength : 100
 				},
 				publisherAddress : {

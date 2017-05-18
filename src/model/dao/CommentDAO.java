@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import common.DataAccess;
 import common.StringProcess;
-import common.ThanhToanException;
+import common.DataBaseException;
 import model.beans.Comment;
 
 public class CommentDAO {
@@ -90,7 +90,7 @@ public class CommentDAO {
 		return arr;
 	}
 
-	public void insertComment(Comment comment, HttpServletRequest request) throws ThanhToanException {
+	public void insertComment(Comment comment, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 		PreparedStatement pstm = null;
 
@@ -104,7 +104,7 @@ public class CommentDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -121,7 +121,7 @@ public class CommentDAO {
 		return cm;
 	}
 
-	public void deleteComment(int ma_BL, HttpServletRequest request) throws ThanhToanException {
+	public void deleteComment(int ma_BL, HttpServletRequest request) throws DataBaseException {
 		String sql = "DELETE FROM binhluan WHERE ma_BL = ? ";
 		PreparedStatement pstm = null;
 		Connection con = DataAccess.connect();
@@ -131,7 +131,7 @@ public class CommentDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();

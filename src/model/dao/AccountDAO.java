@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 import common.DataAccess;
+import common.DataBaseException;
 import common.ThanhToanException;
 import model.beans.Account;
 
@@ -85,7 +86,7 @@ public class AccountDAO {
 	}
 
 	public void themAccount(String userName, String passWord, String ten, String soDienThoai, String diaChi,
-			String email, String role, HttpServletRequest request) throws ThanhToanException {
+			String email, String role, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 		String sql = String.format(
 				"INSERT INTO taikhoan (username, password,ten, sodienthoai, diachi, email, role) "
@@ -96,7 +97,7 @@ public class AccountDAO {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -227,7 +228,7 @@ public class AccountDAO {
 	}
 
 	public void suaAccount(String userName, String passWord, String ten, String soDienThoai, String diaChi,
-			String email, String role, HttpServletRequest request) throws ThanhToanException {
+			String email, String role, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 		PreparedStatement pstm = null;
 		String sql = "UPDATE taikhoan SET password = ?, ten = ?, sodienthoai = ?, diachi = ?, email = ?, role = ? WHERE username = ?";
@@ -243,7 +244,7 @@ public class AccountDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -254,7 +255,7 @@ public class AccountDAO {
 		}
 	}
 
-	public void xoaAccount(String userName, HttpServletRequest request) throws ThanhToanException {
+	public void xoaAccount(String userName, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 		PreparedStatement pstm = null;
 		String sql = "DELETE FROM taikhoan WHERE username = ?";
@@ -265,7 +266,7 @@ public class AccountDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();

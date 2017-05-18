@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import common.DataBaseException;
 import common.ThanhToanException;
 import model.beans.Account;
 import model.dao.AccountDAO;
@@ -20,7 +21,7 @@ public class AccountBO {
 	}
 
 	public void themAccount(String userName, String passWord, String ten, String soDienThoai, String diaChi,
-			String email, String quyen, HttpServletRequest request) throws ThanhToanException {
+			String email, String quyen, HttpServletRequest request) throws DataBaseException {
 		accountDAO.themAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen, request);
 	}
 
@@ -41,11 +42,11 @@ public class AccountBO {
 	}
 
 	public void suaAccount(String userName, String passWord, String ten, String soDienThoai, String diaChi,
-			String email, String quyen, HttpServletRequest request) throws ThanhToanException {
+			String email, String quyen, HttpServletRequest request) throws DataBaseException {
 		accountDAO.suaAccount(userName, passWord, ten, soDienThoai, diaChi, email, quyen, request);
 	}
 
-	public void xoaAccount(String userName, HttpServletRequest request) throws ThanhToanException {
+	public void xoaAccount(String userName, HttpServletRequest request) throws DataBaseException {
 		accountDAO.xoaAccount(userName, request);
 	}
 

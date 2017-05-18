@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import common.DataBaseException;
 import common.ThanhToanException;
 import model.beans.CartInfo;
 import model.beans.Order;
@@ -23,7 +24,7 @@ public class OrderBO {
 		return orderDAO.getStatusOrder(orderNum);
 	}
 
-	public void updateOrder(String orderNum, int status, HttpServletRequest request) throws ThanhToanException {
+	public void updateOrder(String orderNum, int status, HttpServletRequest request) throws DataBaseException {
 		orderDAO.updateOrder(orderNum, status, request);
 	}
 

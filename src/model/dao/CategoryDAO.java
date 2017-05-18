@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 import common.DataAccess;
-import common.ThanhToanException;
+import common.DataBaseException;
 import model.beans.Category;
 
 public class CategoryDAO {
@@ -66,7 +66,7 @@ public class CategoryDAO {
 		return null;
 	}
 
-	public void editCategory(String categoryNum, String categoryName, HttpServletRequest request) throws ThanhToanException {
+	public void editCategory(String categoryNum, String categoryName, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 
 		String sql = String.format("UPDATE theloai " + " SET ten_tl = N'%s'" + " WHERE ma_tl = '%s'", categoryName,
@@ -76,7 +76,7 @@ public class CategoryDAO {
 			stm.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -134,7 +134,7 @@ public class CategoryDAO {
 		return result;
 	}
 
-	public void addCategory(String categoryNum, String categoryName, HttpServletRequest request) throws ThanhToanException {
+	public void addCategory(String categoryNum, String categoryName, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 
 		String sql = String.format("INSERT INTO theloai(ma_tl,ten_tl) " + " VALUES ( '%s',N'%s' )", categoryNum,
@@ -144,7 +144,7 @@ public class CategoryDAO {
 			stm.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -155,7 +155,7 @@ public class CategoryDAO {
 
 	}
 
-	public void deleteCategory(String categoryNum, HttpServletRequest request) throws ThanhToanException {
+	public void deleteCategory(String categoryNum, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 
 		String sql = "DELETE  from theloai where ma_tl = '" + categoryNum + "'";
@@ -164,7 +164,7 @@ public class CategoryDAO {
 			stm.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
-import common.ThanhToanException;
+import common.DataBaseException;
 import model.beans.Promotion;
 import model.dao.PromotionDAO;
 
@@ -19,7 +19,7 @@ public class PromotionBO {
 		return promotionDAO.getListKhuyenMai();
 	}
 
-	public void themKhuyenMai(String maKm, String tenKm, float phanTramKm, int trangThai, HttpServletRequest request) throws ThanhToanException {
+	public void themKhuyenMai(String maKm, String tenKm, float phanTramKm, int trangThai, HttpServletRequest request) throws DataBaseException {
 		promotionDAO.themKhuyenMai(maKm, tenKm, phanTramKm, trangThai, request);
 
 	}
@@ -28,7 +28,7 @@ public class PromotionBO {
 		return promotionDAO.getThongTinKhuyenMai(maKm);
 	}
 
-	public void suaKhuyenMai(String maKm, String tenKm, float phanTramKm, int trangThai, HttpServletRequest request) throws ThanhToanException {
+	public void suaKhuyenMai(String maKm, String tenKm, float phanTramKm, int trangThai, HttpServletRequest request) throws DataBaseException {
 		promotionDAO.suaKhuyenMai(maKm, tenKm, phanTramKm, trangThai, request);
 
 	}
@@ -37,11 +37,11 @@ public class PromotionBO {
 		return promotionDAO.getTrangThaiKm(maKm);
 	}
 
-	public void suaTrangThaiKm(String maKm, int trangThai, HttpServletRequest request) throws ThanhToanException {
+	public void suaTrangThaiKm(String maKm, int trangThai, HttpServletRequest request) throws DataBaseException {
 		promotionDAO.suaTrangThaiKm(maKm, trangThai, request);
 	}
 
-	public void xoaKhuyenMai(String maKm, HttpServletRequest request) throws ThanhToanException {
+	public void xoaKhuyenMai(String maKm, HttpServletRequest request) throws DataBaseException {
 		promotionDAO.xoaKhuyenMai(maKm, request);
 
 	}

@@ -69,7 +69,7 @@
 								<div class="col-md-6 col-md-offset-3">
 									<html:submit styleClass="btn btn-success" property="submit"
 										value="Sửa"></html:submit>
-									<html:link action="/showlistauthor"
+									<html:link action="/showlistcategory"
 										styleClass="btn btn-default">Quay lại</html:link>
 								</div>
 							</div>
@@ -101,7 +101,7 @@
 				},
 				categoryName : {
 					required : true,
-					pattern : /^[áàãảạâấầẫẩậăắằẵẳặđêếềễểệóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựa-zA-Z\s]+$/,
+					pattern : /^[áàãảạÁÀÃẢẠâấầẫẩậÂẤẦẪẨẬăắằẵẳặĂẮÀẴẲẶđĐêếềễểệÊẾỀỄỂỆóòõỏọÓÒÕỎỌôốồỗổộÔỐỒỖỔỘơớờỡởợƠỚƠỠỞỢúùũủụÚÙŨỦỤưứừữửựƯỨỪỮỬỰa-zA-Z\s]+$/
 					maxlength : 200
 				}
 			},

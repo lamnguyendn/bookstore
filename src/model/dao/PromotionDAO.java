@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 import common.DataAccess;
-import common.ThanhToanException;
+import common.DataBaseException;
 import model.beans.Promotion;
 
 public class PromotionDAO {
@@ -92,7 +92,7 @@ public class PromotionDAO {
 		return list;
 	}
 
-	public void themKhuyenMai(String maKm, String tenKm, float phanTramKm, int trangThai, HttpServletRequest request) throws ThanhToanException {
+	public void themKhuyenMai(String maKm, String tenKm, float phanTramKm, int trangThai, HttpServletRequest request) throws DataBaseException {
 		String sql = String.format(
 				"INSERT INTO khuyenmai(ma_km,ten_km,phantram_km,trangthai) " + " VALUES ( '%s',N'%s','%s','%s' )", maKm,
 				tenKm, phanTramKm, trangThai);
@@ -102,7 +102,7 @@ public class PromotionDAO {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -139,7 +139,7 @@ public class PromotionDAO {
 		return km;
 	}
 
-	public void suaKhuyenMai(String maKm, String tenKm, float phanTramKm, int trangThai, HttpServletRequest request) throws ThanhToanException {
+	public void suaKhuyenMai(String maKm, String tenKm, float phanTramKm, int trangThai, HttpServletRequest request) throws DataBaseException {
 		String sql = String.format("UPDATE khuyenmai " + " SET ten_km = N'%s', phantram_km = '%s',trangthai = '%s'"
 				+ " WHERE ma_km = '%s'", tenKm, phanTramKm, trangThai, maKm);
 		Connection con = DataAccess.connect();
@@ -148,7 +148,7 @@ public class PromotionDAO {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -181,7 +181,7 @@ public class PromotionDAO {
 		return trangThai;
 	}
 
-	public void suaTrangThaiKm(String maKm, int trangThai, HttpServletRequest request) throws ThanhToanException {
+	public void suaTrangThaiKm(String maKm, int trangThai, HttpServletRequest request) throws DataBaseException {
 		String sql = "UPDATE khuyenmai SET trangthai = ? WHERE ma_km = ?";
 		Connection con = DataAccess.connect();
 		try {
@@ -191,7 +191,7 @@ public class PromotionDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -202,7 +202,7 @@ public class PromotionDAO {
 
 	}
 
-	public void xoaKhuyenMai(String maKm, HttpServletRequest request) throws ThanhToanException {
+	public void xoaKhuyenMai(String maKm, HttpServletRequest request) throws DataBaseException {
 		String sql = String.format("DELETE FROM khuyenmai WHERE ma_km = '%s'", maKm);
 		Connection con = DataAccess.connect();
 		try {
@@ -210,7 +210,7 @@ public class PromotionDAO {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();

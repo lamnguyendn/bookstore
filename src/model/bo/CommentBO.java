@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import common.ThanhToanException;
+import common.DataBaseException;
 import model.beans.Comment;
 import model.dao.CommentDAO;
 
@@ -15,7 +15,7 @@ public class CommentBO {
 		return commentDAO.getListOfCommentsByIsbn(isbn);
 	}
 
-	public void insertComment(Comment comment, HttpServletRequest request) throws ThanhToanException {
+	public void insertComment(Comment comment, HttpServletRequest request) throws DataBaseException {
 		commentDAO.insertComment(comment, request);
 	}
 
@@ -23,7 +23,7 @@ public class CommentBO {
 		return commentDAO.getListOfComments();
 	}
 
-	public void deleteComment(int ma_BL, HttpServletRequest request) throws ThanhToanException {
+	public void deleteComment(int ma_BL, HttpServletRequest request) throws DataBaseException {
 		commentDAO.deleteComment(ma_BL, request);
 	}
 

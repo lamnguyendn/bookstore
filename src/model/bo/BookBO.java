@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
-import common.ThanhToanException;
+import common.DataBaseException;
 import model.beans.Book;
 import model.dao.BookDAO;
 
 public class BookBO {
 	BookDAO bookDAO = new BookDAO();
 
-	public void addBook(Book book, HttpServletRequest request) throws ThanhToanException {
+	public void addBook(Book book, HttpServletRequest request) throws DataBaseException {
 		bookDAO.addBook(book, request);
 	}
 
-	public void updateBook(Book book, HttpServletRequest request) throws ThanhToanException {
+	public void updateBook(Book book, HttpServletRequest request) throws DataBaseException {
 		bookDAO.updateBook(book, request);
 	}
 
@@ -23,7 +23,7 @@ public class BookBO {
 		return bookDAO.findBookByIsbn(isbn);
 	}
 
-	public void deleteBook(String isbn, HttpServletRequest request) throws ThanhToanException {
+	public void deleteBook(String isbn, HttpServletRequest request) throws DataBaseException {
 		bookDAO.deleteBook(isbn, request);
 	}
 

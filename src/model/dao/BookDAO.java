@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 import common.DataAccess;
-import common.ThanhToanException;
+import common.DataBaseException;
 import model.beans.Book;
 
 public class BookDAO {
 
-	public void addBook(Book book, HttpServletRequest request) throws ThanhToanException {
+	public void addBook(Book book, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 		PreparedStatement pstm = null;
 
@@ -37,7 +37,7 @@ public class BookDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -48,7 +48,7 @@ public class BookDAO {
 		}
 	}
 
-	public void updateBook(Book book, HttpServletRequest request) throws ThanhToanException {
+	public void updateBook(Book book, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 		PreparedStatement pstm = null;
 
@@ -70,7 +70,7 @@ public class BookDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -81,7 +81,7 @@ public class BookDAO {
 		}
 	}
 
-	public void deleteBook(String isbn, HttpServletRequest request) throws ThanhToanException {
+	public void deleteBook(String isbn, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 		PreparedStatement pstm = null;
 
@@ -92,7 +92,7 @@ public class BookDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();

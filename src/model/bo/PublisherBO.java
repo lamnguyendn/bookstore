@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
-import common.ThanhToanException;
+import common.DataBaseException;
 import model.beans.Publisher;
 import model.dao.PublisherDAO;
 
@@ -16,12 +16,12 @@ public class PublisherBO {
 	}
 
 	public void addPublisher(String publisherNum, String publisherName, String publisherAddress,
-			String publisherPhoneNumber, HttpServletRequest request) throws ThanhToanException {
+			String publisherPhoneNumber, HttpServletRequest request) throws DataBaseException {
 		publisherDAO.addPublisher(publisherNum, publisherName, publisherAddress, publisherPhoneNumber, request);
 	}
 
 	public void editPublisher(String publisherNum, String publisherName, String publisherAddress,
-			String publisherPhoneNumber, HttpServletRequest request) throws ThanhToanException {
+			String publisherPhoneNumber, HttpServletRequest request) throws DataBaseException {
 		publisherDAO.editPublisher(publisherNum, publisherName, publisherAddress, publisherPhoneNumber, request);
 	}
 
@@ -29,7 +29,7 @@ public class PublisherBO {
 		return publisherDAO.getInfoPublisher(publisherNum);
 	}
 
-	public void deletePublisher(String publisherNum, HttpServletRequest request) throws ThanhToanException {
+	public void deletePublisher(String publisherNum, HttpServletRequest request) throws DataBaseException {
 		publisherDAO.deletePublisher(publisherNum, request);
 	}
 }

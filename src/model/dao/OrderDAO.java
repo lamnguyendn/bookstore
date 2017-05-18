@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import common.DataAccess;
+import common.DataBaseException;
 import common.ThanhToanException;
 import form.CustomerForm;
 import model.beans.Account;
@@ -159,7 +160,7 @@ public class OrderDAO {
 		return status;
 	}
 
-	public void updateOrder(String orderNum, int status, HttpServletRequest request) throws ThanhToanException {
+	public void updateOrder(String orderNum, int status, HttpServletRequest request) throws DataBaseException {
 		String sql = "UPDATE donhang SET trangthai = ? WHERE ma_dh = ?";
 		Connection con = DataAccess.connect();
 		try {
@@ -169,7 +170,7 @@ public class OrderDAO {
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();

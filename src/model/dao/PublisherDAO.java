@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 import common.DataAccess;
-import common.ThanhToanException;
+import common.DataBaseException;
 import model.beans.Publisher;
 
 public class PublisherDAO {
@@ -46,7 +46,7 @@ public class PublisherDAO {
 	}
 
 	public void addPublisher(String publisherNum, String publisherName, String publisherAddress,
-			String publisherPhoneNumber, HttpServletRequest request) throws ThanhToanException {
+			String publisherPhoneNumber, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 		String sql = String.format(
 				"INSERT INTO nhaxuatban(ma_nxb,ten_nxb,diachi_nxb,sdt_nxb) " + " VALUES ( '%s',N'%s',N'%s','%s' )",
@@ -56,7 +56,7 @@ public class PublisherDAO {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -89,7 +89,7 @@ public class PublisherDAO {
 	}
 
 	public void editPublisher(String publisherNum, String publisherName, String publisherAddress,
-			String publisherPhoneNumber, HttpServletRequest request) throws ThanhToanException {
+			String publisherPhoneNumber, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 
 		String sql = String.format("UPDATE nhaxuatban " + " SET ten_nxb = N'%s', diachi_nxb = N'%s',sdt_nxb ='%s'"
@@ -99,7 +99,7 @@ public class PublisherDAO {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
@@ -140,7 +140,7 @@ public class PublisherDAO {
 		return p;
 	}
 
-	public void deletePublisher(String publisherNum, HttpServletRequest request) throws ThanhToanException {
+	public void deletePublisher(String publisherNum, HttpServletRequest request) throws DataBaseException {
 		Connection con = DataAccess.connect();
 		String sql = "DELETE  from nhaxuatban where ma_nxb = '" + publisherNum + "'";
 		try {
@@ -148,7 +148,7 @@ public class PublisherDAO {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ThanhToanException(request);
+			throw new DataBaseException(request);
 		} finally {
 			try {
 				con.close();
