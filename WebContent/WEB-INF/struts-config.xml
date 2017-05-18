@@ -22,6 +22,16 @@ Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 		<form-bean name="paymentForm" type="form.PaymentForm" />
 	</form-beans>
 	<action-mappings>
+	<!-- Edit by DatTQ  -->
+		<action path="/listEbook" name="bookForm" type="action.ListEbookBoughtAction"
+			scope="request" >
+			<forward name="loadlist" path="/listebook.jsp" />
+		</action>
+		<action path="/showreadpages" name="bookForm" scope="request"
+			type="action.ShowReadPagesAction">
+			<forward name="loadpages" path="/readbook.jsp" />
+		</action>
+		<!-- End Edit by DatTQ  -->
 		<!-- Public -->
 		<action path="/checkLogin" name="loginForm" type="action.CheckLoginAction"
 			scope="request" input="/index.do">

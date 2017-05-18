@@ -7,4 +7,5 @@ encoding//WebContent/testMultipleSelected.jsp=UTF-8
 encoding//src/action/BookManagementAction.java=UTF-8
 encoding//src/action/ConfirmOrderAction.java=UTF-8
 encoding//src/action/UpdateBookAction.java=UTF-8
+encoding//src/model/dao/BookDAO.java=UTF-8
 encoding//src/model/dao/OrderDAO.java=UTF-8

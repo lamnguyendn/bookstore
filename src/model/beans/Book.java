@@ -17,13 +17,25 @@ public class Book {
 	private String categoryName;
 	private String publisherNum;
 	private String publisherName;
+	// Start Edit by DatTQ
+	private int pagesNum;
+
+	public int getPagesNum() {
+		return pagesNum;
+	}
+
+	public void setPagesNum(int pagesNum) {
+		this.pagesNum = pagesNum;
+	}
+	// End Edit by DatTQ
 
 	public Book() {
 
 	}
 
 	public Book(String isbn, String name, float price, int quantity, Date publishDate, byte[] image_1,
-			String description, String authorNum, String categoryNum, String publisherNum) {
+			String description, String authorNum, String authorName, String categoryNum, String categoryName,
+			String publisherNum, String publisherName, int pagesNum) {
 		super();
 		this.isbn = isbn;
 		this.name = name;
@@ -33,8 +45,12 @@ public class Book {
 		this.image_1 = image_1;
 		this.description = description;
 		this.authorNum = authorNum;
+		this.authorName = authorName;
 		this.categoryNum = categoryNum;
+		this.categoryName = categoryName;
 		this.publisherNum = publisherNum;
+		this.publisherName = publisherName;
+		this.pagesNum = pagesNum;
 	}
 
 	public float getPrice() {
